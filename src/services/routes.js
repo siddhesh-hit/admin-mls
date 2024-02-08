@@ -72,6 +72,8 @@ import ViewInterest from "../pages/portals/Add_Interest_Request/ViewInterest";
 import ViewRequest from "../pages/portals/Add_Interest_Request/ViewRequest";
 import ViewInterestRequest from "../pages/portals/Add_Interest_Request/ViewInterestRequest";
 
+import AddMantriMandal from "../pages/portals/Add_mantri_mandal/AddMantriMandal";
+
 // MASTER ROUTES
 
 import AddHouses from "../pages/portals/Add_houses/AddHouses";
@@ -513,6 +515,13 @@ export const routes = [
     exact: true,
     access: ["SuperAdmin", "Admin", "ContentCreator", "Reviewer"],
     element: <ViewInterestRequest />,
+  },
+  {
+    name: "MantriMandal",
+    path: "/AddMantriMandal",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator", "Reviewer"],
+    element: <AddMantriMandal />,
   },
   {
     name: "Houses",
