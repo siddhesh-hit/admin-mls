@@ -133,6 +133,11 @@ export const masterPaths = [
     child: ["/ViewGender", "/AddGender", "/EditGender"],
   },
   {
+    name: "Ministry",
+    path: "/ViewMinistry",
+    child: ["/ViewMinistry", "/AddMinistry", "/EditMinistry"],
+  },
+  {
     name: "Navigation",
     path: "/ViewNavigation",
     child: ["/ViewNavigation", "/AddNavigation", "/EditNavigation"],
@@ -157,6 +162,7 @@ export const routes = [
   "District",
   "Gender",
   "Navigation",
+  "Ministry",
 
   "VidhanMandal",
   "VidhanParishad",
