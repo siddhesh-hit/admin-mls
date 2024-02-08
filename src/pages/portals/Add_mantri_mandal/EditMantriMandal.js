@@ -4,14 +4,14 @@ import Menu from "../../../components/common/Menu";
 import EditContent from "../../../components/portal/mantri_mandal/EditContent";
 
 const EditMantriMandal = () => {
-    return (
-        <div>
-            <Header />
-            <Menu />
-            <EditContent />
-            <Footer />
-        </div>
-    );
+  return (
+    <div>
+      <Header />
+      <Menu />
+      <EditContent />
+      <Footer />
+    </div>
+  );
 };
 
 export default EditMantriMandal;
