@@ -95,6 +95,11 @@ export const portalPaths = [
       "/ViewInterestRequest",
     ],
   },
+  {
+    name: "MantriMandal",
+    path: "/ViewMantriMandal",
+    child: ["/AddMantriMandal", "/ViewMantriMandal", "/EditMantriMandal"],
+  },
 ];
 
 export const masterPaths = [
@@ -164,6 +169,7 @@ export const routes = [
   "Rajyapal",
   "Faqs",
   "Gallery",
+  "MantriMandal",
 
   "InterestRequest",
   "Feedback",
