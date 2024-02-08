@@ -32,24 +32,23 @@ const Viewcontent = () => {
   return (
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
-        <Link to="/AddVidhanMandal" className="addpagess">
+        <Link to="/AddMantriMandal" className="addpagess">
           <img src={add} alt="add" />
-          Add Vidhan Mandal
+          Add Mantri Mandal
         </Link>
 
-        <h4 className="page-title">• View Vidhan Mandal</h4>
+        <h4 className="page-title">• View Mantri Mandal</h4>
         <div className="card card-info">
           <div className="row">
             <div className="col-lg-12">
               <table className="table table-striped table-bordered mb-0 view_vidhan_mandal">
                 <thead>
                   <tr>
-                    <th>Image</th>
-                    <th>English Title</th>
-                    <th>Marathi Title</th>
-                    <th className="heighttab">Description</th>
-                    <th className="heighttab">वर्णन</th>
-                    <th>Document</th>
+                    <th>Ministry Type</th>
+                    <th>Assembly Number</th>
+                    <th>Member Name</th>
+                    <th>Designation</th>
+                    <th>Ministry </th>
                     <th>Action</th>
                   </tr>
                 </thead>
@@ -79,10 +78,6 @@ const Viewcontent = () => {
                               <i className="fa fa-eye" aria-hidden="true"></i>
                             </a>
                           </OverlayTrigger>
-                        </td>
-                        <td>
-                          {/* Display title for English */}
-                          <h4>{item.title}</h4>
                         </td>
                         <td>
                           {/* Display title for Marathi */}
@@ -131,7 +126,7 @@ const Viewcontent = () => {
                         </td>
                         <td>
                           <Link
-                            to={`/EditMantriMandal?id=${data._id}&el=${item._id}`}
+                            to={`/EditVidhanMandal?id=${data._id}&el=${item._id}`}
                           >
                             <OverlayTrigger
                               delay={{ hide: 450, show: 300 }}
