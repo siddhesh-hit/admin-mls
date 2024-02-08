@@ -112,6 +112,13 @@ import AddNavigation from "../pages/masters/Add_navigation/AddNavigation";
 import EditNavigation from "../pages/masters/Add_navigation/EditNavigation";
 import ViewNavigation from "../pages/masters/Add_navigation/ViewNavigation";
 
+
+import AddMinistry from "../pages/masters/Add_ministry/AddMinistry";
+import ViewMinistry from "../pages/masters/Add_ministry/ViewMinistry";
+import EditMinistry from "../pages/masters/Add_ministry/EditMinistry";
+
+
+
 // HOME ROUTES
 
 import EditFeedbacks from "../pages/home/Add_feedbacks/EditFeedbacks";
@@ -126,6 +133,7 @@ import UserRole from "../pages/home/systemmanagement/UserRole";
 import AddTask from "../pages/home/systemmanagement/AddTask";
 import ViewTask from "../pages/home/systemmanagement/ViewTask";
 import EditTask from "../pages/home/systemmanagement/EditTask";
+
 
 export const routes = [
   {
@@ -785,5 +793,26 @@ export const routes = [
     exact: true,
     access: ["SuperAdmin"],
     element: <EditTask />,
+  },
+  {
+    name: "Ministry",
+    path: "/AddMinistry",
+    exact: true,
+    access: ["SuperAdmin"],
+    element: <AddMinistry />,
+  },
+  {
+    name: "Ministry",
+    path: "/ViewMinistry",
+    exact: true,
+    access: ["SuperAdmin"],
+    element: <ViewMinistry />,
+  },
+  {
+    name: "Ministry",
+    path: "/EditMinistry",
+    exact: true,
+    access: ["SuperAdmin"],
+    element: <EditMinistry />,
   },
 ];

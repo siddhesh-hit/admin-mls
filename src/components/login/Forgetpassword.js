@@ -70,7 +70,7 @@ const ForgetPassword = () => {
               <Button variant="primary" onClick={handleSubmit}>
                 Submit
               </Button>
-              <Link to="/Login" className="new_account">
+              <Link to="/" className="new_account">
                 Click here to login
               </Link>
             </div>

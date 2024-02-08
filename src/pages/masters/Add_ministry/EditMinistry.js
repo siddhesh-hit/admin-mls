@@ -3,15 +3,15 @@ import Header from "../../../components/common/Header";
 import Menu from "../../../components/common/Menu";
 import EditContent from "../../../components/master/ministry/EditContent";
 
-const EditGender = () => {
-  return (
-    <div>
-      <Header />
-      <Menu />
-      <EditContent />
-      <Footer />
-    </div>
-  );
+const EditMinistry = () => {
+    return (
+        <div>
+            <Header />
+            <Menu />
+            <EditContent />
+            <Footer />
+        </div>
+    );
 };
 
-export default EditGender;
+export default EditMinistry;
