@@ -98,7 +98,12 @@ export const portalPaths = [
   {
     name: "MantriMandal",
     path: "/ViewAllMantriMandal",
-    child: ["/AddMantriMandal", "/ViewMantriMandal", "/EditMantriMandal", "/ViewAllMantriMandal"],
+    child: [
+      "/AddMantriMandal",
+      "/ViewMantriMandal",
+      "/EditMantriMandal",
+      "/ViewAllMantriMandal",
+    ],
   },
 ];
 

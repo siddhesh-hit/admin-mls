@@ -5,27 +5,25 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import add from "../../../images/add.svg";
 
 import { getApiById } from "../../../services/axiosInterceptors";
-import { API } from "../../../config/api";
 
 const Viewcontent = () => {
   const [data, setData] = useState([]);
 
   const location = useLocation();
-
   const id = location.search.split("=")[1];
 
-  const fetchData = async () => {
-    await getApiById("mandal", id)
-      .then((res) => {
-        console.log(res);
-        setData(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   useEffect(() => {
+    const fetchData = async () => {
+      await getApiById("minister", id)
+        .then((res) => {
+          if (res.data.success) {
+            setData(res.data.data);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
     fetchData();
   }, []);
 
@@ -49,98 +47,38 @@ const Viewcontent = () => {
                     <th>Member Name</th>
                     <th>Designation</th>
                     <th>Ministry </th>
-                    <th>Action</th>
+                    <th>Edit</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {data.english &&
-                    data.marathi &&
-                    data.english.about_us.map((item, index) => (
-                      <tr key={index}>
-                        <td>
+                  {data && (
+                    <tr>
+                      <td>{data?.ministry_type}</td>
+                      <td>
+                        <h4>{data?.assembly_number}</h4>
+                      </td>
+                      <td>
+                        <p>{data?.member_name}</p>
+                      </td>
+                      <td>
+                        <p>{data?.designation}</p>
+                      </td>
+                      <td>{data?.ministry}</td>
+                      <td>
+                        <Link to={`/EditMantriMandal?id=${data._id}}`}>
                           <OverlayTrigger
                             delay={{ hide: 450, show: 300 }}
                             overlay={(props) => (
-                              <Tooltip {...props}>View the data.</Tooltip>
+                              <Tooltip {...props}>Edit the data.</Tooltip>
                             )}
                             placement="bottom"
                           >
-                            <a
-                              href={
-                                API.baseUrl +
-                                data.mandal_image[index].image.destination +
-                                "/" +
-                                data.mandal_image[index].image.filename
-                              }
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              <i className="fa fa-eye" aria-hidden="true"></i>
-                            </a>
+                            <i className="fa fa-edit"></i>
                           </OverlayTrigger>
-                        </td>
-                        <td>
-                          {/* Display title for Marathi */}
-                          <h4>{data.marathi.about_us[index].title}</h4>
-                        </td>
-                        <td className="scrolltabss">
-                          {/* Display description for English */}
-                          <p>
-                            <span>{item.description}</span>
-                          </p>
-                        </td>
-                        <td className="scrolltabss">
-                          {/* Display description for Marathi */}
-                          <p>
-                            <span>
-                              {data.marathi.about_us[index].description}
-                            </span>
-                          </p>
-                        </td>
-                        <td>
-                          {/* Display file name for Marathi */}
-                          <a
-                            href={
-                              API.baseUrl +
-                              data.mandal_image[index].documents.destination +
-                              "/" +
-                              data.mandal_image[index].documents.filename
-                            }
-                            target="_blank"
-                            rel="noreferrer"
-                          >
-                            <OverlayTrigger
-                              delay={{ hide: 450, show: 300 }}
-                              overlay={(props) => (
-                                <Tooltip {...props}>View the data.</Tooltip>
-                              )}
-                              placement="bottom"
-                            >
-                              <i className="fa fa-eye" aria-hidden="true"></i>
-                            </OverlayTrigger>
-                          </a>
-                          <br />
-                          <span>
-                            {data.mandal_image[index].documents?.filename}
-                          </span>
-                        </td>
-                        <td>
-                          <Link
-                            to={`/EditVidhanMandal?id=${data._id}&el=${item._id}`}
-                          >
-                            <OverlayTrigger
-                              delay={{ hide: 450, show: 300 }}
-                              overlay={(props) => (
-                                <Tooltip {...props}>Edit the data.</Tooltip>
-                              )}
-                              placement="bottom"
-                            >
-                              <i className="fa fa-edit"></i>
-                            </OverlayTrigger>
-                          </Link>
-                        </td>
-                      </tr>
-                    ))}
+                        </Link>
+                      </td>
+                    </tr>
+                  )}
                 </tbody>
               </table>
             </div>
