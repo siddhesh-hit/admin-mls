@@ -53,11 +53,13 @@ const Content = () => {
     });
 
     await postApi("gallery", formData)
-      .then(() => {
-        toast.success("Library docs added successfully");
-        setTimeout(() => {
-          navigate("/ViewGallery");
-        }, 1000);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Library docs added successfully");
+          setTimeout(() => {
+            navigate("/ViewGallery");
+          }, 1000);
+        }
       })
       .catch((err) => {
         toast.error("Something went wrong");

@@ -36,11 +36,13 @@ const EditContent = () => {
 
   const handleSubmit = async () => {
     await putApi("helpdesk", id, data)
-      .then(() => {
-        toast.success("Helpdesk updated successfully!");
-        setTimeout(() => {
-          navigate("/ViewAllHelpdesk");
-        }, 1110);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Helpdesk updated successfully!");
+          setTimeout(() => {
+            navigate("/ViewAllHelpdesk");
+          }, 1110);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -73,8 +75,9 @@ const EditContent = () => {
                       </label>
                       <div className="col-sm-8">
                         <div
-                          className={`toggle-button ${isToggled ? "active" : ""
-                            }`}
+                          className={`toggle-button ${
+                            isToggled ? "active" : ""
+                          }`}
                           onClick={handleToggle}
                         >
                           <div

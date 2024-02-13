@@ -291,12 +291,16 @@ const EditContent = () => {
     );
     formData.append("election_data", JSON.stringify(data.election_data));
 
-    await putApi("member", id, formData).then(() => {
-      toast.success("Legislative Member updated successfully.");
-      setTimeout(() => {
-        navigate("/ViewLegislativeMember");
-      }, 1100);
-    });
+    await putApi("member", id, formData)
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Legislative Member updated successfully.");
+          setTimeout(() => {
+            navigate("/ViewLegislativeMember");
+          }, 1100);
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {

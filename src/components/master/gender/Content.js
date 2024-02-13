@@ -71,11 +71,13 @@ const Content = () => {
 
   const handleSubmit = async () => {
     await postApi("gender", data)
-      .then(() => {
-        toast.success("Added gender");
-        setTimeout(() => {
-          navigate("/ViewGender");
-        }, 1100);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Added gender");
+          setTimeout(() => {
+            navigate("/ViewGender");
+          }, 1100);
+        }
       })
       .catch((err) => {
         console.log(err);

@@ -16,9 +16,11 @@ export default function Header() {
 
   const handleLogout = async () => {
     await postApi("user/logout", {})
-      .then(() => {
-        dispatch(logout());
-        window.location.href = "/";
+      .then((res) => {
+        if (res.data.success) {
+          dispatch(logout());
+          window.location.href = "/";
+        }
       })
       .catch((err) => {
         console.log(err);

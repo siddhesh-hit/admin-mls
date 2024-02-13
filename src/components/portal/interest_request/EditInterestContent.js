@@ -31,11 +31,13 @@ const EditInterestContent = () => {
 
   const handleSubmit = async () => {
     await putApi("interest", id, data)
-      .then(() => {
-        toast.success("Interest updated successfully!");
-        setTimeout(() => {
-          navigate(`/ViewInterest?id=${id}`);
-        }, 1110);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Interest updated successfully!");
+          setTimeout(() => {
+            navigate(`/ViewInterest?id=${id}`);
+          }, 1110);
+        }
       })
       .catch((err) => {
         console.log(err);

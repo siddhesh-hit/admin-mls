@@ -228,11 +228,13 @@ const Content = () => {
         formData.append("about_us_doc", serverData.mandal_image[key].documents);
       }
       await postApi("mandal", formData)
-        .then(() => {
-          toast.success("Vidhanmandal added successfully");
-          setTimeout(() => {
-            navigate("/ViewAllMandal");
-          }, 1000);
+        .then((res) => {
+          if (res.data.success) {
+            toast.success("Vidhanmandal added successfully");
+            setTimeout(() => {
+              navigate("/ViewAllMandal");
+            }, 1000);
+          }
         })
         .catch((err) => {
           toast.error("Something went wrong");

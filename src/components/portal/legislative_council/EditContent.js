@@ -410,11 +410,13 @@ const EditContent = () => {
     });
 
     await putApi("parishad", id, formData)
-      .then(() => {
-        toast.success("VidhanParishad updated successfully");
-        setTimeout(() => {
-          navigate("/ViewAllLegislativeCouncil");
-        }, 1000);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("VidhanParishad updated successfully");
+          setTimeout(() => {
+            navigate("/ViewAllLegislativeCouncil");
+          }, 1000);
+        }
       })
       .catch((err) => {
         toast.error("Something went wrong");

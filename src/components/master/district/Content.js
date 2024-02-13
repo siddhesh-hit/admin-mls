@@ -71,11 +71,13 @@ const Content = () => {
 
   const handleSubmit = async () => {
     await postApi("district", data)
-      .then(() => {
-        toast.success("Added District");
-        setTimeout(() => {
-          navigate("/ViewDistrict");
-        }, 1100);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Added District");
+          setTimeout(() => {
+            navigate("/ViewDistrict");
+          }, 1100);
+        }
       })
       .catch((err) => {
         console.log(err);

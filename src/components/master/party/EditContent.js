@@ -61,11 +61,13 @@ const EditContent = () => {
 
     data.isUpdated = true;
     await putApi("party", id, formData)
-      .then(() => {
-        toast.success("Updated Party");
-        setTimeout(() => {
-          navigate("/ViewPoliticalParties");
-        }, 1100);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Updated Party");
+          setTimeout(() => {
+            navigate("/ViewPoliticalParties");
+          }, 1100);
+        }
       })
       .catch((err) => {
         console.log(err);

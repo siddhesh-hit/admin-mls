@@ -26,12 +26,14 @@ const ViewContent = () => {
     if (window.confirm("Are you sure you want to delete it?") === true) {
       // console.log("cehck");
       await deleteApi("constituency", id)
-        .then(() => {
-          toast.success("Deleted the constituency.");
-          setTimeout(() => {
-            navigate("/ViewConstituency");
-            fetchData();
-          }, 1100);
+        .then((res) => {
+          if (res.status === 204) {
+            toast.success("Deleted the constituency.");
+            setTimeout(() => {
+              navigate("/ViewConstituency");
+              fetchData();
+            }, 1100);
+          }
         })
         .catch((err) => {
           console.log(err);

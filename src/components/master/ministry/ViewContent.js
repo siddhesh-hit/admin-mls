@@ -13,7 +13,7 @@ const ViewContent = () => {
   const navigate = useNavigate();
 
   const fetchData = async () => {
-    await getApi("gender")
+    await getApi("minister")
       .then((res) => {
         setData(res.data.data);
       })
@@ -25,17 +25,19 @@ const ViewContent = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete it?") === true) {
       // console.log("cehck");
-      await deleteApi("gender", id)
-        .then(() => {
-          toast.success("Deleted the gender.");
-          setTimeout(() => {
-            navigate("/ViewGender");
-            fetchData();
-          }, 1100);
+      await deleteApi("minister", id)
+        .then((res) => {
+          if (res.status === 204) {
+            toast.success("Deleted the ministry.");
+            setTimeout(() => {
+              navigate("/ViewMinistry");
+              fetchData();
+            }, 1100);
+          }
         })
         .catch((err) => {
           console.log(err);
-          toast.error("Failed to delete the gender.");
+          toast.error("Failed to delete the ministry.");
         });
     }
   };
@@ -64,6 +66,7 @@ const ViewContent = () => {
                     <th>Ministry Name</th>
                     <th>Designation</th>
                     <th>Minister</th>
+                    <th>Assembly Number</th>
                     <th>Minister of State</th>
                     <th>Edit</th>
                     <th>Delete</th>
@@ -75,16 +78,19 @@ const ViewContent = () => {
                       {data.map((item, index) => (
                         <tr key={index}>
                           <td>
-                            <h4>{item.english.gender}</h4>
+                            <h4>{item.ministry}</h4>
                           </td>
                           <td>
-                            <h4>{item.marathi.gender}</h4>
+                            <h4>{item.designation}</h4>
                           </td>
                           <td>
-                            <h4>{item.marathi.gender}</h4>
+                            <h4>{item.ministry_type}</h4>
                           </td>
                           <td>
-                            <h4>{item.marathi.gender}</h4>
+                            <h4>{item.assembly_number}</h4>
+                          </td>
+                          <td>
+                            <h4>{item.member_name}</h4>
                           </td>
                           <td>
                             <Link to={`/EditMinistry?id=${item._id}`}>

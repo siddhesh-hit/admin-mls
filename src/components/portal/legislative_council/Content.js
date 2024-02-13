@@ -349,10 +349,14 @@ const Content = () => {
       }
     });
 
-    await postApi("parishad", formData).then(() => {
-      toast.success("VidhanParishad added Successfully");
-      navigate("/ViewAllLegislativeCouncil");
-    });
+    await postApi("parishad", formData)
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("VidhanParishad added Successfully");
+          navigate("/ViewAllLegislativeCouncil");
+        }
+      })
+      .catch((err) => console.log(err));
     // }
   };
 
