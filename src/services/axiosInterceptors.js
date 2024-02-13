@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  // baseURL: "http://localhost:8484/v1/api",
+  baseURL: "http://localhost:8484/v1/api",
   // baseURL: "https://mlsapi.handsintechnology.in/v1/api",
-  baseURL: "https://mlsapi.sblcorp.com/v1/api",
+  // baseURL: "https://mlsapi.sblcorp.com/v1/api",
 
   withCredentials: true,
 });
@@ -31,9 +31,9 @@ axiosInstance.interceptors.response.use(
       try {
         const res = await axios
           .post(
-            // "http://localhost:8484/v1/api/user/accessToken",
+            "http://localhost:8484/v1/api/user/accessToken",
             // "https://mlsapi.handsintechnology.in/v1/api/accessToken",
-            "https://mlsapi.sblcorp.com/v1/api/user/accessToken",
+            // "https://mlsapi.sblcorp.com/v1/api/user/accessToken",
             {},
             { withCredentials: true }
           )
