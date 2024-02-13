@@ -116,11 +116,13 @@ const Content = () => {
     });
 
     await postApi("party", formData)
-      .then(() => {
-        toast.success("Added party");
-        setTimeout(() => {
-          navigate("/ViewPoliticalParties");
-        }, 1100);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Added party");
+          setTimeout(() => {
+            navigate("/ViewPoliticalParties");
+          }, 1100);
+        }
       })
       .catch((err) => {
         console.log(err);

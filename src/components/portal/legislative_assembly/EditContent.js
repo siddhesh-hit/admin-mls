@@ -407,11 +407,13 @@ const EditContent = () => {
     });
 
     await putApi("sabha", id, formData)
-      .then(() => {
-        toast.success("Vidhansabha updated successfully");
-        setTimeout(() => {
-          navigate("/ViewAllLegislativeAssembly");
-        }, 1000);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Vidhansabha updated successfully");
+          setTimeout(() => {
+            navigate("/ViewAllLegislativeAssembly");
+          }, 1000);
+        }
       })
       .catch((err) => {
         toast.error("Something went wrong");

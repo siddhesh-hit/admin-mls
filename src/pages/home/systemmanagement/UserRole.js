@@ -2,27 +2,21 @@ import Header from "../../../components/common/Header";
 import Menu from "../../../components/common/Menu";
 import Footer from "../../../components/common/Footer";
 import { auth } from "../../../data/RouteStructure";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { getApi } from "../../../services/axiosInterceptors";
 
 const UserRole = () => {
+  const [role, setRole] = useState("");
   const [roles, setRoles] = useState([]);
 
   const handleChange = (e) => {
     console.log(e.target.checked);
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await getApi("user/roletask")
-        .then((res) => setRoles(res.data.data))
-        .catch((err) => console.log(err));
-    };
-
-    fetchData();
-  }, []);
-
-  console.log(roles);
+  const fetchData = async (role) => {
+    await getApi(`user/roletask/query?role=${role}`)
+      .then((res) => setRoles(res.data.data))
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div>
@@ -33,7 +27,15 @@ const UserRole = () => {
           <div className="panell">Role Based User Access Management System</div>
           <div className="usetype">
             <h3>• User Type</h3>
-            <select className="form-control">
+            <select
+              className="form-control"
+              defaultValue={role}
+              onChange={(e) => {
+                setRole(e.target.value);
+                setRoles([]);
+                fetchData(e.target.value);
+              }}
+            >
               <option hidden>Select a role type</option>
               {auth.map((item, index) => (
                 <option key={index} value={item}>

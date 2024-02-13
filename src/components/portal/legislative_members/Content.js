@@ -361,12 +361,17 @@ const Content = () => {
       JSON.stringify(data.political_journey)
     );
     formData.append("election_data", JSON.stringify(data.election_data));
-    await postApi("member", formData).then(() => {
-      toast.success("Legislative Member added successfully.");
-      setTimeout(() => {
-        navigate("/ViewLegislativeMember");
-      }, 1100);
-    });
+
+    await postApi("member", formData)
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Legislative Member added successfully.");
+          setTimeout(() => {
+            navigate("/ViewLegislativeMember");
+          }, 1100);
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {

@@ -219,9 +219,11 @@ const Content = () => {
     }
 
     await postApi("/rajyapal", formData)
-      .then(() => {
-        toast.success("Rajyapal Member added successfully.");
-        navigate("/ViewAllRajyapal");
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Rajyapal Member added successfully.");
+          navigate("/ViewAllRajyapal");
+        }
       })
       .catch((err) => {
         toast.error("Members not created");

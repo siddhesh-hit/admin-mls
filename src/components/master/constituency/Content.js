@@ -75,11 +75,13 @@ const Content = () => {
 
   const handleSubmit = async () => {
     await postApi("constituency", data)
-      .then(() => {
-        toast.success("New Constituency Added.");
-        setTimeout(() => {
-          navigate("/ViewConstituency");
-        }, 1100);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("New Constituency Added.");
+          setTimeout(() => {
+            navigate("/ViewConstituency");
+          }, 1100);
+        }
       })
       .catch((err) => {
         console.log(err);

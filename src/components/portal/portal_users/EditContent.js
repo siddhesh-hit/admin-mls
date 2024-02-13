@@ -56,9 +56,11 @@ const EditContent = () => {
     formData.append("user_image", server.user_image);
 
     await putApi("user", id, formData)
-      .then(() => {
-        toast.success("User updated Successfully");
-        navigate("/ViewPortalUsers");
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("User updated Successfully");
+          navigate("/ViewPortalUsers");
+        }
       })
       .catch((err) => {
         toast.error("Something Went Wrong");

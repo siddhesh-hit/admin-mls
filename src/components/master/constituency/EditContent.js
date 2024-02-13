@@ -41,17 +41,19 @@ const EditContent = () => {
   const handleSubmit = async () => {
     data.isUpdated = true;
     await putApi("constituency", id, data)
-      .then(() => {
-        let message = "";
-        updatedField.map((ele, index, array) =>
-          index === array.length - 1
-            ? (message += `${ele.replace(/_/g, " ").toUpperCase()}`)
-            : (message += `${ele.replace(/_/g, " ").toUpperCase()}, `)
-        );
-        toast.success(`${message ? message : "Constituency"} updated.`);
-        setTimeout(() => {
-          navigate("/ViewConstituency");
-        }, 1100);
+      .then((res) => {
+        if (res.data.success) {
+          let message = "";
+          updatedField.map((ele, index, array) =>
+            index === array.length - 1
+              ? (message += `${ele.replace(/_/g, " ").toUpperCase()}`)
+              : (message += `${ele.replace(/_/g, " ").toUpperCase()}, `)
+          );
+          toast.success(`${message ? message : "Constituency"} updated.`);
+          setTimeout(() => {
+            navigate("/ViewConstituency");
+          }, 1100);
+        }
       })
       .catch((err) => {
         console.log(err);

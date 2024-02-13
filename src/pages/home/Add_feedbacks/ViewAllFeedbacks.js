@@ -28,9 +28,11 @@ const ViewAllFeedbacks = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete it?")) {
       await deleteApi("feedback", id)
-        .then(() => {
-          toast.success("Feedback deleted successfully.");
-          fetchData();
+        .then((res) => {
+          if (res.status === 204) {
+            toast.success("Feedback deleted successfully.");
+            fetchData();
+          }
         })
         .catch((err) => console.log(err));
     }

@@ -122,11 +122,13 @@ const AddContent = () => {
 
   const handleSubmit = async () => {
     await postApi("navigation", data)
-      .then(() => {
-        toast.success("Added navigation");
-        setTimeout(() => {
-          navigate("/ViewNavigation");
-        }, 1100);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Added navigation");
+          setTimeout(() => {
+            navigate("/ViewNavigation");
+          }, 1100);
+        }
       })
       .catch((err) => {
         console.log(err);

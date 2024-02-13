@@ -51,18 +51,20 @@ const EditContent = () => {
   const handleSubmit = async () => {
     data.isUpdated = true;
     await putApi("assembly", id, data)
-      .then(() => {
-        let message = "";
-        updatedField.map((ele, index, array) =>
-          index === array.length - 1
-            ? (message += `${ele.replace(/_/g, " ").toUpperCase()}`)
-            : (message += `${ele.replace(/_/g, " ").toUpperCase()}, `)
-        );
+      .then((res) => {
+        if (res.data.success) {
+          let message = "";
+          updatedField.map((ele, index, array) =>
+            index === array.length - 1
+              ? (message += `${ele.replace(/_/g, " ").toUpperCase()}`)
+              : (message += `${ele.replace(/_/g, " ").toUpperCase()}, `)
+          );
 
-        toast.success(`${message ? message : "Assembly"} updated.`);
-        setTimeout(() => {
-          navigate("/ViewAssembly");
-        }, 1100);
+          toast.success(`${message ? message : "Assembly"} updated.`);
+          setTimeout(() => {
+            navigate("/ViewAssembly");
+          }, 1100);
+        }
       })
       .catch((err) => {
         console.log(err);

@@ -36,11 +36,13 @@ const EditContent = () => {
   const handleSubmit = async () => {
     data.isUpdated = true;
     await putApi("district", id, data)
-      .then(() => {
-        toast.success("Updated district");
-        setTimeout(() => {
-          navigate("/ViewDistrict");
-        }, 1100);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Updated district");
+          setTimeout(() => {
+            navigate("/ViewDistrict");
+          }, 1100);
+        }
       })
       .catch((err) => {
         console.log(err);

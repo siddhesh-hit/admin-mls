@@ -51,11 +51,13 @@ const EditContent = () => {
     formData.append("gallery_image", serverData);
 
     await putApi("gallery", data._id, formData)
-      .then(() => {
-        toast.success("Gallery updated successfully");
-        setTimeout(() => {
-          navigate("/ViewGallery");
-        }, 1000);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Gallery updated successfully");
+          setTimeout(() => {
+            navigate("/ViewGallery");
+          }, 1000);
+        }
       })
       .catch((err) => {
         toast.error("Something went wrong");

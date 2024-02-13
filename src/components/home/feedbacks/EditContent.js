@@ -36,11 +36,13 @@ const EditContent = () => {
 
   const handleSubmit = async () => {
     await putApi("feedback", id, data)
-      .then(() => {
-        toast.success("Feedback updated successfully!");
-        setTimeout(() => {
-          navigate("/ViewAllFeedbacks");
-        }, 1110);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Feedback updated successfully!");
+          setTimeout(() => {
+            navigate("/ViewAllFeedbacks");
+          }, 1110);
+        }
       })
       .catch((err) => {
         console.log(err);

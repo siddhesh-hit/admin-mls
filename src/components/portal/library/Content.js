@@ -63,11 +63,13 @@ const Content = () => {
     // console.log(formData);
 
     await postApi("library", formData)
-      .then(() => {
-        toast.success("Library Added Successfully");
-        setTimeout(() => {
-          navigate("/ViewLibrary");
-        }, 1100);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Library Added Successfully");
+          setTimeout(() => {
+            navigate("/ViewLibrary");
+          }, 1100);
+        }
       })
       .catch(() => {
         toast.error("Something went wrong");
