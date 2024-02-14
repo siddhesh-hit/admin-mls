@@ -1,76 +1,143 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
+import DatePicker from "react-datepicker";
 
-import remove from "../../../images/remove.svg";
-import addwhite from "../../../images/addwhite.svg";
 import back from "../../../images/back.svg";
 
 import { postApi } from "../../../services/axiosInterceptors";
 
 const Content = () => {
-  const [divCount, setDivCount] = useState(1);
-  const [data, setData] = useState([
-    {
-      marathi: {
+  const [isToggled, setIsToggled] = useState(true);
+
+  const [state, setState] = useState({
+    assembly: true,
+    council: false,
+  });
+
+  const [data, setData] = useState({
+    marathi: {
+      assembly: {
         constituency_assembly: "",
         assembly_number: "",
+        year: "",
       },
-      english: {
-        constituency_assembly: "",
-        assembly_number: "",
+      council: {
+        constituency_type: "",
+        constituency_name: "",
+        year: "",
       },
     },
-  ]);
+    english: {
+      assembly: {
+        constituency_assembly: "",
+        assembly_number: "",
+        year: "",
+      },
+      council: {
+        constituency_type: "",
+        constituency_name: "",
+        year: "",
+      },
+    },
+    isHouse: "Assembly",
+  });
 
   const navigate = useNavigate();
 
-  const addDiv = () => {
-    let newData = {
+  const handleToggle = () => {
+    setIsToggled(!isToggled);
+    setState((prev) => ({
+      ...prev,
+      assembly: !prev.assembly,
+      council: !prev.council,
+    }));
+    setData((prev) => ({
+      ...prev,
       marathi: {
-        constituency_assembly: "",
-        assembly_number: "",
+        assembly: {
+          constituency_assembly: "",
+          assembly_number: "",
+          year: "",
+        },
+        council: {
+          constituency_type: "",
+          constituency_name: "",
+          year: "",
+        },
       },
       english: {
-        constituency_assembly: "",
-        assembly_number: "",
+        assembly: {
+          constituency_assembly: "",
+          assembly_number: "",
+          year: "",
+        },
+        council: {
+          constituency_type: "",
+          constituency_name: "",
+          year: "",
+        },
       },
-    };
-    setData([...data, newData]);
-    setDivCount(divCount + 1);
-    alert("You've added one field");
-  };
-
-  const removeDiv = (index) => {
-    let newData = [...data];
-
-    newData.splice(index, 1);
-    setData(newData);
-
-    if (divCount > 1) {
-      setDivCount(divCount - 1);
-    }
-    alert("You've removed one field");
+      isHouse: !state.assembly ? "Assembly" : "Constituency",
+    }));
   };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const [field, subField, index] = name.split(".");
+    const [lang, field, subField] = name.split(".");
 
-    setData((prev) => [
-      ...prev.map((item, i) => {
-        if (i === +index) {
-          return {
-            ...item,
-            [field]: {
-              ...item[field],
-              [subField]: value,
-            },
-          };
-        }
-        return item;
-      }),
-    ]);
+    console.log(lang, field, subField);
+
+    setData((prev) => ({
+      ...prev,
+      [lang]: {
+        ...prev[lang],
+        [field]: {
+          ...prev[lang][field],
+          [subField]: value,
+        },
+      },
+    }));
+  };
+
+  const handleDateChange = (e, name) => {
+    if (name === "assembly") {
+      setData((prev) => ({
+        ...prev,
+        english: {
+          ...prev.english,
+          assembly: {
+            ...prev.english.assembly,
+            year: e,
+          },
+        },
+        marathi: {
+          ...prev.marathi,
+          assembly: {
+            ...prev.marathi.assembly,
+            year: e,
+          },
+        },
+      }));
+    } else {
+      setData((prev) => ({
+        ...prev,
+        english: {
+          ...prev.english,
+          council: {
+            ...prev.english.council,
+            year: e,
+          },
+        },
+        marathi: {
+          ...prev.marathi,
+          council: {
+            ...prev.marathi.council,
+            year: e,
+          },
+        },
+      }));
+    }
   };
 
   const handleSubmit = async () => {
@@ -88,6 +155,8 @@ const Content = () => {
       });
   };
 
+  console.log(data);
+
   return (
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
@@ -99,78 +168,178 @@ const Content = () => {
         <div className="card card-info">
           <div className="row mb-4 mt-4">
             <div className="col-lg-9">
+              <div className="card-body">
+                <div className="form-group row">
+                  <label
+                    htmlFor="inputPassword3"
+                    className="col-sm-4 col-form-label"
+                  >
+                    Select constituency type :
+                  </label>
+                  <div className="col-sm-8">
+                    <div
+                      className={`toggle-button ${isToggled ? "active" : ""}`}
+                      onClick={handleToggle}
+                    >
+                      <div className={`slider ${isToggled ? "active" : ""}`} />
+                      <div className="button-text">
+                        {isToggled ? "Assembly" : "Constituency"}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <form className="form-horizontal">
                 <div className="card-body">
-                  {[...Array(divCount)].map((_, index) => (
-                    <div className="formada border_names" key={index}>
-                      <div className="form-group row mb-5">
-                        <label
-                          htmlFor="inputPassword3"
-                          className="col-sm-3 col-form-label"
-                        >
-                          *Add Constituency Name :
-                        </label>
-                        <div className="col-sm-9">
-                          <input
-                            type="text"
-                            name={`english.constituency_assembly.${index}`}
-                            onChange={handleChange}
-                            className="form-control mb-3"
-                            placeholder="Enter Constitution Name"
-                          />
-                          <input
-                            type="text"
-                            name={`marathi.constituency_assembly.${index}`}
-                            onChange={handleChange}
-                            className="form-control mb-3"
-                            placeholder="संविधानाचे नाव प्रविष्ट करा"
-                          />
+                  <div className="formada border_names">
+                    {state.assembly && (
+                      <>
+                        <div className="form-group row mb-5">
+                          <label
+                            htmlFor="inputPassword3"
+                            className="col-sm-3 col-form-label"
+                          >
+                            *Add Constituency Name :
+                          </label>
+                          <div className="col-sm-9">
+                            <input
+                              type="text"
+                              name={`english.assembly.constituency_assembly`}
+                              onChange={handleChange}
+                              className="form-control mb-3"
+                              placeholder="Enter Constitution Name"
+                            />
+                            <input
+                              type="text"
+                              name={`marathi.assembly.constituency_assembly`}
+                              onChange={handleChange}
+                              className="form-control mb-3"
+                              placeholder="संविधानाचे नाव प्रविष्ट करा"
+                            />
+                          </div>
                         </div>
-                      </div>
-                      <div className="form-group row mb-5">
-                        <label
-                          htmlFor="inputPassword3"
-                          className="col-sm-3 col-form-label"
-                        >
-                          *Add Assembly Number :
-                        </label>
-                        <div className="col-sm-9">
-                          <input
-                            type="number"
-                            name={`english.assembly_number.${index}`}
-                            onChange={handleChange}
-                            className="form-control mb-3"
-                            placeholder="Enter Assembly Number"
-                          />
-                          <input
-                            type="number"
-                            name={`marathi.assembly_number.${index}`}
-                            onChange={handleChange}
-                            className="form-control mb-3"
-                            placeholder="विधानसभा क्रमांक प्रविष्ट करा"
-                          />
+                        <div className="form-group row mb-5">
+                          <label
+                            htmlFor="inputPassword3"
+                            className="col-sm-3 col-form-label"
+                          >
+                            *Add Assembly Number :
+                          </label>
+                          <div className="col-sm-9">
+                            <input
+                              type="number"
+                              name={`english.assembly.assembly_number`}
+                              onChange={handleChange}
+                              className="form-control mb-3"
+                              placeholder="Enter Assembly Number"
+                            />
+                            <input
+                              type="number"
+                              name={`marathi.assembly.assembly_number`}
+                              onChange={handleChange}
+                              className="form-control mb-3"
+                              placeholder="विधानसभा क्रमांक प्रविष्ट करा"
+                            />
+                          </div>
                         </div>
-                      </div>
+                        <div className="form-group row mb-5">
+                          <label
+                            htmlFor="inputPassword3"
+                            className="col-sm-3 col-form-label"
+                          >
+                            *Add Year :
+                          </label>
+                          <div className="col-sm-9">
+                            <DatePicker
+                              placeholderText="Select year"
+                              selected={data.english.assembly.year}
+                              showYearPicker
+                              dateFormat={"yyyy"}
+                              onChange={(e) => handleDateChange(e, "assembly")}
+                              className="form-control"
+                              minDate={new Date("02-01-1936")}
+                              maxDate={new Date()}
+                              name="english.assembly.year"
+                            />
+                          </div>
+                        </div>
+                      </>
+                    )}
 
-                      {index === 0 && (
-                        <div onClick={() => addDiv()} className="addSubButton">
-                          <img src={addwhite} alt="white" />
+                    {state.council && (
+                      <>
+                        <div className="form-group row mb-5">
+                          <label
+                            htmlFor="inputPassword3"
+                            className="col-sm-3 col-form-label"
+                          >
+                            *Add Constituency type :
+                          </label>
+                          <div className="col-sm-9">
+                            <input
+                              type="text"
+                              name={`english.council.constituency_type`}
+                              onChange={handleChange}
+                              className="form-control mb-3"
+                              placeholder="Enter Constitution type"
+                            />
+                            <input
+                              type="text"
+                              name={`marathi.council.constituency_type`}
+                              onChange={handleChange}
+                              className="form-control mb-3"
+                              placeholder="संविधान प्रकार प्रविष्ट करा"
+                            />
+                          </div>
                         </div>
-                      )}
-                      {index !== 0 && (
-                        <div
-                          onClick={() => removeDiv(index)}
-                          className="addSubButton"
-                        >
-                          <img
-                            src={remove}
-                            alt="remove"
-                            style={{ height: "25px", width: "25px" }}
-                          />
+                        <div className="form-group row mb-5">
+                          <label
+                            htmlFor="inputPassword3"
+                            className="col-sm-3 col-form-label"
+                          >
+                            *Add Constituency name :
+                          </label>
+                          <div className="col-sm-9">
+                            <input
+                              type="number"
+                              name={`english.council.constituency_name`}
+                              onChange={handleChange}
+                              className="form-control mb-3"
+                              placeholder="Enter Constituency name"
+                            />
+                            <input
+                              type="number"
+                              name={`marathi.council.constituency_name`}
+                              onChange={handleChange}
+                              className="form-control mb-3"
+                              placeholder="मतदारसंघाचे नाव टाका"
+                            />
+                          </div>
                         </div>
-                      )}
-                    </div>
-                  ))}
+                        <div className="form-group row mb-5">
+                          <label
+                            htmlFor="inputPassword3"
+                            className="col-sm-3 col-form-label"
+                          >
+                            *Add Year :
+                          </label>
+                          <div className="col-sm-9">
+                            <DatePicker
+                              placeholderText="Select year"
+                              selected={data.english.assembly.year}
+                              showYearPicker
+                              dateFormat={"yyyy"}
+                              onChange={(e) => handleDateChange(e, "council")}
+                              className="form-control"
+                              minDate={new Date("02-01-1936")}
+                              maxDate={new Date()}
+                              name="english.council.year"
+                            />
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
                 </div>
               </form>
             </div>
