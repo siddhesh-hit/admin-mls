@@ -64,13 +64,13 @@ const ViewContent = () => {
                 <thead>
                   <tr>
                     <th>Year</th>
-                    <th>Constituency Assembly</th>
-                    <th>संविधानाचे नाव</th>
+                    <th>Constituency name</th>
+                    <th>मतदारसंघाचे नाव</th>
                     <th>Assembly Number</th>
                     <th>विधानसभा क्रमांक</th>
                     <th>Year</th>
                     <th>Constituency Type</th>
-                    <th>संविधान प्रकार</th>
+                    <th>मतदारसंघाचा प्रकार</th>
                     <th>Constituency Name</th>
                     <th>मतदारसंघाचे नाव</th>
                     <th>Edit</th>

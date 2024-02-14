@@ -214,7 +214,7 @@ const Content = () => {
                               name={`marathi.assembly.constituency_assembly`}
                               onChange={handleChange}
                               className="form-control mb-3"
-                              placeholder="संविधानाचे नाव प्रविष्ट करा"
+                              placeholder="मतदारसंघाचे नाव प्रविष्ट करा"
                             />
                           </div>
                         </div>
@@ -288,7 +288,7 @@ const Content = () => {
                               name={`marathi.council.constituency_type`}
                               onChange={handleChange}
                               className="form-control mb-3"
-                              placeholder="संविधान प्रकार प्रविष्ट करा"
+                              placeholder="मतदारसंघाचा प्रकार प्रविष्ट करा"
                             />
                           </div>
                         </div>

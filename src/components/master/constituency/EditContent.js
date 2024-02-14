@@ -217,7 +217,7 @@ const EditContent = () => {
                                       .constituency_assembly
                                   }
                                   className="form-control mb-3"
-                                  placeholder="संविधानाचे नाव प्रविष्ट करा"
+                                  placeholder="मतदारसंघाचे नाव प्रविष्ट करा"
                                 />
                               </div>
                             </div>
@@ -305,7 +305,7 @@ const EditContent = () => {
                                     data?.marathi.council.constituency_type
                                   }
                                   className="form-control mb-3"
-                                  placeholder="संविधान प्रकार प्रविष्ट करा"
+                                  placeholder="मतदारसंघाचा प्रकार प्रविष्ट करा"
                                 />
                               </div>
                             </div>
