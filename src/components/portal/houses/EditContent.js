@@ -72,11 +72,13 @@ const EditContent = () => {
 
   const handleSubmit = async () => {
     await postApi("faq", data)
-      .then(() => {
-        toast.success("Added a FAQ");
-        setTimeout(() => {
-          navigate("/ViewFaqs");
-        }, 1100);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Added a FAQ");
+          setTimeout(() => {
+            navigate("/ViewFaqs");
+          }, 1100);
+        }
       })
       .catch((err) => {
         console.log(err);

@@ -61,12 +61,16 @@ const EditContent = () => {
       isUpdated: true,
     };
 
-    await putApi("faq", id, newData).then(() => {
-      toast.success("Updated FAQ");
-      setTimeout(() => {
-        navigate(`/ViewFaqs?id=${id}`);
-      }, 1100);
-    });
+    await putApi("faq", id, newData)
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Updated FAQ");
+          setTimeout(() => {
+            navigate(`/ViewFaqs?id=${id}`);
+          }, 1100);
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   useEffect(() => {

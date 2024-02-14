@@ -350,11 +350,13 @@ const Content = () => {
     });
 
     await postApi("sabha", formData)
-      .then(() => {
-        toast.success("VidhanSabha added successfully");
-        setTimeout(() => {
-          navigate("/ViewAllLegislativeAssembly");
-        }, 1000);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("VidhanSabha added successfully");
+          setTimeout(() => {
+            navigate("/ViewAllLegislativeAssembly");
+          }, 1000);
+        }
       })
       .catch((err) => {
         toast.error("Something went wrong");

@@ -125,7 +125,7 @@ const Content = () => {
     const { name, value } = e.target;
     const [field, subField, index] = name.split(".");
 
-    // console.log(name, value, field, subField, index);
+    console.log(name, value, field, subField, index);
 
     if (index) {
       setData((prev) => [
@@ -158,6 +158,25 @@ const Content = () => {
     }
   };
 
+  const handleKeyDown = (event) => {
+    // Allow backspace and delete keys
+    if (event.key === "Backspace" || event.key === "Delete") {
+      return;
+    }
+
+    // Allow digits (0-9) and a single hyphen (-)
+    const currentValue = event.target.value;
+    const key = event.key;
+    const allowedCharacters = /^[0-9-]$/;
+
+    if (
+      (key === "-" && currentValue.includes("-")) || // Allow only one hyphen
+      !allowedCharacters.test(key)
+    ) {
+      event.preventDefault();
+    }
+  };
+
   const handleSubmit = async () => {
     // validator(data);
 
@@ -165,11 +184,13 @@ const Content = () => {
     //   ? toast.error("Fill the fields properly.")
     // :
     await postApi("assembly", data)
-      .then(() => {
-        toast.success("New Assembly Added.");
-        setTimeout(() => {
-          navigate("/ViewAssembly");
-        }, 1100);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("New Assembly Added.");
+          setTimeout(() => {
+            navigate("/ViewAssembly");
+          }, 1100);
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -200,9 +221,10 @@ const Content = () => {
                         </label>
                         <div className="col-sm-9">
                           <input
-                            type="number"
+                            type="text"
                             name={`english.assembly_number.${index}`}
                             onChange={handleChange}
+                            onKeyDown={handleKeyDown}
                             className={`form-control mb-3 ${
                               error[index] &&
                               error[index].english &&
@@ -223,7 +245,7 @@ const Content = () => {
                             <></>
                           )}
                           <input
-                            type="number"
+                            type="text"
                             name={`marathi.assembly_number.${index}`}
                             onChange={handleChange}
                             className={`form-control mb-3 ${

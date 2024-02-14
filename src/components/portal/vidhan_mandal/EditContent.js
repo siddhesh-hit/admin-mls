@@ -179,11 +179,13 @@ const Editcontent = () => {
         formData.append("about_us_doc", document);
       });
       await putApi("mandal", data._id, formData)
-        .then(() => {
-          toast.success("Vidhanmandal updated successfully");
-          setTimeout(() => {
-            navigate(`/ViewVidhanMandal?id=${data._id}`);
-          }, 1000);
+        .then((res) => {
+          if (res.data.success) {
+            toast.success("Vidhanmandal updated successfully");
+            setTimeout(() => {
+              navigate(`/ViewVidhanMandal?id=${data._id}`);
+            }, 1000);
+          }
         })
         .catch((err) => {
           toast.error("Something went wrong");

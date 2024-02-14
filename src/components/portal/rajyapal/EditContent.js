@@ -186,9 +186,11 @@ const EditContent = () => {
     }
 
     await putApi("rajyapal", id, formData)
-      .then(() => {
-        toast.success("Rajyapal member updated successfully.");
-        navigate("/ViewAllRajyapal");
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Rajyapal member updated successfully.");
+          navigate("/ViewAllRajyapal");
+        }
       })
       .catch((err) => {
         console.log(err);

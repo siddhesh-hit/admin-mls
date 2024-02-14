@@ -75,11 +75,13 @@ const EditContent = () => {
     // console.log(formData);
 
     await putApi("library", data._id, formData)
-      .then(() => {
-        toast.success("Library docs updated Successfully");
-        setTimeout(() => {
-          navigate("/ViewLibrary");
-        }, 1100);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Library docs updated Successfully");
+          setTimeout(() => {
+            navigate("/ViewLibrary");
+          }, 1100);
+        }
       })
       .catch(() => {
         toast.error("Something went wrong");

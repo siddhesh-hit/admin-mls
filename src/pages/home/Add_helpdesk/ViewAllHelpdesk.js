@@ -26,9 +26,11 @@ const ViewAllHelpdesk = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete it?")) {
       await deleteApi("helpdesk", id)
-        .then(() => {
-          toast.success("Helpdesk deleted successfully.");
-          fetchData();
+        .then((res) => {
+          if (res.status === 204) {
+            toast.success("Helpdesk deleted successfully.");
+            fetchData();
+          }
         })
         .catch((err) => console.log(err));
     }

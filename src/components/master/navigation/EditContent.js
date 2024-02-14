@@ -151,11 +151,13 @@ const EditContent = () => {
 
   const handleSubmit = async () => {
     await putApi("navigation", id, data)
-      .then(() => {
-        toast.success("Added navigation");
-        setTimeout(() => {
-          navigate("/ViewNavigation");
-        }, 1100);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Added navigation");
+          setTimeout(() => {
+            navigate("/ViewNavigation");
+          }, 1100);
+        }
       })
       .catch((err) => {
         console.log(err);

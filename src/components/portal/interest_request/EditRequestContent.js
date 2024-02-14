@@ -67,11 +67,13 @@ const EditRequestContent = () => {
 
   const handleSubmit = async () => {
     await putApi("request", id, data)
-      .then(() => {
-        toast.success("Request updated successfully!");
-        setTimeout(() => {
-          navigate(`/ViewRequest?id=${id}`);
-        }, 1110);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Request updated successfully!");
+          setTimeout(() => {
+            navigate(`/ViewRequest?id=${id}`);
+          }, 1110);
+        }
       })
       .catch((err) => {
         console.log(err);

@@ -159,11 +159,13 @@ const EditContent = () => {
 
   const handleGraphSubmit = async () => {
     await putApi("graph", id, graph)
-      .then(() => {
-        toast.success("Information updated successfully");
-        setTimeout(() => {
-          navigate("/ViewLegislativeAssembly");
-        }, 1000);
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Information updated successfully");
+          setTimeout(() => {
+            navigate("/ViewLegislativeAssembly");
+          }, 1000);
+        }
       })
       .catch((err) => {
         toast.error("Something went wrong");
