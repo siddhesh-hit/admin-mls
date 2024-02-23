@@ -33,10 +33,10 @@ const ViewTask = () => {
       <Menu />
       <div className="content-wrapper pt-4">
         <div className="contentofpages">
-          <Link className="addpagess" to="/AddTask">
+          {/* <Link className="addpagess" to="/AddTask">
             <img src={add} alt="add" />
             Add Task Management
-          </Link>
+          </Link> */}
           <h4 className="page-title">• View All Task Management</h4>
           <div className="card card-info">
             <div className="row">
@@ -47,7 +47,7 @@ const ViewTask = () => {
                       <th>Department</th>
                       <th>User</th>
                       <th>Task Name</th>
-                      <th>Activity</th>
+                      {/* <th>Activity</th> */}
                       <th>Task Approval Authority</th>
                       {/* <th>Delete</th> */}
                       <th>Edit</th>
@@ -58,25 +58,35 @@ const ViewTask = () => {
                       roles?.map((item, index) => (
                         <tr key={index}>
                           <td>
-                            <h4>{item.userId.department}</h4>
+                            <h4>{item.userId?.department}</h4>
                           </td>
                           <td>
-                            <h4>{item.userId.full_name}</h4>
+                            <h4>{item.userId?.full_name}</h4>
                           </td>
-                          <td>
-                            {item?.taskName?.length === routes.length ? (
-                              "All"
+                          <td className="overflow-auto">
+                            {item?.taskName?.length > 0 ? (
+                              <>
+                                {item?.taskName?.length === routes.length ? (
+                                  "All"
+                                ) : (
+                                  <ul
+                                    style={{
+                                      height: "30px",
+                                    }}
+                                  >
+                                    {item.taskName.map((item, index, array) => (
+                                      <li key={index}>{item}</li>
+                                    ))}
+                                  </ul>
+                                )}
+                              </>
                             ) : (
-                              <ul>
-                                {item.taskName.map((item, index, array) => (
-                                  <li key={index}>{item}</li>
-                                ))}
-                              </ul>
+                              <>-</>
                             )}
                           </td>
-                          <td>
+                          {/* <td>
                             <h4>{item.activity || "-"}</h4>
-                          </td>
+                          </td> */}
                           <td>
                             <h4>{item.role || "-"}</h4>
                           </td>

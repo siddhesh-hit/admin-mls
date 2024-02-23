@@ -1,17 +1,18 @@
+import { useState } from "react";
+import { OverlayTrigger, Tooltip } from "react-bootstrap";
+
 import Header from "../../../components/common/Header";
 import Menu from "../../../components/common/Menu";
 import Footer from "../../../components/common/Footer";
+
 import { auth } from "../../../data/RouteStructure";
-import { useState } from "react";
 import { getApi } from "../../../services/axiosInterceptors";
+import { Link } from "react-router-dom";
 
 const UserRole = () => {
   const [role, setRole] = useState("");
   const [roles, setRoles] = useState([]);
 
-  const handleChange = (e) => {
-    console.log(e.target.checked);
-  };
   const fetchData = async (role) => {
     await getApi(`user/roletask/query?role=${role}`)
       .then((res) => setRoles(res.data.data))
@@ -43,106 +44,114 @@ const UserRole = () => {
                 </option>
               ))}
             </select>
-            <table className="table table-striped table-bordered mb-0 mt-5 view_vidhan_mandal">
-              <thead>
-                <tr>
-                  <th>User Name</th>
-                  <th>Authorities</th>
-                  <th>Create</th>
-                  <th>View</th>
-                  <th>Update</th>
-                  <th>Delete</th>
-                  <th>User</th>
-                  <th>Download</th>
-                  <th>Upload</th>
-                </tr>
-              </thead>
-              <tbody>
-                {roles?.map((item, index) => (
-                  <tr key={index}>
-                    <td>
-                      <h4>{item.userId.full_name}</h4>
-                    </td>
-                    <td>
-                      <p>{item.role}</p>
-                    </td>
-                    <td className="markyesorno">
-                      <div>
-                        <input
-                          type="checkbox"
-                          name="create"
-                          onChange={handleChange}
-                          defaultChecked={item?.permission?.includes("create")}
-                        />
-                      </div>
-                    </td>
-                    <td className="markyesorno">
-                      <div>
-                        <input
-                          type="checkbox"
-                          name="read"
-                          onChange={handleChange}
-                          defaultChecked={item?.permission?.includes("read")}
-                        />
-                      </div>
-                    </td>
-                    <td className="markyesorno">
-                      <div>
-                        <input
-                          type="checkbox"
-                          name="update"
-                          onChange={handleChange}
-                          defaultChecked={item?.permission?.includes("update")}
-                        />
-                      </div>
-                    </td>
-                    <td className="markyesorno">
-                      <div>
-                        <input
-                          type="checkbox"
-                          name="delete"
-                          onChange={handleChange}
-                          defaultChecked={item?.permission?.includes("delete")}
-                        />
-                      </div>
-                    </td>
-
-                    <td className="markyesorno">
-                      <div>
-                        <input
-                          type="checkbox"
-                          name="user"
-                          onChange={handleChange}
-                          defaultChecked={item?.permission?.includes("user")}
-                        />
-                      </div>
-                    </td>
-                    <td className="markyesorno">
-                      <div>
-                        <input
-                          type="checkbox"
-                          name="download"
-                          onChange={handleChange}
-                          defaultChecked={item?.permission?.includes(
-                            "download"
-                          )}
-                        />
-                      </div>
-                    </td>
-                    <td className="markyesorno">
-                      <div>
-                        <input
-                          type="checkbox"
-                          name="upload"
-                          onChange={handleChange}
-                          defaultChecked={item?.permission?.includes("upload")}
-                        />
-                      </div>
-                    </td>
+            {roles?.length > 0 ? (
+              <table className="table table-striped table-bordered mb-0 mt-5 view_vidhan_mandal">
+                <thead>
+                  <tr>
+                    <th>User Name</th>
+                    <th>Authorities</th>
+                    <th>Create</th>
+                    <th>View</th>
+                    <th>Update</th>
+                    <th>Delete</th>
+                    <th>User</th>
+                    <th>Download</th>
+                    <th>Upload</th>
+                    <th>Edit</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {roles?.map((item, index) => (
+                    <tr key={index}>
+                      <td>
+                        <h4>{item.userId.full_name}</h4>
+                      </td>
+                      <td>
+                        <p>{item.role}</p>
+                      </td>
+                      <td className="markyesorno">
+                        <div>
+                          {item?.permission?.includes("create") ? (
+                            <i class="fa-solid fa-check"></i>
+                          ) : (
+                            <i class="fa-solid fa-xmark"></i>
+                          )}
+                        </div>
+                      </td>
+                      <td className="markyesorno">
+                        <div>
+                          {item?.permission?.includes("read") ? (
+                            <i class="fa-solid fa-check"></i>
+                          ) : (
+                            <i class="fa-solid fa-xmark"></i>
+                          )}
+                        </div>
+                      </td>
+                      <td className="markyesorno">
+                        <div>
+                          {item?.permission?.includes("update") ? (
+                            <i class="fa-solid fa-check"></i>
+                          ) : (
+                            <i class="fa-solid fa-xmark"></i>
+                          )}
+                        </div>
+                      </td>
+                      <td className="markyesorno">
+                        <div>
+                          {item?.permission?.includes("delete") ? (
+                            <i class="fa-solid fa-check"></i>
+                          ) : (
+                            <i class="fa-solid fa-xmark"></i>
+                          )}
+                        </div>
+                      </td>
+                      <td className="markyesorno">
+                        <div>
+                          {item?.permission?.includes("user") ? (
+                            <i class="fa-solid fa-check"></i>
+                          ) : (
+                            <i class="fa-solid fa-xmark"></i>
+                          )}
+                        </div>
+                      </td>
+                      <td className="markyesorno">
+                        <div>
+                          {item?.permission?.includes("download") ? (
+                            <i class="fa-solid fa-check"></i>
+                          ) : (
+                            <i class="fa-solid fa-xmark"></i>
+                          )}
+                        </div>
+                      </td>
+                      <td className="markyesorno">
+                        <div>
+                          {item?.permission?.includes("upload") ? (
+                            <i class="fa-solid fa-check"></i>
+                          ) : (
+                            <i class="fa-solid fa-xmark"></i>
+                          )}
+                        </div>
+                      </td>
+                      <td>
+                        <Link to={`/EditRole?id=${item._id}`}>
+                          <OverlayTrigger
+                            delay={{ hide: 450, show: 300 }}
+                            overlay={(props) => (
+                              <Tooltip {...props}>Edit the data.</Tooltip>
+                            )}
+                            placement="bottom"
+                          >
+                            <i className="fa fa-edit" aria-hidden="true"></i>
+                          </OverlayTrigger>
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>

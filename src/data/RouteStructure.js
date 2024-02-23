@@ -189,4 +189,13 @@ export const routes = [
   "User Management",
   "Task Management",
   "Pending",
+  "AuditTrail",
+];
+
+export const authDesc = [
+  "SuperAdmin, he can do everything.",
+  "ContentCreator, he can create and edit tasks.",
+  "User, can visit and perform basic functionality.",
+  "Reviewer, he can approve the tasks.",
+  "Admin, has functionality similar to SA but with some exceptions.",
 ];

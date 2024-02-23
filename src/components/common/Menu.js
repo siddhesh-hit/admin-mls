@@ -483,7 +483,7 @@ const Menu = () => {
               </li>
 
               <li className="nav-item borders">
-                <Link to="/Dashboard" className="nav-link main">
+                <Link to="/ViewAudit" className="nav-link main">
                   <svg
                     width="18"
                     height="18"

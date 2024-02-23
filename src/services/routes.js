@@ -126,6 +126,7 @@ import EditHelpdesk from "../pages/home/Add_helpdesk/EditHelpdesk";
 import ViewHelpdesk from "../pages/home/Add_helpdesk/ViewHelpdesk";
 
 import UserRole from "../pages/home/systemmanagement/UserRole";
+import EditRole from "../pages/home/systemmanagement/EditRole";
 import AddTask from "../pages/home/systemmanagement/AddTask";
 import ViewTask from "../pages/home/systemmanagement/ViewTask";
 import EditTask from "../pages/home/systemmanagement/EditTask";
@@ -134,6 +135,8 @@ import AddPending from "../pages/home/Add_pending/AddPending";
 import EditPending from "../pages/home/Add_pending/EditPending";
 import ViewPending from "../pages/home/Add_pending/ViewPending";
 import ViewAllPending from "../pages/home/Add_pending/ViewAllPending";
+
+import ViewAudit from "../pages/home/Audit_Trail/ViewAudit";
 
 export const routes = [
   {
@@ -795,6 +798,13 @@ export const routes = [
     element: <UserRole />,
   },
   {
+    name: "User Management",
+    path: "/EditRole",
+    exact: true,
+    access: ["SuperAdmin", "Admin"],
+    element: <EditRole />,
+  },
+  {
     name: "Task Management",
     path: "/AddTask",
     exact: true,
@@ -842,5 +852,12 @@ export const routes = [
     exact: true,
     access: ["SuperAdmin"],
     element: <ViewAllPending />,
+  },
+  {
+    name: "AuditTrail",
+    path: "/ViewAudit",
+    exact: true,
+    access: ["SuperAdmin"],
+    element: <ViewAudit />,
   },
 ];

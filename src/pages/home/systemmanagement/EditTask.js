@@ -5,10 +5,10 @@ import Select from "react-select";
 import Header from "../../../components/common/Header";
 import Menu from "../../../components/common/Menu";
 import Footer from "../../../components/common/Footer";
-
 import add from "../../../images/back.svg";
+
 import { getApiById, putApi } from "../../../services/axiosInterceptors";
-import { routes, auth } from "../../../data/RouteStructure";
+import { routes, auth, authDesc } from "../../../data/RouteStructure";
 import { toast } from "react-toastify";
 
 const EditTask = () => {
@@ -110,10 +110,10 @@ const EditTask = () => {
                           >
                             <option hidden>Select Department</option>
                             <option value={"check"}>check</option>
-                            <option>Department 2</option>
-                            <option>Department 3</option>
-                            <option>Department 4</option>
-                            <option>Department 5</option>
+                            <option value={"Department 2"}>Department 2</option>
+                            <option value={"Department 3"}>Department 3</option>
+                            <option value={"Department 4"}>Department 4</option>
+                            <option value={"Department 5"}>Department 5</option>
                           </select>
                         </div>
                       </div>
@@ -167,14 +167,19 @@ const EditTask = () => {
                           Edit Activity :
                         </label>
                         <div className="col-sm-8">
-                          <textarea
-                            placeholder="Enter Description"
+                          <select
                             className="form-control"
-                            rows="3"
-                            name="activity"
+                            name="department"
                             onChange={handleChange}
-                            defaultValue={role?.activity}
-                          />
+                            value={role?.activity}
+                          >
+                            <option hidden>Select Description</option>
+                            {authDesc.map((item, ind) => (
+                              <option value={item} key={ind}>
+                                {item}
+                              </option>
+                            ))}
+                          </select>
                         </div>
                       </div>
                       <div className="form-group row">
