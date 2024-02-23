@@ -13,7 +13,7 @@ const ViewAllCalendar = () => {
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
-    await getApi("session")
+    await getApi("session?status=Approved")
       .then((res) => {
         setData(res.data.data);
       })

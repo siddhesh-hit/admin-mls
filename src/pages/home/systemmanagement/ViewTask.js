@@ -23,6 +23,8 @@ const ViewTask = () => {
     fetchData();
   }, []);
 
+  console.log(routes.length);
+
   const handleDelete = () => {};
 
   return (

@@ -37,6 +37,7 @@ export const portalPaths = [
       "/AddLegislativeMembers",
       "/EditLegislativeMember",
       "/ViewLegislativeMember",
+      "/Viewmemberprofile",
     ],
   },
   {
@@ -61,7 +62,7 @@ export const portalPaths = [
       "/ViewAllCalendar",
       "/AddSessionCalendar",
       "/EditSessionCalendar",
-      "/ViewSessionCalendar",
+      "/ViewCalendar",
     ],
   },
   {
@@ -187,4 +188,5 @@ export const routes = [
   "Helpdesk",
   "User Management",
   "Task Management",
+  "Pending",
 ];

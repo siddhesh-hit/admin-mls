@@ -13,8 +13,6 @@ const ProtectedRoute = ({ element }) => {
   const roles = ["SuperAdmin", "Admin", "ContentCreator", "Reviewer"];
 
   if (roles.includes(deData.role_taskId.role)) {
-    // console.log(element.name);
-    // console.log(deData.role_taskId.taskName);
     if (
       element.access.includes(deData.role_taskId.role) &&
       deData.role_taskId.taskName.includes(element.name)

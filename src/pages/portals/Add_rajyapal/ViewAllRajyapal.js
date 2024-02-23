@@ -13,7 +13,7 @@ const ViewAllRajyapal = () => {
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
-    await getApi("rajyapal")
+    await getApi("rajyapal?status=Approved")
       .then((res) => {
         setData(res.data.data);
       })
