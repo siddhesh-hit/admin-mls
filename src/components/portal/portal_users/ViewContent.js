@@ -91,26 +91,40 @@ const ViewContent = () => {
                           <p>{item.gender}</p>
                         </td>
                         <td>
-                          <a
-                            href={
-                              API.baseUrl +
-                              item.user_image.destination +
-                              "/" +
-                              item.user_image.filename
-                            }
-                            target="_blank"
-                            rel="noreferrer"
-                          >
+                          {item.user_image ? (
+                            <a
+                              href={
+                                API.baseUrl +
+                                item.user_image?.destination +
+                                "/" +
+                                item.user_image?.filename
+                              }
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              <OverlayTrigger
+                                delay={{ hide: 450, show: 300 }}
+                                overlay={(props) => (
+                                  <Tooltip {...props}>View profile.</Tooltip>
+                                )}
+                                placement="bottom"
+                              >
+                                <i className="fa fa-eye" aria-hidden="true"></i>
+                              </OverlayTrigger>
+                            </a>
+                          ) : (
                             <OverlayTrigger
                               delay={{ hide: 450, show: 300 }}
                               overlay={(props) => (
-                                <Tooltip {...props}>View the data.</Tooltip>
+                                <Tooltip {...props}>
+                                  No profile to view.
+                                </Tooltip>
                               )}
                               placement="bottom"
                             >
-                              <i className="fa fa-eye" aria-hidden="true"></i>
+                              <i class="fa fa-eye-slash" aria-hidden="true"></i>
                             </OverlayTrigger>
-                          </a>
+                          )}
                         </td>
                         {/* <td>
                           <Link to={`/EditPortalUsers?id=${item._id}`}>

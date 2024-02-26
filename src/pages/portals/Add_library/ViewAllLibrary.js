@@ -13,7 +13,7 @@ const ViewAllLibrary = () => {
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
-    await getApi("library")
+    await getApi("library?status=Approved")
       .then((res) => {
         setData(res.data.data);
       })

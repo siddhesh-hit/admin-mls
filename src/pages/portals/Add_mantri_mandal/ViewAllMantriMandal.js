@@ -13,7 +13,7 @@ const ViewAllMantriMandal = () => {
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
-    await getApi("minister")
+    await getApi("minister?status=Approved")
       .then((res) => {
         setData(res.data.data);
       })

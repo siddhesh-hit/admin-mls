@@ -131,7 +131,7 @@ const Viewcontent = () => {
                         </td>
                         <td>
                           <Link
-                            to={`/EditMantriMandal?id=${data._id}&el=${item._id}`}
+                            to={`/EditVidhanMandal?id=${data._id}&el=${item._id}`}
                           >
                             <OverlayTrigger
                               delay={{ hide: 450, show: 300 }}

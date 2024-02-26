@@ -13,7 +13,7 @@ const ViewAllMandal = () => {
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
-    await getApi("mandal")
+    await getApi("mandal?status=Approved")
       .then((res) => {
         setData(res.data.data);
       })
