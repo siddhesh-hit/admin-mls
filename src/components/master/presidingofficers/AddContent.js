@@ -4,11 +4,11 @@ const AddContent = () => {
   return <div>
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
-        <a className="addpagess" href="/ViewDesignation">
+        <a className="addpagess" href="/ViewPresidingOfficers">
           <img src={add} alt="add" style={{ width: 25 }} />
           Go back
         </a>
-        <h4 className="page-title">• Add Designation</h4>
+        <h4 className="page-title">• Add Presiding Officer</h4>
         <div className="card card-info">
           <div className="row">
             <div className="col-lg-10">
@@ -20,13 +20,13 @@ const AddContent = () => {
                         htmlFor="inputPassword3"
                         className="col-sm-4 col-form-label"
                       >
-                        Add Designation :
+                        Add Presiding Officer :
                       </label>
                       <div className="col-sm-8">
                         <input
                           type="text"
                           className="form-control"
-                          placeholder="Enter Designation"
+                          placeholder="Enter Presiding Officer"
                         />
                       </div>
                     </div>

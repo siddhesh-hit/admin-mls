@@ -68,7 +68,7 @@
 }
 
 .sidebar::-webkit-scrollbar-corner {
-  background-color: transparent;
+  background-color: #a9a9a9;
 }
 
 .sidebar::-webkit-scrollbar-thumb {
@@ -76,7 +76,7 @@
 }
 
 .sidebar::-webkit-scrollbar-track {
-  background-color: transparent;
+  background-color: #a9a9a9;
 }
 
 :not(.layout-fixed) .main-sidebar {
@@ -1656,4 +1656,21 @@ td.markyesorno input[type=checkbox] {
   color: white;
   padding: 2px;
   border-radius: 4px;
+}
+
+.dropdown-menu.notouifi {
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.user-panel.pb-3.mb-3.d-flex.align-content-center {
+  cursor: pointer;
+}
+
+.dropdown-item .fa {
+  margin-right: 10px;
+}
+
+.dropdown-item {
+  cursor: pointer;
 }

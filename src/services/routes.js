@@ -45,6 +45,7 @@ import AddGallery from "../pages/portals/Add_gallery/AddGallery";
 import ViewGallery from "../pages/portals/Add_gallery/ViewGallery";
 import EditGallery from "../pages/portals/Add_gallery/EditGallery";
 import ViewAllGallery from "../pages/portals/Add_gallery/ViewAllGallery";
+import ViewGalleryImages from "../pages/portals/Add_gallery/ViewGalleryImages";
 
 import AddRajyapal from "../pages/portals/Add_rajyapal/AddRajyapal";
 import ViewRajyapal from "../pages/portals/Add_rajyapal/ViewRajyapal";
@@ -122,6 +123,15 @@ import EditSessionField from "../pages/masters/Add_sessionField/EditSessionField
 import AddDesignation from "../pages/masters/Add_designation/AddDesignation";
 import ViewDesignation from "../pages/masters/Add_designation/ViewDesignation";
 import EditDesignation from "../pages/masters/Add_designation/EditDesignation";
+
+import AddLegislativePositions from "../pages/masters/Add_legislative_positions/AddLegislativePositions";
+import EditLegislativePositions from "../pages/masters/Add_legislative_positions/EditLegislativePositions";
+import ViewLegislativePositions from "../pages/masters/Add_legislative_positions/ViewLegislativePositions";
+
+
+import AddPresidingOfficers from "../pages/masters/Add_presiding_officers/AddPresidingOfficers";
+import EditPresidingOfficers from "../pages/masters/Add_presiding_officers/EditPresidingOfficers";
+import ViewPresidingOfficers from "../pages/masters/Add_presiding_officers/ViewPresidingOfficers";
 
 // HOME ROUTES
 
@@ -388,6 +398,13 @@ export const routes = [
     exact: true,
     access: ["SuperAdmin", "Admin", "ContentCreator"],
     element: <EditGallery />,
+  },
+  {
+    name: "Gallery",
+    path: "/ViewGalleryImages",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <ViewGalleryImages />,
   },
   {
     name: "Faqs",
@@ -780,6 +797,48 @@ export const routes = [
     exact: true,
     access: ["SuperAdmin", "Admin", "ContentCreator"],
     element: <AddDesignation />,
+  },
+  {
+    name: "Legislative Positions",
+    path: "/AddLegislativePositions",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <AddLegislativePositions />,
+  },
+  {
+    name: "Legislative Positions",
+    path: "/EditLegislativePositions",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <EditLegislativePositions />,
+  },
+  {
+    name: "Legislative Positions",
+    path: "/ViewLegislativePositions",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <ViewLegislativePositions />,
+  },
+  {
+    name: "Legislative Positions",
+    path: "/AddPresidingOfficers",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <AddPresidingOfficers />,
+  },
+  {
+    name: "Legislative Positions",
+    path: "/EditPresidingOfficers",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <EditPresidingOfficers />,
+  },
+  {
+    name: "Legislative Positions",
+    path: "/ViewPresidingOfficers",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <ViewPresidingOfficers />,
   },
   {
     name: "SessionField",

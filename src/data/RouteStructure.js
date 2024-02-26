@@ -158,6 +158,18 @@ export const masterPaths = [
     path: "/ViewDesignation",
     child: ["/ViewDesignation", "/AddDesignation", "/EditDesignation"],
   },
+
+  {
+    name: "Legislative Positions",
+    path: "/ViewLegislativePositions",
+    child: ["/ViewLegislativePositions", "/AddLegislativePositions", "/EditLegislativePositions"],
+  },
+
+  {
+    name: "Presiding Officer",
+    path: "/ViewPresidingOfficers",
+    child: ["/AddPresidingOfficers", "/ViewPresidingOfficers", "/EditPresidingOfficers"],
+  },
 ];
 
 export const auth = [
@@ -180,6 +192,8 @@ export const routes = [
   "Navigation",
   "Ministry",
   "Designation",
+  "Legislative Positions",
+  "Presiding Officer",
   "SessionField",
 
   "VidhanMandal",
