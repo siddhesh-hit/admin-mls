@@ -13,7 +13,7 @@ const ViewAllLegislativeCouncil = () => {
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
-    await getApi("parishad")
+    await getApi("parishad?status=Approved")
       .then((res) => {
         setData(res.data.data);
       })

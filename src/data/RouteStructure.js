@@ -37,6 +37,7 @@ export const portalPaths = [
       "/AddLegislativeMembers",
       "/EditLegislativeMember",
       "/ViewLegislativeMember",
+      "/Viewmemberprofile",
     ],
   },
   {
@@ -61,7 +62,7 @@ export const portalPaths = [
       "/ViewAllCalendar",
       "/AddSessionCalendar",
       "/EditSessionCalendar",
-      "/ViewSessionCalendar",
+      "/ViewCalendar",
     ],
   },
   {
@@ -147,6 +148,16 @@ export const masterPaths = [
     path: "/ViewNavigation",
     child: ["/ViewNavigation", "/AddNavigation", "/EditNavigation"],
   },
+  {
+    name: "SessionField",
+    path: "/ViewSessionField",
+    child: ["/ViewSessionField", "/AddSessionField", "/EditSessionField"],
+  },
+  {
+    name: "Designation",
+    path: "/ViewDesignation",
+    child: ["/ViewDesignation", "/AddDesignation", "/EditDesignation"],
+  },
 ];
 
 export const auth = [
@@ -168,6 +179,8 @@ export const routes = [
   "Gender",
   "Navigation",
   "Ministry",
+  "Designation",
+  "SessionField",
 
   "VidhanMandal",
   "VidhanParishad",
@@ -187,4 +200,14 @@ export const routes = [
   "Helpdesk",
   "User Management",
   "Task Management",
+  "Pending",
+  "AuditTrail",
+];
+
+export const authDesc = [
+  "SuperAdmin, he can do everything.",
+  "ContentCreator, he can create and edit tasks.",
+  "User, can visit and perform basic functionality.",
+  "Reviewer, he can approve the tasks.",
+  "Admin, has functionality similar to SA but with some exceptions.",
 ];

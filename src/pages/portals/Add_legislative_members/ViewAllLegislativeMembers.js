@@ -13,7 +13,7 @@ const ViewAllLegislativeMembers = () => {
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
-    await getApi("member")
+    await getApi("member?status=Approved")
       .then((res) => {
         setData(res.data.data);
       })

@@ -77,7 +77,6 @@ import ViewAllMantriMandal from "../pages/portals/Add_mantri_mandal/ViewAllMantr
 import ViewMantriMandal from "../pages/portals/Add_mantri_mandal/ViewMantriMandal";
 import EditMantriMandal from "../pages/portals/Add_mantri_mandal/EditMantriMandal";
 
-
 // MASTER ROUTES
 
 import AddHouses from "../pages/portals/Add_houses/AddHouses";
@@ -112,12 +111,17 @@ import AddNavigation from "../pages/masters/Add_navigation/AddNavigation";
 import EditNavigation from "../pages/masters/Add_navigation/EditNavigation";
 import ViewNavigation from "../pages/masters/Add_navigation/ViewNavigation";
 
-
 import AddMinistry from "../pages/masters/Add_ministry/AddMinistry";
 import ViewMinistry from "../pages/masters/Add_ministry/ViewMinistry";
 import EditMinistry from "../pages/masters/Add_ministry/EditMinistry";
 
+import AddSessionField from "../pages/masters/Add_sessionField/AddSessionField";
+import ViewSessionField from "../pages/masters/Add_sessionField/ViewSessionField";
+import EditSessionField from "../pages/masters/Add_sessionField/EditSessionField";
 
+import AddDesignation from "../pages/masters/Add_designation/AddDesignation";
+import ViewDesignation from "../pages/masters/Add_designation/ViewDesignation";
+import EditDesignation from "../pages/masters/Add_designation/EditDesignation";
 
 // HOME ROUTES
 
@@ -130,10 +134,17 @@ import EditHelpdesk from "../pages/home/Add_helpdesk/EditHelpdesk";
 import ViewHelpdesk from "../pages/home/Add_helpdesk/ViewHelpdesk";
 
 import UserRole from "../pages/home/systemmanagement/UserRole";
+import EditRole from "../pages/home/systemmanagement/EditRole";
 import AddTask from "../pages/home/systemmanagement/AddTask";
 import ViewTask from "../pages/home/systemmanagement/ViewTask";
 import EditTask from "../pages/home/systemmanagement/EditTask";
 
+import AddPending from "../pages/home/Add_pending/AddPending";
+import EditPending from "../pages/home/Add_pending/EditPending";
+import ViewPending from "../pages/home/Add_pending/ViewPending";
+import ViewAllPending from "../pages/home/Add_pending/ViewAllPending";
+
+import ViewAudit from "../pages/home/Audit_Trail/ViewAudit";
 
 export const routes = [
   {
@@ -725,6 +736,69 @@ export const routes = [
     element: <EditNavigation />,
   },
   {
+    name: "Ministry",
+    path: "/AddMinistry",
+    exact: true,
+    access: ["SuperAdmin"],
+    element: <AddMinistry />,
+  },
+  {
+    name: "Ministry",
+    path: "/ViewMinistry",
+    exact: true,
+    access: ["SuperAdmin"],
+    element: <ViewMinistry />,
+  },
+  {
+    name: "Ministry",
+    path: "/EditMinistry",
+    exact: true,
+    access: ["SuperAdmin"],
+    element: <EditMinistry />,
+  },
+  {
+    name: "Designation",
+    path: "/EditDesignation",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <EditDesignation />,
+  },
+  {
+    name: "Designation",
+    path: "/ViewDesignation",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <ViewDesignation />,
+  },
+  {
+    name: "Designation",
+    path: "/AddDesignation",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <AddDesignation />,
+  },
+  {
+    name: "SessionField",
+    path: "/EditSessionField",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <EditSessionField />,
+  },
+  {
+    name: "SessionField",
+    path: "/ViewSessionField",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <ViewSessionField />,
+  },
+  {
+    name: "SessionField",
+    path: "/AddSessionField",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <AddSessionField />,
+  },
+  {
     name: "Feedback",
     path: "/ViewAllFeedbacks",
     exact: true,
@@ -774,6 +848,13 @@ export const routes = [
     element: <UserRole />,
   },
   {
+    name: "User Management",
+    path: "/EditRole",
+    exact: true,
+    access: ["SuperAdmin", "Admin"],
+    element: <EditRole />,
+  },
+  {
     name: "Task Management",
     path: "/AddTask",
     exact: true,
@@ -795,24 +876,38 @@ export const routes = [
     element: <EditTask />,
   },
   {
-    name: "Ministry",
-    path: "/AddMinistry",
+    name: "Pending",
+    path: "/AddPending",
     exact: true,
     access: ["SuperAdmin"],
-    element: <AddMinistry />,
+    element: <AddPending />,
   },
   {
-    name: "Ministry",
-    path: "/ViewMinistry",
+    name: "Pending",
+    path: "/EditPending",
     exact: true,
     access: ["SuperAdmin"],
-    element: <ViewMinistry />,
+    element: <EditPending />,
   },
   {
-    name: "Ministry",
-    path: "/EditMinistry",
+    name: "Pending",
+    path: "/ViewPending",
     exact: true,
     access: ["SuperAdmin"],
-    element: <EditMinistry />,
+    element: <ViewPending />,
+  },
+  {
+    name: "Pending",
+    path: "/ViewAllPending",
+    exact: true,
+    access: ["SuperAdmin"],
+    element: <ViewAllPending />,
+  },
+  {
+    name: "AuditTrail",
+    path: "/ViewAudit",
+    exact: true,
+    access: ["SuperAdmin"],
+    element: <ViewAudit />,
   },
 ];

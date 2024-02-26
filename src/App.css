@@ -1516,7 +1516,7 @@ label.form-check-label {
 
 .form-check-input {
   position: relative;
-  top: 4px;
+  /* top: 4px; */
   margin-left: inherit;
   width: 18px;
   height: 18px;
@@ -1640,4 +1640,20 @@ td.markyesorno input[type=checkbox] {
 
 .chip {
   background: #000088 !important;
+}
+
+.fa-check:before {
+  content: "\f00c";
+  color: white;
+  background: green;
+  padding: 2px;
+  border-radius: 4px;
+}
+
+.fa-xmark:before {
+  content: "\f00d";
+  background: red;
+  color: white;
+  padding: 2px;
+  border-radius: 4px;
 }

@@ -13,7 +13,7 @@ const ViewAllLegislativeAssembly = () => {
   const [data, setData] = useState([]);
 
   const fetchData = async () => {
-    await getApi("sabha")
+    await getApi("sabha?status=Approved")
       .then((res) => {
         setData(res.data.data);
       })
