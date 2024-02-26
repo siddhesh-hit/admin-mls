@@ -15,42 +15,55 @@ const ViewAllFaqs = () => {
     delete: [],
   });
 
-  const fetchData = async () => {
-    await getApi(`pending?isPending=${true}&action=Create`)
-      .then((res) => {
-        setData((prev) => ({
-          ...prev,
-          create: res.data.data,
-        }));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    await getApi(`pending?isPending=${true}&action=Update`)
-      .then((res) => {
-        setData((prev) => ({
-          ...prev,
-          update: res.data.data,
-        }));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-    await getApi(`pending?isPending=${true}&action=Delete`)
-      .then((res) => {
-        setData((prev) => ({
-          ...prev,
-          delete: res.data.data,
-        }));
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+  const pageName = {
+    Debate: "",
+    Faq: "ViewFaqs",
+    MandalGallery: "ViewGallery",
+    Library: "ViewLibrary",
+    VidhanMandal: "ViewVidhanMandal",
+    Member: "ViewLegislativeMember",
+    Minister: "ViewMantriMandal",
+    VidhanParishad: "ViewLegislativeCouncil",
+    RajyapalMember: "ViewRajyapal",
+    VidhanSabha: "ViewLegislativeAssembly",
+    SessionCalendar: "ViewCalendar",
   };
 
   useEffect(() => {
+    const fetchData = async () => {
+      await getApi(`pending?isPending=${true}&action=Create`)
+        .then((res) => {
+          setData((prev) => ({
+            ...prev,
+            create: res.data.data,
+          }));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      await getApi(`pending?isPending=${true}&action=Update`)
+        .then((res) => {
+          setData((prev) => ({
+            ...prev,
+            update: res.data.data,
+          }));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      await getApi(`pending?isPending=${true}&action=Delete`)
+        .then((res) => {
+          setData((prev) => ({
+            ...prev,
+            delete: res.data.data,
+          }));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
     fetchData();
   }, []);
   return (
@@ -83,21 +96,47 @@ const ViewAllFaqs = () => {
                           <td>{item?.action}</td>
                           <td>{item?.modelName}</td>
                           <td>
-                            <Link to={`/ViewPending?id=${item._id}`}>
-                              <OverlayTrigger
-                                delay={{ hide: 450, show: 300 }}
-                                overlay={(props) => (
-                                  <Tooltip {...props}>View the data.</Tooltip>
-                                )}
-                                placement="bottom"
+                            {item?.modelName === "MandalGallery" ? (
+                              <Link
+                                to={`https://mlsapi.sblcorp.com/images/mandal/${item?.modelId}`}
                               >
-                                <i className="fa fa-eye" aria-hidden="true"></i>
-                              </OverlayTrigger>
-                            </Link>
+                                <OverlayTrigger
+                                  delay={{ hide: 450, show: 300 }}
+                                  overlay={(props) => (
+                                    <Tooltip {...props}>View the data.</Tooltip>
+                                  )}
+                                  placement="bottom"
+                                >
+                                  <i
+                                    className="fa fa-eye"
+                                    aria-hidden="true"
+                                  ></i>
+                                </OverlayTrigger>
+                              </Link>
+                            ) : (
+                              <Link
+                                to={`/${pageName[item?.modelName]}?id=${
+                                  item.modelId
+                                }`}
+                              >
+                                <OverlayTrigger
+                                  delay={{ hide: 450, show: 300 }}
+                                  overlay={(props) => (
+                                    <Tooltip {...props}>View the data.</Tooltip>
+                                  )}
+                                  placement="bottom"
+                                >
+                                  <i
+                                    className="fa fa-eye"
+                                    aria-hidden="true"
+                                  ></i>
+                                </OverlayTrigger>
+                              </Link>
+                            )}
                           </td>
                           <td>
                             <Link
-                              to={`/EditPending?id=${item._id}&action=${item.action}`}
+                              to={`/EditWorkflow?id=${item._id}&action=${item.action}`}
                             >
                               <OverlayTrigger
                                 delay={{ hide: 450, show: 300 }}
@@ -147,17 +186,43 @@ const ViewAllFaqs = () => {
                           <td>{item?.action}</td>
                           <td>{item?.modelName}</td>
                           <td>
-                            <Link to={`/ViewPending?id=${item._id}`}>
-                              <OverlayTrigger
-                                delay={{ hide: 450, show: 300 }}
-                                overlay={(props) => (
-                                  <Tooltip {...props}>View the data.</Tooltip>
-                                )}
-                                placement="bottom"
+                            {item?.modelName === "MandalGallery" ? (
+                              <Link
+                                to={`https://mlsapi.sblcorp.com/images/mandal/${item?.data_object}`}
                               >
-                                <i className="fa fa-eye" aria-hidden="true"></i>
-                              </OverlayTrigger>
-                            </Link>
+                                <OverlayTrigger
+                                  delay={{ hide: 450, show: 300 }}
+                                  overlay={(props) => (
+                                    <Tooltip {...props}>View the data.</Tooltip>
+                                  )}
+                                  placement="bottom"
+                                >
+                                  <i
+                                    className="fa fa-eye"
+                                    aria-hidden="true"
+                                  ></i>
+                                </OverlayTrigger>
+                              </Link>
+                            ) : (
+                              <Link
+                                to={`/${pageName[item?.modelName]}?id=${
+                                  item._id
+                                }&pending=update`}
+                              >
+                                <OverlayTrigger
+                                  delay={{ hide: 450, show: 300 }}
+                                  overlay={(props) => (
+                                    <Tooltip {...props}>View the data.</Tooltip>
+                                  )}
+                                  placement="bottom"
+                                >
+                                  <i
+                                    className="fa fa-eye"
+                                    aria-hidden="true"
+                                  ></i>
+                                </OverlayTrigger>
+                              </Link>
+                            )}
                           </td>
                           <td>
                             <Link
@@ -225,7 +290,9 @@ const ViewAllFaqs = () => {
                           </td>
                           <td>
                             <Link
-                              to={`/EditPending?id=${item._id}&action=${item.action}`}
+                              to={`/${pageName[item?.modelName]}?id=${
+                                item._id
+                              }&action=${item.action}`}
                             >
                               <OverlayTrigger
                                 delay={{ hide: 450, show: 300 }}

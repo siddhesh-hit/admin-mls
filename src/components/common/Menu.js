@@ -399,7 +399,7 @@ const Menu = () => {
               </NavLink>
 
               <li className="nav-item borders">
-                <Link to="/ViewAllPending" className="nav-link main">
+                <Link to="/ViewAllWorkflow" className="nav-link main">
                   <svg
                     width="18"
                     height="18"
@@ -426,7 +426,7 @@ const Menu = () => {
                       strokeLinecap="round"
                     />
                   </svg>
-                  &nbsp;&nbsp;&nbsp;<p>Pending</p>
+                  &nbsp;&nbsp;&nbsp;<p>Workflow</p>
                 </Link>
               </li>
 

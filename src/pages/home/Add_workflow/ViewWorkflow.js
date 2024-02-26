@@ -1,17 +1,17 @@
 import Footer from "../../../components/common/Footer";
 import Header from "../../../components/common/Header";
 import Menu from "../../../components/common/Menu";
-import EditContent from "../../../components/home/pending/EditContent";
+import ViewContent from "../../../components/home/workflow/ViewContent";
 
-const EditFaqs = () => {
+const ViewFaqs = () => {
   return (
     <div>
       <Header />
       <Menu />
-      <EditContent />
+      <ViewContent />
       <Footer />
     </div>
   );
 };
 
-export default EditFaqs;
+export default ViewFaqs;

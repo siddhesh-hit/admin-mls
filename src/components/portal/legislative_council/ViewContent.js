@@ -1,32 +1,17 @@
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import add from "../../../images/add.svg";
 
-import { getApiById } from "../../../services/axiosInterceptors";
 import { API } from "../../../config/api";
+import { useDataFetchingForBothApis } from "../../../hooks/useDataFetching";
+import LoadingComponent from "../../common/Loading";
 
 const ViewContent = () => {
-  const [data, setData] = useState([]);
-
-  const location = useLocation();
-  const id = location.search.split("=")[1];
-
-  const fetchData = async () => {
-    await getApiById("parishad", id)
-      .then((res) => {
-        console.log(res);
-        setData(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const { data, loading, error } = useDataFetchingForBothApis("parishad");
+  if (loading) {
+    return <LoadingComponent />;
+  }
 
   return (
     <div className="content-wrapper pt-4">
@@ -49,15 +34,15 @@ const ViewContent = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.english && data.marathi && (
+                  {data?.english && data?.marathi && (
                     <tr>
                       <td>
                         <a
                           href={
                             API.baseUrl +
-                            data.banner_image.destination +
+                            data?.banner_image.destination +
                             "/" +
-                            data.banner_image.filename
+                            data?.banner_image.filename
                           }
                           target="_blank"
                           rel="noreferrer"
@@ -79,18 +64,18 @@ const ViewContent = () => {
                       <td className="scrolltabss">
                         {/* Display description for English */}
                         <p>
-                          <span>{data.english.description}</span>
+                          <span>{data?.english.description}</span>
                         </p>
                       </td>
                       <td className="scrolltabss">
                         {/* Display description for Marathi */}
                         <p>
-                          <span>{data.marathi.description}</span>
+                          <span>{data?.marathi.description}</span>
                         </p>
                       </td>
                       <td>
                         {/* Display edit link */}
-                        <Link to={`/EditLegislativeCouncil?id=${data._id}`}>
+                        <Link to={`/EditLegislativeCouncil?id=${data?._id}`}>
                           <OverlayTrigger
                             delay={{ hide: 450, show: 300 }}
                             overlay={(props) => (
@@ -127,9 +112,9 @@ const ViewContent = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.publication && data.publication.length > 0 ? (
+                  {data?.publication && data?.publication.length > 0 ? (
                     <>
-                      {data.publication.map((item, index) => (
+                      {data?.publication.map((item, index) => (
                         <tr key={index}>
                           <td>
                             <a
@@ -253,32 +238,32 @@ const ViewContent = () => {
                         </a>
                       </td>
                       <td>
-                        <p>{data.english.structure.name}</p>
+                        <p>{data?.english.structure.name}</p>
                       </td>
                       <td>
-                        <p>{data.marathi.structure.name}</p>
+                        <p>{data?.marathi.structure.name}</p>
                       </td>
                       <td>
-                        <p>{data.english.structure.type}</p>
+                        <p>{data?.english.structure.type}</p>
                       </td>
                       <td>
-                        <p>{data.marathi.structure.type}</p>
+                        <p>{data?.marathi.structure.type}</p>
                       </td>
                       <td>
-                        <p>{data.english.structure.term_limit}</p>
+                        <p>{data?.english.structure.term_limit}</p>
                       </td>
                       <td>
-                        <p>{data.marathi.structure.term_limit}</p>
+                        <p>{data?.marathi.structure.term_limit}</p>
                       </td>
                       <td>
-                        <p>{data.english.structure.seats}</p>
+                        <p>{data?.english.structure.seats}</p>
                       </td>
                       <td>
-                        <p>{data.marathi.structure.seats}</p>
+                        <p>{data?.marathi.structure.seats}</p>
                       </td>
                       <td>
                         {/* Display edit link */}
-                        <Link to={`/EditLegislativeCouncil?id=${data._id}`}>
+                        <Link to={`/EditLegislativeCouncil?id=${data?._id}`}>
                           <OverlayTrigger
                             delay={{ hide: 450, show: 300 }}
                             overlay={(props) => (
@@ -316,8 +301,8 @@ const ViewContent = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.legislative_council &&
-                    data.legislative_council.map((item, index) => (
+                  {data?.legislative_council &&
+                    data?.legislative_council.map((item, index) => (
                       <tr key={index}>
                         <td>
                           <a
@@ -344,7 +329,7 @@ const ViewContent = () => {
                         <td>
                           <h4>
                             {
-                              data.english.legislative_council[index]
+                              data?.english.legislative_council[index]
                                 .council_name
                             }
                           </h4>
@@ -352,7 +337,7 @@ const ViewContent = () => {
                         <td>
                           <h4>
                             {
-                              data.marathi.legislative_council[index]
+                              data?.marathi.legislative_council[index]
                                 .council_name
                             }
                           </h4>
@@ -361,7 +346,7 @@ const ViewContent = () => {
                           <p>
                             <span>
                               {
-                                data.english.legislative_council[index]
+                                data?.english.legislative_council[index]
                                   .council_description
                               }
                             </span>
@@ -371,14 +356,14 @@ const ViewContent = () => {
                           <p>
                             <span>
                               {
-                                data.marathi.legislative_council[index]
+                                data?.marathi.legislative_council[index]
                                   .council_description
                               }
                             </span>
                           </p>
                         </td>
                         <td>
-                          <Link to={`/EditLegislativeCouncil?id=${data._id}`}>
+                          <Link to={`/EditLegislativeCouncil?id=${data?._id}`}>
                             <OverlayTrigger
                               delay={{ hide: 450, show: 300 }}
                               overlay={(props) => (

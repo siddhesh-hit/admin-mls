@@ -1,32 +1,18 @@
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import add from "../../../images/add.svg";
 
-import { getApiById } from "../../../services/axiosInterceptors";
 import { API } from "../../../config/api";
+import { useDataFetchingForBothApis } from "../../../hooks/useDataFetching";
+import LoadingComponent from "../../common/Loading";
 
 const ViewContent = () => {
-  const [data, setData] = useState([]);
+  const { data, loading, error } = useDataFetchingForBothApis("library");
 
-  const location = useLocation();
-  const id = location.search.split("=")[1];
-
-  const fetchData = async () => {
-    await getApiById("library", id)
-      .then((res) => {
-        console.log(res);
-        setData(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  if (loading) {
+    return <LoadingComponent />;
+  }
 
   return (
     <div className="content-wrapper pt-4">
@@ -53,7 +39,7 @@ const ViewContent = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.english && data.marathi ? (
+                  {data?.english && data?.marathi ? (
                     <tr>
                       <td>
                         <a
@@ -136,7 +122,7 @@ const ViewContent = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data.english && data.marathi ? (
+                  {data?.english && data?.marathi ? (
                     <tr>
                       <td>
                         <a

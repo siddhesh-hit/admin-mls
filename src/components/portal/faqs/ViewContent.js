@@ -1,32 +1,17 @@
-import { useState, useEffect } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import add from "../../../images/add.svg";
 
-import { getApiById } from "../../../services/axiosInterceptors";
+import { useDataFetchingForBothApis } from "../../../hooks/useDataFetching";
+import LoadingComponent from "../../common/Loading";
 
 const ViewContent = () => {
-  const [data, setData] = useState([]);
+  const { data, loading, error } = useDataFetchingForBothApis("faq");
 
-  const location = useLocation();
-  const id = location.search.split("=")[1];
-
-  const fetchData = async () => {
-    await getApiById("faq", id)
-      .then((res) => {
-        setData([res.data.data]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  console.log(data);
+  if (loading) {
+    return <LoadingComponent />;
+  }
 
   return (
     <div className="content-wrapper pt-4">
@@ -50,32 +35,26 @@ const ViewContent = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {data && data.length > 0 ? (
-                    <>
-                      {data.map((item, index) => (
-                        <tr key={index}>
-                          <td>{item.english.question}</td>
-                          <td>{item.marathi.question}</td>
-                          <td>{item.english.answer}</td>
-                          <td>{item.marathi.answer}</td>
-                          <td>
-                            <Link to={`/EditFaqs?id=${item._id}`}>
-                              <OverlayTrigger
-                                delay={{ hide: 450, show: 300 }}
-                                overlay={(props) => (
-                                  <Tooltip {...props}>Edit the data.</Tooltip>
-                                )}
-                                placement="bottom"
-                              >
-                                <i className="fa fa-edit"></i>
-                              </OverlayTrigger>
-                            </Link>
-                          </td>
-                        </tr>
-                      ))}
-                    </>
-                  ) : (
-                    <></>
+                  {data && (
+                    <tr>
+                      <td>{data.english.question}</td>
+                      <td>{data.marathi.question}</td>
+                      <td>{data.english.answer}</td>
+                      <td>{data.marathi.answer}</td>
+                      <td>
+                        <Link to={`/EditFaqs?id=${data._id}`}>
+                          <OverlayTrigger
+                            delay={{ hide: 450, show: 300 }}
+                            overlay={(props) => (
+                              <Tooltip {...props}>Edit the data.</Tooltip>
+                            )}
+                            placement="bottom"
+                          >
+                            <i className="fa fa-edit"></i>
+                          </OverlayTrigger>
+                        </Link>
+                      </td>
+                    </tr>
                   )}
                 </tbody>
               </table>

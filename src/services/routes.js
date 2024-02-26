@@ -139,10 +139,10 @@ import AddTask from "../pages/home/systemmanagement/AddTask";
 import ViewTask from "../pages/home/systemmanagement/ViewTask";
 import EditTask from "../pages/home/systemmanagement/EditTask";
 
-import AddPending from "../pages/home/Add_pending/AddPending";
-import EditPending from "../pages/home/Add_pending/EditPending";
-import ViewPending from "../pages/home/Add_pending/ViewPending";
-import ViewAllPending from "../pages/home/Add_pending/ViewAllPending";
+import AddWorkflow from "../pages/home/Add_workflow/AddWorkflow";
+import EditWorkflow from "../pages/home/Add_workflow/EditWorkflow";
+import ViewWorkflow from "../pages/home/Add_workflow/ViewWorkflow";
+import ViewAllWorkflow from "../pages/home/Add_workflow/ViewAllWorkflow";
 
 import AddContact from "../pages/home/contactus/AddContact";
 import EditContact from "../pages/home/contactus/EditContact";
@@ -880,32 +880,32 @@ export const routes = [
     element: <EditTask />,
   },
   {
-    name: "Pending",
-    path: "/AddPending",
+    name: "Workflow",
+    path: "/AddWorkflow",
     exact: true,
     access: ["SuperAdmin"],
-    element: <AddPending />,
+    element: <AddWorkflow />,
   },
   {
-    name: "Pending",
-    path: "/EditPending",
+    name: "Workflow",
+    path: "/EditWorkflow",
     exact: true,
     access: ["SuperAdmin"],
-    element: <EditPending />,
+    element: <EditWorkflow />,
   },
   {
-    name: "Pending",
-    path: "/ViewPending",
+    name: "Workflow",
+    path: "/ViewWorkflow",
     exact: true,
     access: ["SuperAdmin"],
-    element: <ViewPending />,
+    element: <ViewWorkflow />,
   },
   {
-    name: "Pending",
-    path: "/ViewAllPending",
+    name: "Workflow",
+    path: "/ViewAllWorkflow",
     exact: true,
     access: ["SuperAdmin"],
-    element: <ViewAllPending />,
+    element: <ViewAllWorkflow />,
   },
   {
     name: "AuditTrail",
