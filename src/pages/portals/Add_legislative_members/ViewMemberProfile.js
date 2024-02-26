@@ -1,29 +1,16 @@
-import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
-
 import Footer from "../../../components/common/Footer";
 import Header from "../../../components/common/Header";
 import Menu from "../../../components/common/Menu";
 
-import { getApiById } from "../../../services/axiosInterceptors";
 import { API } from "../../../config/api";
+import { useDataFetchingForBothApis } from "../../../hooks/useDataFetching";
+import LoadingComponent from "../../../components/common/Loading";
+
 const ViewMemberProfile = () => {
-  const [data, setData] = useState({});
-
-  const location = useLocation();
-  const id = location.search.split("=")[1];
-
-  const fetchData = async () => {
-    await getApiById("member", id)
-      .then((res) => setData(res.data.data))
-      .catch((err) => console.log(err));
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  console.log(data);
+  const { data, loading, error } = useDataFetchingForBothApis("member");
+  if (loading) {
+    return <LoadingComponent />;
+  }
 
   return (
     <div>
