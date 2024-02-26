@@ -49,12 +49,12 @@ const ViewContent = () => {
   return (
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
-        <Link to="/AddSessionField" className="addpagess">
+        <Link to="/AddPresidingOfficers" className="addpagess">
           <img src={add} alt="add" />
-          Add Session Field
+          Add Presiding Officer
         </Link>
 
-        <h4 className="page-title">• View Session Field</h4>
+        <h4 className="page-title">• View Presiding Officer</h4>
         <div className="card card-info">
           <div className="row">
             <div className="col-lg-12">

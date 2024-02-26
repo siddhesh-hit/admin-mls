@@ -1,14 +1,14 @@
 import React from "react";
 import add from "../../../images/back.svg";
-const AddContent = () => {
+const EditContent = () => {
   return <div>
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
-        <a className="addpagess" href="/ViewDesignation">
+        <a className="addpagess" href="/ViewPresidingOfficers">
           <img src={add} alt="add" style={{ width: 25 }} />
           Go back
         </a>
-        <h4 className="page-title">• Add Designation</h4>
+        <h4 className="page-title">• Edit Designation</h4>
         <div className="card card-info">
           <div className="row">
             <div className="col-lg-10">
@@ -20,7 +20,7 @@ const AddContent = () => {
                         htmlFor="inputPassword3"
                         className="col-sm-4 col-form-label"
                       >
-                        Add Designation :
+                        Edit Presiding Officer :
                       </label>
                       <div className="col-sm-8">
                         <input
@@ -42,4 +42,4 @@ const AddContent = () => {
   </div>;
 };
 
-export default AddContent;
+export default EditContent;

@@ -55,6 +55,107 @@ export default function Header() {
       {/* Right navbar links */}
       <ul className="navbar-nav ml-auto">
         <li className="nav-item dropdown">
+          <a className="nav-link" data-toggle="dropdown" href="#">
+            <i className="far fa-bell"></i>
+            <span className="badge badge-warning navbar-badge">15</span>
+          </a>
+          <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right notouifi" style={{ maxWidth: '100%', minWidth: '300px', background: 'white' }}>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <a href="#" className="dropdown-item">
+              <i className="fas fa-envelope mr-2"></i> 4 new messages
+              <span className="float-right text-muted text-sm">3 mins</span>
+            </a>
+          </div>
+        </li>
+
+        <li className="nav-item dropdown">
           <div
             className="nav-link"
             data-toggle="dropdown"
@@ -71,7 +172,7 @@ export default function Header() {
                   }
                   className="elevation-2"
                   alt="User"
-                  style={{ height: "auto", width: "2.1rem" }}
+                  style={{ height: "2.1rem", width: "2.1rem", objectFit: 'fill', borderRadius: '100px' }}
                 />
               </div>
               <div className="info">
