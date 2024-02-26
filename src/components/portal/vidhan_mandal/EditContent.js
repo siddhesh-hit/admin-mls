@@ -15,7 +15,7 @@ const Editcontent = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const id = location.search.split("&")[0].split("=")[1];
+  const id = location.search.split("=")[1];
 
   const [serverData, setServerData] = useState({});
 

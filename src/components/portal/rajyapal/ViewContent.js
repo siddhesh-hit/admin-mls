@@ -1,44 +1,18 @@
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import add from "../../../images/add.svg";
 
-import { getApiById } from "../../../services/axiosInterceptors";
 import { API } from "../../../config/api";
 
+import { useDataFetchingForBothApis } from "../../../hooks/useDataFetching";
+import LoadingComponent from "../../../components/common/Loading";
+
 const ViewContent = () => {
-  const [data, setData] = useState([]);
-
-  const location = useLocation();
-  const id = location.search.split("=")[1];
-
-  const fetchData = async () => {
-    await getApiById("rajyapal", id)
-      .then((res) => {
-        setData(res.data.data);
-        setData(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const dateToFromat = (date) => {
-    const d = new Date(date);
-    const ye = new Intl.DateTimeFormat("en", { year: "numeric" }).format(d);
-    const mo = new Intl.DateTimeFormat("en", { month: "short" }).format(d);
-    const da = new Intl.DateTimeFormat("en", { day: "2-digit" }).format(d);
-    return `${da}-${mo}-${ye}`;
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
-
-  console.log(data);
-
-  console.log(data);
+  const { data, loading, error } = useDataFetchingForBothApis("rajyapal");
+  if (loading) {
+    return <LoadingComponent />;
+  }
 
   return (
     <div className="content-wrapper pt-4">

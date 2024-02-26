@@ -1,32 +1,17 @@
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import add from "../../../images/add.svg";
 
-import { getApiById } from "../../../services/axiosInterceptors";
 import { API } from "../../../config/api";
+import { useDataFetchingForBothApis } from "../../../hooks/useDataFetching";
+import LoadingComponent from "../../../components/common/Loading";
 
 const ViewContent = () => {
-  const [data, setData] = useState([]);
-
-  const location = useLocation();
-  const id = location.search.split("=")[1];
-
-  const fetchData = async () => {
-    await getApiById("sabha", id)
-      .then((res) => {
-        console.log(res);
-        setData(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const { data, loading, error } = useDataFetchingForBothApis("sabha");
+  if (loading) {
+    return <LoadingComponent />;
+  }
 
   return (
     <div className="content-wrapper pt-4">

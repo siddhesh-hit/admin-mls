@@ -1,31 +1,16 @@
-import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import add from "../../../images/add.svg";
 
-import { getApiById } from "../../../services/axiosInterceptors";
+import { useDataFetchingForBothApis } from "../../../hooks/useDataFetching";
+import LoadingComponent from "../../../components/common/Loading";
 
 const Viewcontent = () => {
-  const [data, setData] = useState([]);
-
-  const location = useLocation();
-  const id = location.search.split("=")[1];
-
-  useEffect(() => {
-    const fetchData = async () => {
-      await getApiById("minister", id)
-        .then((res) => {
-          if (res.data.success) {
-            setData(res.data.data);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
-    fetchData();
-  }, []);
+  const { data, loading, error } = useDataFetchingForBothApis("minister");
+  if (loading) {
+    return <LoadingComponent />;
+  }
 
   return (
     <div className="content-wrapper pt-4">
