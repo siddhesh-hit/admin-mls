@@ -115,6 +115,14 @@ import AddMinistry from "../pages/masters/Add_ministry/AddMinistry";
 import ViewMinistry from "../pages/masters/Add_ministry/ViewMinistry";
 import EditMinistry from "../pages/masters/Add_ministry/EditMinistry";
 
+import AddSessionField from "../pages/masters/Add_sessionField/AddSessionField";
+import ViewSessionField from "../pages/masters/Add_sessionField/ViewSessionField";
+import EditSessionField from "../pages/masters/Add_sessionField/EditSessionField";
+
+import AddDesignation from "../pages/masters/Add_designation/AddDesignation";
+import ViewDesignation from "../pages/masters/Add_designation/ViewDesignation";
+import EditDesignation from "../pages/masters/Add_designation/EditDesignation";
+
 // HOME ROUTES
 
 import EditFeedbacks from "../pages/home/Add_feedbacks/EditFeedbacks";
@@ -747,6 +755,48 @@ export const routes = [
     exact: true,
     access: ["SuperAdmin"],
     element: <EditMinistry />,
+  },
+  {
+    name: "Designation",
+    path: "/EditDesignation",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <EditDesignation />,
+  },
+  {
+    name: "Designation",
+    path: "/ViewDesignation",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <ViewDesignation />,
+  },
+  {
+    name: "Designation",
+    path: "/AddDesignation",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <AddDesignation />,
+  },
+  {
+    name: "SessionField",
+    path: "/EditSessionField",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <EditSessionField />,
+  },
+  {
+    name: "SessionField",
+    path: "/ViewSessionField",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <ViewSessionField />,
+  },
+  {
+    name: "SessionField",
+    path: "/AddSessionField",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <AddSessionField />,
   },
   {
     name: "Feedback",

@@ -148,6 +148,16 @@ export const masterPaths = [
     path: "/ViewNavigation",
     child: ["/ViewNavigation", "/AddNavigation", "/EditNavigation"],
   },
+  {
+    name: "SessionField",
+    path: "/ViewSessionField",
+    child: ["/ViewSessionField", "/AddSessionField", "/EditSessionField"],
+  },
+  {
+    name: "Designation",
+    path: "/ViewDesignation",
+    child: ["/ViewDesignation", "/AddDesignation", "/EditDesignation"],
+  },
 ];
 
 export const auth = [
@@ -169,6 +179,8 @@ export const routes = [
   "Gender",
   "Navigation",
   "Ministry",
+  "Designation",
+  "SessionField",
 
   "VidhanMandal",
   "VidhanParishad",
