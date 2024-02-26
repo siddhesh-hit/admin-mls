@@ -144,6 +144,10 @@ import EditPending from "../pages/home/Add_pending/EditPending";
 import ViewPending from "../pages/home/Add_pending/ViewPending";
 import ViewAllPending from "../pages/home/Add_pending/ViewAllPending";
 
+import AddContact from "../pages/home/contactus/AddContact";
+import EditContact from "../pages/home/contactus/EditContact";
+import ViewContact from "../pages/home/contactus/ViewContact";
+
 import ViewAudit from "../pages/home/Audit_Trail/ViewAudit";
 
 export const routes = [
@@ -909,5 +913,26 @@ export const routes = [
     exact: true,
     access: ["SuperAdmin"],
     element: <ViewAudit />,
+  },
+  {
+    name: "ContactUs",
+    path: "/AddContact",
+    exact: true,
+    access: ["SuperAdmin"],
+    element: <AddContact />,
+  },
+  {
+    name: "ContactUs",
+    path: "/EditContact",
+    exact: true,
+    access: ["SuperAdmin"],
+    element: <EditContact />,
+  },
+  {
+    name: "ContactUs",
+    path: "/ViewContact",
+    exact: true,
+    access: ["SuperAdmin"],
+    element: <ViewContact />,
   },
 ];

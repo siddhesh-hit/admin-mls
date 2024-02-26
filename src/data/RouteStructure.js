@@ -200,6 +200,7 @@ export const routes = [
   "Helpdesk",
   "User Management",
   "Task Management",
+  "ContactUs",
   "Pending",
   "AuditTrail",
 ];
