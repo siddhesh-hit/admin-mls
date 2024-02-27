@@ -13,7 +13,7 @@ const ViewContent = () => {
   const navigate = useNavigate();
 
   const fetchData = async () => {
-    await getApi("navigation")
+    await getApi("designation")
       .then((res) => {
         setData(res.data.data);
       })
@@ -25,19 +25,19 @@ const ViewContent = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete it?") === true) {
       // console.log("cehck");
-      await deleteApi("navigation", id)
+      await deleteApi("designation", id)
         .then((res) => {
           if (res.status === 204) {
-            toast.success("Deleted the navigation.");
+            toast.success("Deleted the Designation.");
             setTimeout(() => {
-              navigate("/ViewNavigation");
+              navigate("/ViewDesignation");
               fetchData();
             }, 1100);
           }
         })
         .catch((err) => {
           console.log(err);
-          toast.error("Failed to delete the navigation.");
+          toast.error("Failed to delete the Designation.");
         });
     }
   };
@@ -74,10 +74,10 @@ const ViewContent = () => {
                         <tr key={index}>
                           <td>{index + 1}</td>
                           <td>
-                            <h4>{item.english.navigation}</h4>
+                            <h4>{item.name}</h4>
                           </td>
                           <td>
-                            <Link to={`/EditContent?id=${item._id}`}>
+                            <Link to={`/EditDesignation?id=${item._id}`}>
                               <OverlayTrigger
                                 delay={{ hide: 450, show: 300 }}
                                 overlay={(props) => (

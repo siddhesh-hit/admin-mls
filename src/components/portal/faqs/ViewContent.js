@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import add from "../../../images/add.svg";
 
-import { useDataFetchingForBothApis } from "../../../hooks/useDataFetching";
+import { useDataFetchingForBothApis } from "../../../hooks/useDataFetchingForBothApis";
 import LoadingComponent from "../../common/Loading";
 
 const ViewContent = () => {

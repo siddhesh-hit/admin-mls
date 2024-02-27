@@ -32,10 +32,6 @@ import EditLibrary from "../pages/portals/Add_library/EditLibrary";
 import ViewLibrary from "../pages/portals/Add_library/ViewLibrary";
 import ViewAllLibrary from "../pages/portals/Add_library/ViewAllLibrary";
 
-import AddPortalUsers from "../pages/portals/Add_portal_users/AddPortalUsers";
-import EditPortalUsers from "../pages/portals/Add_portal_users/EditPortalUsers";
-import ViewPortalUsers from "../pages/portals/Add_portal_users/ViewPortalUsers";
-
 import AddFaqs from "../pages/portals/Add_faqs/AddFaqs";
 import ViewFaqs from "../pages/portals/Add_faqs/ViewFaqs";
 import EditFaqs from "../pages/portals/Add_faqs/EditFaqs";
@@ -128,7 +124,6 @@ import AddLegislativePositions from "../pages/masters/Add_legislative_positions/
 import EditLegislativePositions from "../pages/masters/Add_legislative_positions/EditLegislativePositions";
 import ViewLegislativePositions from "../pages/masters/Add_legislative_positions/ViewLegislativePositions";
 
-
 import AddPresidingOfficers from "../pages/masters/Add_presiding_officers/AddPresidingOfficers";
 import EditPresidingOfficers from "../pages/masters/Add_presiding_officers/EditPresidingOfficers";
 import ViewPresidingOfficers from "../pages/masters/Add_presiding_officers/ViewPresidingOfficers";
@@ -142,6 +137,12 @@ import ViewAllFeedbacks from "../pages/home/Add_feedbacks/ViewAllFeedbacks";
 import ViewAllHelpdesk from "../pages/home/Add_helpdesk/ViewAllHelpdesk";
 import EditHelpdesk from "../pages/home/Add_helpdesk/EditHelpdesk";
 import ViewHelpdesk from "../pages/home/Add_helpdesk/ViewHelpdesk";
+
+import AddPortalUsers from "../pages/home/Add_portal_users/AddPortalUsers";
+import EditPortalUsers from "../pages/home/Add_portal_users/EditPortalUsers";
+import ViewPortalUsers from "../pages/home/Add_portal_users/ViewPortalUsers";
+import BlockUsers from "../pages/home/Add_portal_users/Block";
+import UserReset from "../pages/home/Add_portal_users/UserReset";
 
 import UserRole from "../pages/home/systemmanagement/UserRole";
 import EditRole from "../pages/home/systemmanagement/EditRole";
@@ -314,6 +315,20 @@ export const routes = [
     exact: true,
     access: ["SuperAdmin", "Admin", "ContentCreator", "Reviewer"],
     element: <ViewPortalUsers />,
+  },
+  {
+    name: "Portal User",
+    path: "/BlockUser",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator", "Reviewer"],
+    element: <BlockUsers />,
+  },
+  {
+    name: "Portal User",
+    path: "/UserReset",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator", "Reviewer"],
+    element: <UserReset />,
   },
   {
     name: "Portal User",
