@@ -16,11 +16,16 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [captcha, setCaptcha] = useState(false);
 
   const dispatch = useDispatch();
 
   const togglePassword = () => {
     setPasswordType(passwordType === "password" ? "text" : "password");
+  };
+
+  const handleCaptchaChange = (value) => {
+    value ? setCaptcha(true) : setCaptcha(false);
   };
 
   // const validateForm = () => {
@@ -40,6 +45,11 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // validateForm();
+
+    if (!captcha) {
+      toast.error("Captcha is filled wrong");
+      return;
+    }
 
     if (Object.keys(errors).every((key) => errors[key] === "")) {
       const data = { email, password };
@@ -121,6 +131,14 @@ const Login = () => {
               {errors.error && (
                 <p className="error">{"something went wromg"}</p>
               )}
+
+              <Captcha
+                onChange={handleCaptchaChange}
+                // onRefresh={true}
+                placeholder="Enter captcha"
+                length={10}
+              />
+
               <Button type="submit" variant="primary" className="mt-3">
                 Sign In
               </Button>
