@@ -1759,3 +1759,13 @@ td.markyesorno input[type=checkbox] {
     transform: scale3d(1.15, 0.8, 1);
   }
 }
+
+.ck.ck-balloon-panel.ck-balloon-panel_position_border-side_right.ck-powered-by-balloon {
+  display: none;
+}
+
+.ck.ck-editor {
+  box-shadow: 0px 4px 4px 0px #00000040;
+  border-radius: 5px;
+  margin-bottom: 15px !important;
+}

@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import back from "../../../images/back.svg";
 
 import { getApiById, putApi } from "../../../services/axiosInterceptors";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const EditContent = () => {
   const [data, setData] = useState({});
@@ -76,7 +78,17 @@ const EditContent = () => {
   useEffect(() => {
     fetchData();
   }, []);
-
+  const handleEditorChange = (event, value, name) => {
+    // const { name, value } = e.target;
+    const [field, subField] = name.split("_");
+    setData((prev) => ({
+      ...prev,
+      [field]: {
+        ...prev[field],
+        [subField]: value?.getData(),
+      },
+    }));
+  }
   console.log(data);
   return (
     <div className="content-wrapper pt-4">
@@ -127,7 +139,21 @@ const EditContent = () => {
                           Edit Answer :
                         </label>
                         <div className="col-sm-9">
-                          <textarea
+                          <CKEditor
+                            editor={ClassicEditor}
+                            data={data.english.answer}
+                            name="marathi.about_us-description"
+                            onChange={(event, editor) => handleEditorChange(event, editor, "english_answer")}
+
+                          />
+                          <CKEditor
+                            editor={ClassicEditor}
+                            data={data.marathi.answer}
+                            name="marathi.about_us-description"
+                            onChange={(event, editor) => handleEditorChange(event, editor, "english_answer")}
+
+                          />
+                          {/* <textarea
                             style={{ height: "auto !important" }}
                             name="english_answer"
                             defaultValue={data.english.answer}
@@ -142,7 +168,7 @@ const EditContent = () => {
                             onChange={handleChange}
                             className="form-control"
                             placeholder="वर्णन प्रविष्ट करा"
-                          />
+                          /> */}
                         </div>
                       </div>
                       <div className="form-group row">
@@ -154,9 +180,8 @@ const EditContent = () => {
                         </label>
                         <div className="col-sm-8">
                           <div
-                            className={`toggle-button ${
-                              isToggled ? "active" : ""
-                            }`}
+                            className={`toggle-button ${isToggled ? "active" : ""
+                              }`}
                             onClick={handleToggle}
                           >
                             <div

@@ -4,6 +4,8 @@ import { toast } from "react-toastify";
 
 import back from "../../../images/back.svg";
 import { getApiById, putApi } from "../../../services/axiosInterceptors";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const EditContent = () => {
   const [data, setData] = useState([]);
@@ -107,6 +109,18 @@ const EditContent = () => {
 
   console.log(serverData, "data here");
 
+  const handleEditorChange = (event, value, name) => {
+    const [field, subField] = name.split("_");
+
+    setData((prev) => ({
+      ...prev,
+      [field]: {
+        ...prev[field],
+        [subField]: value,
+      },
+    }));
+  }
+
   return (
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
@@ -166,7 +180,21 @@ const EditContent = () => {
                         Edit Description :
                       </label>
                       <div className="col-sm-9">
-                        <textarea
+                        <CKEditor
+                          editor={ClassicEditor}
+                          data={serverData.english.description}
+                          name="english_description"
+                          onChange={(event, editor) => handleEditorChange(event, editor, "english_description")}
+
+                        />
+                        <CKEditor
+                          editor={ClassicEditor}
+                          data={serverData.marathi.description}
+                          name="marathi_description"
+                          onChange={(event, editor) => handleEditorChange(event, editor, "marathi_description")}
+
+                        />
+                        {/* <textarea
                           name="english_description"
                           defaultValue={serverData.english.description}
                           onChange={handleChange}
@@ -179,7 +207,7 @@ const EditContent = () => {
                           onChange={handleChange}
                           className="form-control"
                           placeholder="वर्णन प्रविष्ट करा"
-                        />
+                        /> */}
                       </div>
                     </div>
                   </div>

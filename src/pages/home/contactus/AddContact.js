@@ -3,6 +3,8 @@ import Footer from "../../../components/common/Footer";
 import Header from "../../../components/common/Header";
 import Menu from "../../../components/common/Menu";
 import add from "../../../images/back.svg";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 const AddContact = () => {
   return (
     <div>
@@ -29,15 +31,12 @@ const AddContact = () => {
                           Add Address :
                         </label>
                         <div className="col-sm-8">
-                          <textarea
-                            type="text"
-                            placeholder="Enter Address"
-                            className="form-control mb-3"
+                          <CKEditor
+                            editor={ClassicEditor}
+                            // data={editorData}
                           />
-                          <textarea
-                            type="text"
-                            placeholder="पत्ता प्रविष्ट करा"
-                            className="form-control"
+                          <CKEditor
+                            editor={ClassicEditor}
                           />
                         </div>
                       </div>

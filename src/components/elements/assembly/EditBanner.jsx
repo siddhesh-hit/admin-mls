@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-
-const EditBanner = ({ data, handleChange, error, back }) => {
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+const EditBanner = ({ data, handleChange, error, back, handleEditorBannerChange }) => {
   return (
     <div className="contentofpages">
       <Link to="/ViewAllLegislativeAssembly" className="addpagess">
@@ -46,9 +47,8 @@ const EditBanner = ({ data, handleChange, error, back }) => {
                         )}
 
                         <label
-                          className={`custom-file-label ${
-                            error?.banner_image ? "activeError" : ""
-                          }`}
+                          className={`custom-file-label ${error?.banner_image ? "activeError" : ""
+                            }`}
                           htmlFor="customFile"
                         >
                           Image -{" "}
@@ -69,13 +69,24 @@ const EditBanner = ({ data, handleChange, error, back }) => {
                       Edit Description :
                     </label>
                     <div className="col-sm-9">
-                      <textarea
+                      <CKEditor
+                        editor={ClassicEditor}
+                        data={data.english.description}
+                        name="english.description"
+                        onChange={(event, editor) => handleEditorBannerChange(event, editor, "english.description")}
+                      />
+                      <CKEditor
+                        editor={ClassicEditor}
+                        data={data.marathi.description}
+                        name="marathi.description"
+                        onChange={(event, editor) => handleEditorBannerChange(event, editor, "marathi.description")}
+                      />
+                      {/* <textarea
                         name="english.description"
                         defaultValue={data.english.description}
                         onChange={handleChange}
-                        className={`form-control mb-3 ${
-                          error?.english?.description ? "activeError" : ""
-                        }`}
+                        className={`form-control mb-3 ${error?.english?.description ? "activeError" : ""
+                          }`}
                         placeholder="Edit Description"
                       />
 
@@ -91,9 +102,8 @@ const EditBanner = ({ data, handleChange, error, back }) => {
                         name="marathi.description"
                         defaultValue={data.marathi.description}
                         onChange={handleChange}
-                        className={`form-control ${
-                          error?.marathi?.description ? "activeError" : ""
-                        }`}
+                        className={`form-control ${error?.marathi?.description ? "activeError" : ""
+                          }`}
                         placeholder="वर्णन प्रविष्ट करा"
                       />
 
@@ -103,7 +113,7 @@ const EditBanner = ({ data, handleChange, error, back }) => {
                         </p>
                       ) : (
                         <></>
-                      )}
+                      )} */}
                     </div>
                   </div>
                 </div>

@@ -8,6 +8,8 @@ import remove from "../../../images/remove.svg";
 import back from "../../../images/back.svg";
 
 import { postApi } from "../../../services/axiosInterceptors";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const Content = () => {
   const [isToggled, setIsToggled] = useState(false);
@@ -233,6 +235,20 @@ const Content = () => {
 
   // console.log(speeches);
 
+  const handleEditorChange = (event, value, name, index) => {
+    // const { name, value, files } = e.target;
+    const [subName, field] = name.split("_");
+
+    setData((prev) => ({
+      ...prev,
+      [subName]: {
+        ...prev[subName],
+        [field]: value?.getData(),
+      },
+    }));
+  }
+  console.log(data);
+
   return (
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
@@ -403,7 +419,19 @@ const Content = () => {
                         Add Political Career :
                       </label>
                       <div className="col-sm-8">
-                        <textarea
+                        <CKEditor
+                          editor={ClassicEditor}
+                          // data={editorData}
+                          name="english_politicalCareer"
+                          onChange={(event, editor) => handleEditorChange(event, editor, "english_politicalCareer")}
+                        />
+                        <CKEditor
+                          editor={ClassicEditor}
+                          // data={editorData}
+                          name="marathi_politicalCareer"
+                          onChange={(event, editor) => handleEditorChange(event, editor, "marathi_politicalCareer")}
+                        />
+                        {/* <textarea
                           type="text"
                           style={{
                             height: "100px",
@@ -419,7 +447,7 @@ const Content = () => {
                           onChange={handleChange}
                           className="form-control"
                           placeholder="राजकीय करिअरमध्ये प्रवेश करा"
-                        />
+                        /> */}
                       </div>
                     </div>
                     <div className="form-group row">
@@ -535,8 +563,8 @@ const Content = () => {
                                             languageIndex
                                           ]
                                             ? speeches[speechIndex].values[
-                                                languageIndex
-                                              ].content.name
+                                              languageIndex
+                                            ].content.name
                                             : ""}
                                         </label>
                                       </div>
