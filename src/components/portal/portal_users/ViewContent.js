@@ -41,92 +41,90 @@ const ViewContent = () => {
           Add Portal User
         </Link>
         <h4 className="page-title">• View Portal User</h4>
-        <div className="card card-info">
-          <div className="row pt-5 pb-5">
-            <div className="col-lg-11">
-              <table className="table table-striped table-bordered mb-0 view_vidhan_mandal respon">
-                <thead>
-                  <tr>
-                    <th>Sr.No</th>
-                    <th>Name</th>
-                    <th>Houses</th>
-                    <th>Department</th>
-                    <th>Designation</th>
-                    <th>Email Id</th>
-                    <th>Mobile Number</th>
-                    <th>Date Of Birth</th>
-                    <th>Gender</th>
-                    <th>Profile</th>
-                    {/* <th>Action</th> */}
-                  </tr>
-                </thead>
-                <tbody>
-                  {data &&
-                    data.length > 0 &&
-                    data.map((item, index) => (
-                      <tr key={index}>
-                        <td>{index + 1}</td>
-                        <td>
-                          <p>{item.full_name}</p>
-                        </td>
-                        <td>
-                          <p>{item.houses}</p>
-                        </td>
-                        <td>
-                          <p>{item.department}</p>
-                        </td>
-                        <td>
-                          <p>{item.designation}</p>
-                        </td>
-                        <td>
-                          <p>{item.email}</p>
-                        </td>
-                        <td>
-                          <p>{item.phone_number}</p>
-                        </td>
-                        <td>
-                          <p>{dateToFromat(item.date_of_birth)}</p>
-                        </td>
-                        <td>
-                          <p>{item.gender}</p>
-                        </td>
-                        <td>
-                          {item.user_image ? (
-                            <a
-                              href={
-                                API.baseUrl +
-                                item.user_image?.destination +
-                                "/" +
-                                item.user_image?.filename
-                              }
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              <OverlayTrigger
-                                delay={{ hide: 450, show: 300 }}
-                                overlay={(props) => (
-                                  <Tooltip {...props}>View profile.</Tooltip>
-                                )}
-                                placement="bottom"
-                              >
-                                <i className="fa fa-eye" aria-hidden="true"></i>
-                              </OverlayTrigger>
-                            </a>
-                          ) : (
-                            <OverlayTrigger
-                              delay={{ hide: 450, show: 300 }}
-                              overlay={(props) => (
-                                <Tooltip {...props}>
-                                  No profile to view.
-                                </Tooltip>
-                              )}
-                              placement="bottom"
-                            >
-                              <i class="fa fa-eye-slash" aria-hidden="true"></i>
-                            </OverlayTrigger>
+        <div className="col-lg-12">
+          <table className="table table-striped table-bordered mb-0 view_vidhan_mandal respon">
+            <thead>
+              <tr>
+                <th>Sr.No</th>
+                <th>Name</th>
+                <th>Houses</th>
+                <th>Department</th>
+                <th>Designation</th>
+                <th>Email Id</th>
+                <th>Mobile Number</th>
+                <th>Date Of Birth</th>
+                <th>Gender</th>
+                <th>Profile</th>
+                {/* <th>Action</th> */}
+              </tr>
+            </thead>
+            <tbody>
+              {data &&
+                data.length > 0 &&
+                data.map((item, index) => (
+                  <tr key={index}>
+                    <td>{index + 1}</td>
+                    <td>
+                      <p>{item.full_name}</p>
+                    </td>
+                    <td>
+                      <p>{item.houses}</p>
+                    </td>
+                    <td>
+                      <p>{item.department}</p>
+                    </td>
+                    <td>
+                      <p>{item.designation}</p>
+                    </td>
+                    <td>
+                      <p>{item.email}</p>
+                    </td>
+                    <td>
+                      <p>{item.phone_number}</p>
+                    </td>
+                    <td>
+                      <p>{dateToFromat(item.date_of_birth)}</p>
+                    </td>
+                    <td>
+                      <p>{item.gender}</p>
+                    </td>
+                    <td>
+                      {item.user_image ? (
+                        <a
+                          href={
+                            API.baseUrl +
+                            item.user_image?.destination +
+                            "/" +
+                            item.user_image?.filename
+                          }
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <OverlayTrigger
+                            delay={{ hide: 450, show: 300 }}
+                            overlay={(props) => (
+                              <Tooltip {...props}>View profile.</Tooltip>
+                            )}
+                            placement="bottom"
+                          >
+                            <i className="fa fa-eye" aria-hidden="true"></i>
+                          </OverlayTrigger>
+                        </a>
+                      ) : (
+                        <OverlayTrigger
+                          delay={{ hide: 450, show: 300 }}
+                          overlay={(props) => (
+                            <Tooltip {...props}>
+                              No profile to view.
+                            </Tooltip>
                           )}
-                        </td>
-                        {/* <td>
+                          placement="bottom"
+                        >
+                          <i class="fa fa-eye-slash" aria-hidden="true"></i>
+                        </OverlayTrigger>
+                      )}
+                    </td>
+                    {/* <td>
                           <Link to={`/EditPortalUsers?id=${item._id}`}>
                             <i
                               className="fa fa-edit"
@@ -134,12 +132,10 @@ const ViewContent = () => {
                             ></i>
                           </Link>
                         </td> */}
-                      </tr>
-                    ))}
-                </tbody>
-              </table>
-            </div>
-          </div>
+                  </tr>
+                ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </div>

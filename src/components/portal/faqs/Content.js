@@ -7,7 +7,8 @@ import addwhite from "../../../images/addwhite.svg";
 import back from "../../../images/back.svg";
 
 import { postApi } from "../../../services/axiosInterceptors";
-
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 const Content = () => {
   const [divCount, setDivCount] = useState(1);
   const [data, setData] = useState({
@@ -93,7 +94,18 @@ const Content = () => {
         console.log(err);
       });
   };
-
+  const handleEditorChange = (event, value, name) => {
+    // const { name, value } = e.target;
+    const [field, subField] = name.split("_");
+    setData((prev) => ({
+      ...prev,
+      [field]: {
+        ...prev[field],
+        [subField]: value?.getData(),
+      },
+    }));
+  }
+  console.log(data)
   return (
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
@@ -141,7 +153,21 @@ const Content = () => {
                         Add Answer :
                       </label>
                       <div className="col-sm-9">
-                        <textarea
+                        <CKEditor
+                          editor={ClassicEditor}
+                          // data={editorData}
+                          name="marathi.about_us-description"
+                          onChange={(event, editor) => handleEditorChange(event, editor, "english_answer")}
+
+                        />
+                        <CKEditor
+                          editor={ClassicEditor}
+                          // data={editorData}
+                          name="marathi.about_us-description"
+                          onChange={(event, editor) => handleEditorChange(event, editor, "marathi_answer")}
+
+                        />
+                        {/* <textarea
                           type="text"
                           name="english_answer"
                           onChange={handleChange}
@@ -156,7 +182,7 @@ const Content = () => {
                           style={{ height: "auto !important" }}
                           className="form-control"
                           placeholder="वर्णन प्रविष्ट करा"
-                        />
+                        /> */}
                       </div>
                     </div>
                     {/* {index === 0 && (

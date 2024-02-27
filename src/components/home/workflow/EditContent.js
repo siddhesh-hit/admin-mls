@@ -42,9 +42,10 @@ const EditContent = () => {
     await putApi(`pending/${configRoutes[action]}`, id, data)
       .then((res) => {
         if (res.data.success) {
-          toast.success("Updated pending");
+          // toast.success("Updated pending");
+          toast.success(`Status ${status}!`)
           setTimeout(() => {
-            navigate(`/ViewAllPending`);
+            navigate(`/ViewAllWorkflow`);
           }, 1100);
         }
       })

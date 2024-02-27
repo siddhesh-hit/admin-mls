@@ -176,12 +176,12 @@ const EditContent = () => {
             [field]: prev[field].map((item, ind) =>
               ind === +index
                 ? {
-                    ...item,
-                    [lang]: {
-                      ...item[lang],
-                      [subField]: files[0],
-                    },
-                  }
+                  ...item,
+                  [lang]: {
+                    ...item[lang],
+                    [subField]: files[0],
+                  },
+                }
                 : item
             ),
           }));
@@ -195,12 +195,12 @@ const EditContent = () => {
         [field]: prev[field].map((item, ind) =>
           ind === +index
             ? {
-                ...item,
-                [lang]: {
-                  ...item[lang],
-                  [subField]: value,
-                },
-              }
+              ...item,
+              [lang]: {
+                ...item[lang],
+                [subField]: value,
+              },
+            }
             : item
         ),
       }));
@@ -265,9 +265,9 @@ const EditContent = () => {
             legislative_council: prev.legislative_council.map((item, ind) =>
               ind === +index
                 ? {
-                    ...item,
-                    [field]: files[0],
-                  }
+                  ...item,
+                  [field]: files[0],
+                }
                 : item
             ),
           }));
@@ -284,9 +284,9 @@ const EditContent = () => {
           [field]: prev[lang][field].map((item, ind) =>
             ind === +index
               ? {
-                  ...item,
-                  [subField]: value,
-                }
+                ...item,
+                [subField]: value,
+              }
               : item
           ),
         },
@@ -435,7 +435,36 @@ const EditContent = () => {
   }, []);
 
   // console.log(server);
+  const handleEditorBannerChange = (event, value, name, index) => {
+    // const { name, value, files } = e.target;
 
+    const [lang, field] = name.split(".");
+    setServer((prev) => ({
+      ...prev,
+      [lang]: {
+        ...prev[lang],
+        [field]: value,
+      },
+    }));
+  }
+
+  const handleEditorProfileChange = (event, value, name) => {
+    const [lang, field, index, subField] = name.split(".");
+    setServer((prev) => ({
+      ...prev,
+      [lang]: {
+        ...prev[lang],
+        [field]: prev[lang][field].map((item, ind) =>
+          ind === +index
+            ? {
+              ...item,
+              [subField]: value,
+            }
+            : item
+        ),
+      },
+    }));
+  }
   return (
     <div className="content-wrapper pt-4">
       <EditBanner
@@ -443,6 +472,7 @@ const EditContent = () => {
         handleChange={handleChange}
         error={error}
         back={back}
+        handleEditorBannerChange={handleEditorBannerChange}
       />
 
       <EditPublication
@@ -473,6 +503,7 @@ const EditContent = () => {
         isToggled={isToggled}
         handleToggle={handleToggle}
         handleSubmit={handleSubmit}
+        handleEditorProfileChange={handleEditorProfileChange}
       />
     </div>
   );

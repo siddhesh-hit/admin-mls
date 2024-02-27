@@ -13,7 +13,6 @@ import {
   Structure,
   Profile,
 } from "../../elements/council";
-
 const Content = () => {
   const [divCount4, setDivCount4] = useState(1);
   const [divCount5, setDivCount5] = useState(1);
@@ -188,6 +187,20 @@ const Content = () => {
     }
   };
 
+  const handleEditorBannerChange = (event, value, name, index) => {
+    // const { name, value, files } = e.target;
+
+    const [lang, field] = name.split(".");
+    setData((prev) => ({
+      ...prev,
+      [lang]: {
+        ...prev[lang],
+        [field]: value.getData(),
+      },
+    }));
+    console.log(data);
+  }
+
   const handlePublicationChange = (e) => {
     const { name, value, files } = e.target;
     const [field, index, lang, subField] = name.split(".");
@@ -204,12 +217,12 @@ const Content = () => {
             [field]: prev[field].map((item, ind) =>
               ind === +index
                 ? {
-                    ...item,
-                    [lang]: {
-                      ...item[lang],
-                      [subField]: files[0],
-                    },
-                  }
+                  ...item,
+                  [lang]: {
+                    ...item[lang],
+                    [subField]: files[0],
+                  },
+                }
                 : item
             ),
           }));
@@ -223,12 +236,12 @@ const Content = () => {
         [field]: prev[field].map((item, ind) =>
           ind === +index
             ? {
-                ...item,
-                [lang]: {
-                  ...item[lang],
-                  [subField]: value,
-                },
-              }
+              ...item,
+              [lang]: {
+                ...item[lang],
+                [subField]: value,
+              },
+            }
             : item
         ),
       }));
@@ -293,9 +306,9 @@ const Content = () => {
             legislative_council: prev.legislative_council.map((item, ind) =>
               ind === +index
                 ? {
-                    ...item,
-                    [field]: files[0],
-                  }
+                  ...item,
+                  [field]: files[0],
+                }
                 : item
             ),
           }));
@@ -312,15 +325,34 @@ const Content = () => {
           [field]: prev[lang][field].map((item, ind) =>
             ind === +index
               ? {
-                  ...item,
-                  [subField]: value,
-                }
+                ...item,
+                [subField]: value,
+              }
               : item
           ),
         },
       }));
     }
   };
+
+  const handleEditorProfileChange = (event, value, name) => {
+    const [lang, field, index, subField] = name.split(".");
+    setData((prev) => ({
+      ...prev,
+      [lang]: {
+        ...prev[lang],
+        [field]: prev[lang][field].map((item, ind) =>
+          ind === +index
+            ? {
+              ...item,
+              [subField]: value.getData(),
+            }
+            : item
+        ),
+      },
+    }));
+    console.log(data);
+  }
 
   const handleSubmit = async () => {
     // const { isValid, errors } = validateData(data, council);
@@ -367,6 +399,7 @@ const Content = () => {
         handleChange={handleChange}
         error={error}
         back={back}
+        handleEditorBannerChange={handleEditorBannerChange}
       />
 
       <Publication
@@ -396,6 +429,7 @@ const Content = () => {
         addwhite={addwhite}
         remove={remove}
         handleSubmit={handleSubmit}
+        handleEditorProfileChange={handleEditorProfileChange}
       />
     </div>
   );

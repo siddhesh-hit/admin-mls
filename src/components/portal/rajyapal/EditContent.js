@@ -7,6 +7,8 @@ import back from "../../../images/back.svg";
 
 import { getApiById, putApi } from "../../../services/axiosInterceptors";
 import { API } from "../../../config/api";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const EditContent = () => {
   const [data, setData] = useState();
@@ -200,7 +202,18 @@ const EditContent = () => {
   useEffect(() => {
     fetchData();
   }, []);
+  const handleEditorChange = (event, value, name, index) => {
+    // const { name, value, files } = e.target;
+    const [subName, field] = name.split("_");
 
+    setData((prev) => ({
+      ...prev,
+      [subName]: {
+        ...prev[subName],
+        [field]: value?.getData(),
+      },
+    }));
+  }
   return (
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
@@ -385,7 +398,19 @@ const EditContent = () => {
                           Edit Political Career :
                         </label>
                         <div className="col-sm-8">
-                          <input
+                          <CKEditor
+                            editor={ClassicEditor}
+                            data={data.english.political_career}
+                            name="english_politicalCareer"
+                            onChange={(event, editor) => handleEditorChange(event, editor, "english_politicalCareer")}
+                          />
+                          <CKEditor
+                            editor={ClassicEditor}
+                            data={data.marathi.political_career}
+                            name="marathi_politicalCareer"
+                            onChange={(event, editor) => handleEditorChange(event, editor, "marathi_politicalCareer")}
+                          />
+                          {/* <input
                             type="text"
                             name="english_politicalCareer"
                             defaultValue={data.english.political_career}
@@ -400,7 +425,7 @@ const EditContent = () => {
                             onChange={handleChange}
                             className="form-control"
                             placeholder="राजकीय करिअरमध्ये प्रवेश करा"
-                          />
+                          /> */}
                         </div>
                       </div>
                       <div className="form-group row">

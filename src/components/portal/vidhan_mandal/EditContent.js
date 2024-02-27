@@ -5,6 +5,8 @@ import { toast } from "react-toastify";
 import back from "../../../images/back.svg";
 
 import { getApiById, putApi } from "../../../services/axiosInterceptors";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const Editcontent = () => {
   const [data, setData] = useState([]);
@@ -199,7 +201,21 @@ const Editcontent = () => {
   }, []);
 
   // console.log(error, "data here");
-
+  const handleEditorChange = (event, value, name, index) => {
+    const [fullField, subField] = name.split("-");
+    const [lang, field] = fullField.split(".");
+    setServerData((prev) => ({
+      ...prev,
+      [lang]: {
+        ...prev[lang],
+        [field]: [
+          ...prev[lang][field].map((item, i) =>
+            i === index ? { ...item, [subField]: value?.getData() } : item
+          ),
+        ],
+      },
+    }));
+  }
   return (
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
@@ -214,9 +230,9 @@ const Editcontent = () => {
               <div className="">
                 <form className="form-horizontal">
                   {data &&
-                  data.english &&
-                  data.marathi &&
-                  data.english.about_us ? (
+                    data.english &&
+                    data.marathi &&
+                    data.english.about_us ? (
                     data.english.about_us.map((item, index, array) => (
                       <React.Fragment key={index}>
                         <div className="card-body border_names">
@@ -233,11 +249,10 @@ const Editcontent = () => {
                                 name="english.about_us-title"
                                 defaultValue={item.title}
                                 onChange={(e) => handleChange(e, index)}
-                                className={`form-control mb-3 ${
-                                  error?.english?.about_us[index]?.title
-                                    ? "activeError"
-                                    : ""
-                                }`}
+                                className={`form-control mb-3 ${error?.english?.about_us[index]?.title
+                                  ? "activeError"
+                                  : ""
+                                  }`}
                                 placeholder="Enter Title"
                               />
                               {error?.english?.about_us[index]?.title ? (
@@ -254,11 +269,10 @@ const Editcontent = () => {
                                   data.marathi.about_us[index].title
                                 }
                                 onChange={(e) => handleChange(e, index)}
-                                className={`form-control ${
-                                  error?.marathi?.about_us[index]?.title
-                                    ? "activeError"
-                                    : ""
-                                }`}
+                                className={`form-control ${error?.marathi?.about_us[index]?.title
+                                  ? "activeError"
+                                  : ""
+                                  }`}
                                 placeholder="शीर्षक प्रविष्ट करा"
                               />
                               {error?.marathi?.about_us[index]?.title ? (
@@ -279,15 +293,27 @@ const Editcontent = () => {
                               Edit Description :
                             </label>
                             <div className="col-sm-8">
-                              <textarea
+
+                              <CKEditor
+                                editor={ClassicEditor}
+                                data={item.description}
+                                className={`form-control mb-3 ${error?.english?.about_us[index]?.description
+                                  ? "activeError"
+                                  : ""
+                                  }`}
+                                name="marathi.about_us-description"
+                                onChange={(event, editor) => handleEditorChange(event, editor, "english.about_us-description", index)}
+
+                              />
+
+                              {/* <textarea
                                 name="english.about_us-description"
                                 defaultValue={item.description}
                                 onChange={(e) => handleChange(e, index)}
-                                className={`form-control mb-3 ${
-                                  error?.english?.about_us[index]?.description
-                                    ? "activeError"
-                                    : ""
-                                }`}
+                                className={`form-control mb-3 ${error?.english?.about_us[index]?.description
+                                  ? "activeError"
+                                  : ""
+                                  }`}
                                 placeholder=" Enter Description"
                               />{" "}
                               {error?.english?.about_us[index]?.description ? (
@@ -296,20 +322,30 @@ const Editcontent = () => {
                                 </span>
                               ) : (
                                 <></>
-                              )}
-                              <textarea
+                              )} */}
+                              <CKEditor
+                                editor={ClassicEditor}
+                                data={data.marathi.about_us[index].description}
+                                className={`${error?.marathi?.about_us[index]?.description
+                                  ? "activeError"
+                                  : ""
+                                  }`}
+                                name="marathi.about_us-description"
+                                onChange={(event, editor) => handleEditorChange(event, editor, "marathi.about_us-description", index)}
+
+                              />
+                              {/* <textarea
                                 name="marathi.about_us-description"
                                 defaultValue={
                                   data.marathi.about_us[index].description
                                 }
                                 onChange={(e) => handleChange(e, index)}
-                                className={`form-control mb-3 ${
-                                  error?.marathi?.about_us[index]?.description
-                                    ? "activeError"
-                                    : ""
-                                }`}
+                                className={`form-control mb-3 ${error?.marathi?.about_us[index]?.description
+                                  ? "activeError"
+                                  : ""
+                                  }`}
                                 placeholder="वर्णन प्रविष्ट करा"
-                              />{" "}
+                              />{" "} */}
                               {error?.marathi?.about_us[index]?.description ? (
                                 <span className="red-error">
                                   {error.marathi.about_us[index].description}
@@ -344,7 +380,7 @@ const Editcontent = () => {
                                 />
 
                                 {error.mandal_image &&
-                                error?.mandal_image[index]?.image ? (
+                                  error?.mandal_image[index]?.image ? (
                                   <p className="red-error mt-3">
                                     {error.mandal_image[index].image}
                                   </p>
@@ -353,12 +389,11 @@ const Editcontent = () => {
                                 )}
 
                                 <label
-                                  className={`custom-file-label ${
-                                    error.mandal_image &&
+                                  className={`custom-file-label ${error.mandal_image &&
                                     error?.mandal_image[index]?.image
-                                      ? "activeError"
-                                      : ""
-                                  }`}
+                                    ? "activeError"
+                                    : ""
+                                    }`}
                                   htmlFor="customFile"
                                 >
                                   Image -
@@ -398,7 +433,7 @@ const Editcontent = () => {
                                   id="customFile"
                                 />
                                 {error.mandal_image &&
-                                error?.mandal_image[index]?.documents ? (
+                                  error?.mandal_image[index]?.documents ? (
                                   <p className="red-error mt-3">
                                     {error.mandal_image[index].documents}
                                   </p>
@@ -407,12 +442,11 @@ const Editcontent = () => {
                                 )}
 
                                 <label
-                                  className={`custom-file-label ${
-                                    error.mandal_image &&
+                                  className={`custom-file-label ${error.mandal_image &&
                                     error?.mandal_image[index]?.documents
-                                      ? "activeError"
-                                      : ""
-                                  }`}
+                                    ? "activeError"
+                                    : ""
+                                    }`}
                                   htmlFor="customFile"
                                 >
                                   Document -{" "}
@@ -449,9 +483,8 @@ const Editcontent = () => {
                       </label>
                       <div className="col-sm-8">
                         <div
-                          className={`toggle-button ${
-                            isToggled ? "active" : ""
-                          }`}
+                          className={`toggle-button ${isToggled ? "active" : ""
+                            }`}
                           onClick={handleToggle}
                         >
                           <div

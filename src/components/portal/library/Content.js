@@ -3,7 +3,10 @@ import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 
 import back from "../../../images/back.svg";
+
 import { postApi } from "../../../services/axiosInterceptors";
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 const Content = () => {
   const [data, setData] = useState({
@@ -78,6 +81,18 @@ const Content = () => {
 
   console.log(data);
 
+
+  const handleEditorChange = (event, value, name) => {
+    const [field, subField] = name.split("_");
+
+    setData((prev) => ({
+      ...prev,
+      [field]: {
+        ...prev[field],
+        [subField]: value,
+      },
+    }));
+  }
   return (
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
@@ -130,7 +145,19 @@ const Content = () => {
                       Add Description :
                     </label>
                     <div className="col-sm-9">
-                      <input
+                      <CKEditor
+                        editor={ClassicEditor}
+                        name="english_description"
+                        onChange={(event, editor) => handleEditorChange(event, editor, "english_description")}
+
+                      />
+                      <CKEditor
+                        editor={ClassicEditor}
+                        name="marathi_description"
+                        onChange={(event, editor) => handleEditorChange(event, editor, "marathi_description")}
+
+                      />
+                      {/* <input
                         type="text"
                         name="english_description"
                         onChange={handleChange}
@@ -143,7 +170,7 @@ const Content = () => {
                         onChange={handleChange}
                         className="form-control"
                         placeholder="वर्णन प्रविष्ट करा"
-                      />
+                      /> */}
                     </div>
                   </div>
                 </div>
