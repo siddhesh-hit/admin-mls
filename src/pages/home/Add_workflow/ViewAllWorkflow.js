@@ -72,7 +72,7 @@ const ViewAllFaqs = () => {
       <Menu />
       <div className="content-wrapper pt-4">
         <div className="contentofpages">
-          <h4 className="page-title">• View All CREATE Pending</h4>
+          <h4 className="page-title">• View All CREATE Workflow</h4>
           <div className="card card-info">
             <div className="row">
               <div className="col-lg-12">
@@ -162,7 +162,7 @@ const ViewAllFaqs = () => {
         </div>
 
         <div className="contentofpages">
-          <h4 className="page-title">• View All UPDATE Pending</h4>
+          <h4 className="page-title">• View All UPDATE Workflow</h4>
           <div className="card card-info">
             <div className="row">
               <div className="col-lg-12">
@@ -226,7 +226,7 @@ const ViewAllFaqs = () => {
                           </td>
                           <td>
                             <Link
-                              to={`/EditPending?id=${item._id}&action=${item.action}`}
+                              to={`/EditWorkflow?id=${item._id}&action=${item.action}`}
                             >
                               <OverlayTrigger
                                 delay={{ hide: 450, show: 300 }}
@@ -252,7 +252,7 @@ const ViewAllFaqs = () => {
         </div>
 
         <div className="contentofpages">
-          <h4 className="page-title">• View All DELETE Pending</h4>
+          <h4 className="page-title">• View All DELETE Workflow</h4>
           <div className="card card-info">
             <div className="row">
               <div className="col-lg-12">
@@ -276,7 +276,7 @@ const ViewAllFaqs = () => {
                           <td>{item?.action}</td>
                           <td>{item?.modelName}</td>
                           <td>
-                            <Link to={`/ViewPending?id=${item._id}`}>
+                            <Link to={`/ViewWorkflow?id=${item._id}`}>
                               <OverlayTrigger
                                 delay={{ hide: 450, show: 300 }}
                                 overlay={(props) => (
