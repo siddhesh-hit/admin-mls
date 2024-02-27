@@ -76,7 +76,7 @@ const Viewcontent = () => {
                         <td className="scrolltabss">
                           {/* Display description for English */}
                           <p>
-                            <span>{item.description}</span>
+                            <span dangerouslySetInnerHTML={{ __html: item.description }}></span>
                           </p>
                         </td>
                         <td className="scrolltabss">

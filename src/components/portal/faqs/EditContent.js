@@ -150,7 +150,7 @@ const EditContent = () => {
                             editor={ClassicEditor}
                             data={data.marathi.answer}
                             name="marathi.about_us-description"
-                            onChange={(event, editor) => handleEditorChange(event, editor, "english_answer")}
+                            onChange={(event, editor) => handleEditorChange(event, editor, "marathi_answer")}
 
                           />
                           {/* <textarea

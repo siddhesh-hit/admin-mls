@@ -66,13 +66,13 @@ const ViewContent = () => {
                       <td className="scrolltabss">
                         {/* Display description for English */}
                         <p>
-                          <span>{data.english.description}</span>
+                          <span dangerouslySetInnerHTML={{ __html: data.english.description }}></span>
                         </p>
                       </td>
                       <td className="scrolltabss">
                         {/* Display description for Marathi */}
                         <p>
-                          <span>{data.marathi.description}</span>
+                          <span dangerouslySetInnerHTML={{ __html: data.marathi.description }}></span>
                         </p>
                       </td>
                       <td>
