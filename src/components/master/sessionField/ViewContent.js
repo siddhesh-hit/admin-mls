@@ -13,7 +13,7 @@ const ViewContent = () => {
   const navigate = useNavigate();
 
   const fetchData = async () => {
-    await getApi("navigation")
+    await getApi("sessionField")
       .then((res) => {
         setData(res.data.data);
       })
@@ -74,7 +74,7 @@ const ViewContent = () => {
                         <tr key={index}>
                           <td>{index + 1}</td>
                           <td>
-                            <h4>{item.english.navigation}</h4>
+                            <h4>{item.name}</h4>
                           </td>
                           <td>
                             <Link to={`/EditContent?id=${item._id}`}>

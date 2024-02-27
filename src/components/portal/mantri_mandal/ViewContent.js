@@ -3,7 +3,7 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
 import add from "../../../images/add.svg";
 
-import { useDataFetchingForBothApis } from "../../../hooks/useDataFetching";
+import { useDataFetchingForBothApis } from "../../../hooks/useDataFetchingForBothApis";
 import LoadingComponent from "../../../components/common/Loading";
 
 const Viewcontent = () => {

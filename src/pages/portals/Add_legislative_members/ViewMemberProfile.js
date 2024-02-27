@@ -3,7 +3,7 @@ import Header from "../../../components/common/Header";
 import Menu from "../../../components/common/Menu";
 
 import { API } from "../../../config/api";
-import { useDataFetchingForBothApis } from "../../../hooks/useDataFetching";
+import { useDataFetchingForBothApis } from "../../../hooks/useDataFetchingForBothApis";
 import LoadingComponent from "../../../components/common/Loading";
 
 const ViewMemberProfile = () => {
