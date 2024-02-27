@@ -4,7 +4,7 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import add from "../../../images/add.svg";
 
 import { API } from "../../../config/api";
-import { useDataFetchingForBothApis } from "../../../hooks/useDataFetching";
+import { useDataFetchingForBothApis } from "../../../hooks/useDataFetchingForBothApis";
 import LoadingComponent from "../../common/Loading";
 
 const ViewContent = () => {

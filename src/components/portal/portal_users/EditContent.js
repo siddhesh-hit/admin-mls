@@ -50,7 +50,6 @@ const EditContent = () => {
   };
 
   const handleSubmit = async (e) => {
-    console.log(server);
     const formData = new FormData();
     formData.append("data", JSON.stringify(server));
     formData.append("user_image", server.user_image);
@@ -88,7 +87,7 @@ const EditContent = () => {
                       htmlFor="inputPassword3"
                       className="col-sm-3 col-form-label"
                     >
-                      Add Name :
+                      Edit Name :
                     </label>
                     <div className="col-sm-9">
                       <input
@@ -106,7 +105,7 @@ const EditContent = () => {
                       htmlFor="inputPassword3"
                       className="col-sm-3 col-form-label"
                     >
-                      Add Houses :
+                      Edit Houses :
                     </label>
                     <div className="col-sm-9">
                       <select
@@ -128,7 +127,7 @@ const EditContent = () => {
                       htmlFor="inputPassword3"
                       className="col-sm-3 col-form-label"
                     >
-                      Add Department :
+                      Edit Department :
                     </label>
                     <div className="col-sm-9">
                       <select
@@ -150,7 +149,7 @@ const EditContent = () => {
                       htmlFor="inputPassword3"
                       className="col-sm-3 col-form-label"
                     >
-                      Add Designation :
+                      Edit Designation :
                     </label>
                     <div className="col-sm-9">
                       <select
@@ -172,7 +171,7 @@ const EditContent = () => {
                       htmlFor="inputPassword3"
                       className="col-sm-3 col-form-label"
                     >
-                      Add Email Id :
+                      Edit Email Id :
                     </label>
                     <div className="col-sm-9">
                       <input
@@ -190,7 +189,7 @@ const EditContent = () => {
                       htmlFor="inputPassword3"
                       className="col-sm-3 col-form-label"
                     >
-                      Add Mobile Number :
+                      Edit Mobile Number :
                     </label>
                     <div className="col-sm-9">
                       <input
@@ -208,7 +207,7 @@ const EditContent = () => {
                       htmlFor="inputPassword3"
                       className="col-sm-3 col-form-label"
                     >
-                      Add Date Of Birth :
+                      Edit Date Of Birth :
                     </label>
                     <div className="col-sm-9">
                       <input
@@ -226,7 +225,7 @@ const EditContent = () => {
                       htmlFor="inputPassword3"
                       className="col-sm-3 col-form-label"
                     >
-                      Add Gender :
+                      Edit Gender :
                     </label>
                     <div className="col-sm-9">
                       <select
@@ -248,7 +247,7 @@ const EditContent = () => {
                       htmlFor="inputEmail3"
                       className="col-sm-3 col-form-label"
                     >
-                      Add Profile :
+                      Edit Profile :
                     </label>
                     <div className="col-sm-9">
                       <div className="custom-file">

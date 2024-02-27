@@ -57,7 +57,9 @@ const ViewContent = () => {
                     <th>Date Of Birth</th>
                     <th>Gender</th>
                     <th>Profile</th>
-                    {/* <th>Action</th> */}
+                    <th>Action</th>
+                    <th>Block</th>
+                    <th>Reset</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -126,14 +128,52 @@ const ViewContent = () => {
                             </OverlayTrigger>
                           )}
                         </td>
-                        {/* <td>
+                        <td>
                           <Link to={`/EditPortalUsers?id=${item._id}`}>
-                            <i
-                              className="fa fa-edit"
-                              style={{ fontSize: "20px" }}
-                            ></i>
+                            <OverlayTrigger
+                              delay={{ hide: 450, show: 300 }}
+                              overlay={(props) => (
+                                <Tooltip {...props}>
+                                  Edit the user profile.
+                                </Tooltip>
+                              )}
+                              placement="bottom"
+                            >
+                              <i
+                                className="fa fa-edit"
+                                style={{ fontSize: "20px" }}
+                              ></i>
+                            </OverlayTrigger>
                           </Link>
-                        </td> */}
+                        </td>
+                        <td>
+                          <Link to={`/BlockUser?id=${item._id}`}>
+                            <OverlayTrigger
+                              delay={{ hide: 450, show: 300 }}
+                              overlay={(props) => (
+                                <Tooltip {...props}>
+                                  Block/Unblock User.
+                                </Tooltip>
+                              )}
+                              placement="bottom"
+                            >
+                              <i class="fa-solid fa-unlock"></i>
+                            </OverlayTrigger>
+                          </Link>
+                        </td>
+                        <td>
+                          <Link to={`/UserReset?id=${item._id}`}>
+                            <OverlayTrigger
+                              delay={{ hide: 450, show: 300 }}
+                              overlay={(props) => (
+                                <Tooltip {...props}>Reset password.</Tooltip>
+                              )}
+                              placement="bottom"
+                            >
+                              <i class="fa-solid fa-key"></i>
+                            </OverlayTrigger>
+                          </Link>
+                        </td>
                       </tr>
                     ))}
                 </tbody>
