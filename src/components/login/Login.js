@@ -50,6 +50,10 @@ const Login = () => {
     //   toast.error("Captcha is filled wrong");
     //   return;
     // }
+    // if (!captcha) {
+    //   toast.error("Captcha is filled wrong");
+    //   return;
+    // }
 
     if (Object.keys(errors).every((key) => errors[key] === "")) {
       const data = { email, password };
@@ -131,6 +135,13 @@ const Login = () => {
               {errors.error && (
                 <p className="error">{"something went wromg"}</p>
               )}
+
+              {/* <Captcha
+                onChange={handleCaptchaChange}
+                // onRefresh={true}
+                placeholder="Enter captcha"
+                length={10}
+              /> */}
 
               <Button type="submit" variant="primary" className="mt-3">
                 Sign In

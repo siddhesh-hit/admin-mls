@@ -173,7 +173,7 @@ const Editcontent = () => {
       formData.append("files", JSON.stringify(serverData.mandal_image));
       formData.append("isActive", serverData.isActive);
       formData.append("isUpdated", true);
-      // console.log(serverData);
+      console.log(serverData);
       serverData.mandal_image.forEach((item) => {
         let image = item.image;
         let document = item.documents;
@@ -184,9 +184,9 @@ const Editcontent = () => {
         .then((res) => {
           if (res.data.success) {
             toast.success("Vidhanmandal updated successfully");
-            setTimeout(() => {
-              navigate(`/ViewVidhanMandal?id=${data._id}`);
-            }, 1000);
+            // setTimeout(() => {
+            //   navigate(`/ViewVidhanMandal?id=${data._id}`);
+            // }, 1000);
           }
         })
         .catch((err) => {
@@ -216,6 +216,9 @@ const Editcontent = () => {
       },
     }));
   }
+
+  console.log(serverData)
+
   return (
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
