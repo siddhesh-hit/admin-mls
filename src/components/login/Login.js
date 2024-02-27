@@ -46,10 +46,10 @@ const Login = () => {
     e.preventDefault();
     // validateForm();
 
-    if (!captcha) {
-      toast.error("Captcha is filled wrong");
-      return;
-    }
+    // if (!captcha) {
+    //   toast.error("Captcha is filled wrong");
+    //   return;
+    // }
 
     if (Object.keys(errors).every((key) => errors[key] === "")) {
       const data = { email, password };
@@ -100,7 +100,7 @@ const Login = () => {
                   aria-describedby="basic-addon1"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  // onBlur={validateForm} // Validate on blur
+                // onBlur={validateForm} // Validate on blur
                 />
               </InputGroup>
               {errors.email && <p className="error">{errors.email}</p>}
@@ -115,7 +115,7 @@ const Login = () => {
                   aria-describedby="basic-addon1"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  // onBlur={validateForm} // Validate on blur
+                // onBlur={validateForm} // Validate on blur
                 />
                 <div className="input-group-btn">
                   <span onClick={togglePassword}>
@@ -132,12 +132,12 @@ const Login = () => {
                 <p className="error">{"something went wromg"}</p>
               )}
 
-              <Captcha
+              {/* <Captcha
                 onChange={handleCaptchaChange}
                 // onRefresh={true}
                 placeholder="Enter captcha"
                 length={10}
-              />
+              /> */}
 
               <Button type="submit" variant="primary" className="mt-3">
                 Sign In
