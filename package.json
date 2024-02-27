@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^7.1.2",
     "axios": "^1.2.3",
     "crypto-js": "^4.2.0",
+    "demos-react-captcha": "^1.0.11",
     "joi": "^17.11.0",
     "jwt-decode": "^4.0.0",
     "react": "^18.2.0",

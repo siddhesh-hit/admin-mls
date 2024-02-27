@@ -43,7 +43,7 @@ const EditContent = () => {
       .then((res) => {
         if (res.data.success) {
           // toast.success("Updated pending");
-          toast.success(`Status ${status}!`)
+          toast.success(`Status ${status}!`);
           setTimeout(() => {
             navigate(`/ViewAllWorkflow`);
           }, 1100);
@@ -59,11 +59,11 @@ const EditContent = () => {
   return (
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
-        <Link to="/ViewAllPending" className="addpagess">
+        <Link to="/ViewAllWorkflow" className="addpagess">
           <img src={back} style={{ width: "25px" }} alt="add" />
           Go back
         </Link>
-        <h4 className="page-title">• Edit Pending</h4>
+        <h4 className="page-title">• Edit Workflow</h4>
         <div className="card card-info">
           <div className="row mb-4 mt-4">
             {data && (

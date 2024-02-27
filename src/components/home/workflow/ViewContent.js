@@ -33,7 +33,7 @@ const ViewContent = () => {
           <img src={add} alt="add" />
           Add Pending
         </Link> */}
-        <h4 className="page-title">• View Pending</h4>
+        <h4 className="page-title">• View Workflow</h4>
         <div className="card card-info">
           <div className="row">
             <div className="col-lg-12">
@@ -54,7 +54,7 @@ const ViewContent = () => {
                       <td>{data.action}</td>
                       <td>
                         <Link
-                          to={`/EditPending?id=${data._id}&action=${data.action}`}
+                          to={`/EditWorkflow?id=${data._id}&action=${data.action}`}
                         >
                           <OverlayTrigger
                             delay={{ hide: 450, show: 300 }}
