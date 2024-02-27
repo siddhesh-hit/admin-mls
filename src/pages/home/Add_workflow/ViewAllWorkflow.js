@@ -115,9 +115,8 @@ const ViewAllFaqs = () => {
                               </Link>
                             ) : (
                               <Link
-                                to={`/${pageName[item?.modelName]}?id=${
-                                  item.modelId
-                                }`}
+                                to={`/${pageName[item?.modelName]}?id=${item.modelId
+                                  }`}
                               >
                                 <OverlayTrigger
                                   delay={{ hide: 450, show: 300 }}
@@ -205,9 +204,8 @@ const ViewAllFaqs = () => {
                               </Link>
                             ) : (
                               <Link
-                                to={`/${pageName[item?.modelName]}?id=${
-                                  item._id
-                                }&pending=update`}
+                                to={`/${pageName[item?.modelName]}?id=${item._id
+                                  }&pending=update`}
                               >
                                 <OverlayTrigger
                                   delay={{ hide: 450, show: 300 }}
@@ -226,7 +224,7 @@ const ViewAllFaqs = () => {
                           </td>
                           <td>
                             <Link
-                              to={`/EditPending?id=${item._id}&action=${item.action}`}
+                              to={`/EditWorkflow?id=${item._id}&action=${item.action}`}
                             >
                               <OverlayTrigger
                                 delay={{ hide: 450, show: 300 }}
@@ -290,9 +288,8 @@ const ViewAllFaqs = () => {
                           </td>
                           <td>
                             <Link
-                              to={`/${pageName[item?.modelName]}?id=${
-                                item._id
-                              }&action=${item.action}`}
+                              to={`/${pageName[item?.modelName]}?id=${item._id
+                                }&action=${item.action}`}
                             >
                               <OverlayTrigger
                                 delay={{ hide: 450, show: 300 }}
