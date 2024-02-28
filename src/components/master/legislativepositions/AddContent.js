@@ -1,6 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import add from "../../../images/back.svg";
+import { postApi } from "../../../services/axiosInterceptors";
+
 const AddContent = () => {
+  const [data, setData] = useState("");
+  const navigate = useNavigate();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (data === "") {
+      toast.error("Please enter the position");
+      return;
+    }
+    await postApi("position", { name: data })
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Position created!");
+          setTimeout(() => {
+            navigate("/ViewLegislativePositions");
+          }, 1100);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        toast.error(err?.response?.data?.message);
+      });
+  };
   return <div>
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
@@ -13,7 +39,7 @@ const AddContent = () => {
           <div className="row">
             <div className="col-lg-10">
               <div className="">
-                <form className="form-horizontal">
+                <form className="form-horizontal" onSubmit={handleSubmit}>
                   <div className="card-body border_names">
                     <div className="form-group row" style={{ marginBottom: '10px' }}>
                       <label
@@ -27,6 +53,8 @@ const AddContent = () => {
                           type="text"
                           className="form-control"
                           placeholder="Enter Legislative Positions"
+                          value={data}
+                          onChange={(e) => setData(e.target.value)}
                         />
                       </div>
                     </div>
@@ -34,7 +62,7 @@ const AddContent = () => {
                 </form>
               </div>
             </div>
-            <button className="submit123 mt-5">Submit</button>
+            <button onClick={handleSubmit} className="submit123 mt-5">Submit</button>
           </div>
         </div>
       </div>
