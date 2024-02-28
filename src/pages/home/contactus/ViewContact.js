@@ -1,10 +1,31 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+
 import Footer from "../../../components/common/Footer";
 import Header from "../../../components/common/Header";
 import Menu from "../../../components/common/Menu";
+
 import add from "../../../images/add.svg";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { getApi } from "../../../services/axiosInterceptors";
+
 const ViewContact = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await getApi("/contact")
+        .then((res) => {
+          if (res.data.success) {
+            setData(res.data.data);
+          }
+        })
+        .catch((err) => console.log(err));
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div>
       <Header />
@@ -26,49 +47,69 @@ const ViewContact = () => {
                       <th>Email</th>
                       <th>Fax Number</th>
                       <th>Legislature No</th>
-                      <th>Action</th>
+                      <th>Active</th>
+                      <th>Edit</th>
+                      <th>Delete</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td>
-                        <h4>Library Department</h4>
-                      </td>
-                      <td>
-                        <h4>ABC</h4>
-                      </td>
-                      <td>
-                        <h4>Library</h4>
-                      </td>
-                      <td>
-                        <h4>ABC</h4>
-                      </td>
-                      <td>
-                        <Link to="/">
-                          <OverlayTrigger
-                            delay={{ hide: 450, show: 300 }}
-                            overlay={(props) => (
-                              <Tooltip {...props}>Delete the data.</Tooltip>
-                            )}
-                            placement="bottom"
-                          >
-                            <i className="fa fa-trash" aria-hidden="true"></i>
-                          </OverlayTrigger>
-                        </Link>
-                        &nbsp;&nbsp;&nbsp;
-                        <Link to="/EditContact">
-                          <OverlayTrigger
-                            delay={{ hide: 450, show: 300 }}
-                            overlay={(props) => (
-                              <Tooltip {...props}>Edit the data.</Tooltip>
-                            )}
-                            placement="bottom"
-                          >
-                            <i className="fa fa-edit" aria-hidden="true"></i>
-                          </OverlayTrigger>
-                        </Link>
-                      </td>
-                    </tr>
+                    {data &&
+                      data?.length > 0 &&
+                      data?.map((item, index) => (
+                        <tr key={index}>
+                          <td>
+                            <h4
+                              dangerouslySetInnerHTML={{
+                                __html: item?.english?.address,
+                              }}
+                            ></h4>
+                          </td>
+                          <td>
+                            <h4>{item?.english?.email}</h4>
+                          </td>
+                          <td>
+                            <h4>{item?.english?.fax}</h4>
+                          </td>
+                          <td>
+                            <h4>{item?.english?.telephone}</h4>
+                          </td>
+                          <td>
+                            <h4>{item?.isActive ? "Active" : "Inactive"}</h4>
+                          </td>
+                          <td>
+                            <Link to={`/EditContact?id=${item._id}`}>
+                              <OverlayTrigger
+                                delay={{ hide: 450, show: 300 }}
+                                overlay={(props) => (
+                                  <Tooltip {...props}>Edit the data.</Tooltip>
+                                )}
+                                placement="bottom"
+                              >
+                                <i
+                                  className="fa fa-edit"
+                                  aria-hidden="true"
+                                ></i>
+                              </OverlayTrigger>
+                            </Link>
+                          </td>
+                          <td>
+                            <Link to="/">
+                              <OverlayTrigger
+                                delay={{ hide: 450, show: 300 }}
+                                overlay={(props) => (
+                                  <Tooltip {...props}>Delete the data.</Tooltip>
+                                )}
+                                placement="bottom"
+                              >
+                                <i
+                                  className="fa fa-trash"
+                                  aria-hidden="true"
+                                ></i>
+                              </OverlayTrigger>
+                            </Link>
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </div>

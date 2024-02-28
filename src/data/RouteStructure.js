@@ -162,13 +162,21 @@ export const masterPaths = [
   {
     name: "Legislative Positions",
     path: "/ViewLegislativePositions",
-    child: ["/ViewLegislativePositions", "/AddLegislativePositions", "/EditLegislativePositions"],
+    child: [
+      "/ViewLegislativePositions",
+      "/AddLegislativePositions",
+      "/EditLegislativePositions",
+    ],
   },
 
   {
     name: "Presiding Officer",
     path: "/ViewPresidingOfficers",
-    child: ["/AddPresidingOfficers", "/ViewPresidingOfficers", "/EditPresidingOfficers"],
+    child: [
+      "/AddPresidingOfficers",
+      "/ViewPresidingOfficers",
+      "/EditPresidingOfficers",
+    ],
   },
 ];
 
@@ -215,8 +223,9 @@ export const routes = [
   "User Management",
   "Task Management",
   "ContactUs",
-  "Workflow",
   "AuditTrail",
+  "Workflow",
+  "Archive",
 ];
 
 export const authDesc = [

@@ -6,28 +6,17 @@ import Footer from "../../../components/common/Footer";
 import Header from "../../../components/common/Header";
 import Menu from "../../../components/common/Menu";
 import add from "../../../images/add.svg";
+import history from "../../../images/history.svg";
 
 import { getApi } from "../../../services/axiosInterceptors";
+import { pageName } from "../../../data/fileName";
+
 const ViewAllFaqs = () => {
   const [data, setData] = useState({
     create: [],
     update: [],
     delete: [],
   });
-
-  const pageName = {
-    Debate: "",
-    Faq: "ViewFaqs",
-    MandalGallery: "ViewGallery",
-    Library: "ViewLibrary",
-    VidhanMandal: "ViewVidhanMandal",
-    Member: "ViewLegislativeMember",
-    Minister: "ViewMantriMandal",
-    VidhanParishad: "ViewLegislativeCouncil",
-    RajyapalMember: "ViewRajyapal",
-    VidhanSabha: "ViewLegislativeAssembly",
-    SessionCalendar: "ViewCalendar",
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,12 +55,17 @@ const ViewAllFaqs = () => {
     };
     fetchData();
   }, []);
+
   return (
     <div>
       <Header />
       <Menu />
       <div className="content-wrapper pt-4">
         <div className="contentofpages">
+          <Link to="/ViewWorkflowHistory" className="addpagess">
+            <img src={history} alt="history" />
+            Workflow history
+          </Link>
           <h4 className="page-title">• View All CREATE Workflow</h4>
           <div className="card card-info">
             <div className="row">
@@ -115,8 +109,9 @@ const ViewAllFaqs = () => {
                               </Link>
                             ) : (
                               <Link
-                                to={`/${pageName[item?.modelName]}?id=${item.modelId
-                                  }`}
+                                to={`/${pageName[item?.modelName]}?id=${
+                                  item.modelId
+                                }`}
                               >
                                 <OverlayTrigger
                                   delay={{ hide: 450, show: 300 }}
@@ -204,8 +199,9 @@ const ViewAllFaqs = () => {
                               </Link>
                             ) : (
                               <Link
-                                to={`/${pageName[item?.modelName]}?id=${item._id
-                                  }&pending=update`}
+                                to={`/${pageName[item?.modelName]}?id=${
+                                  item._id
+                                }&pending=update`}
                               >
                                 <OverlayTrigger
                                   delay={{ hide: 450, show: 300 }}
@@ -288,8 +284,9 @@ const ViewAllFaqs = () => {
                           </td>
                           <td>
                             <Link
-                              to={`/${pageName[item?.modelName]}?id=${item._id
-                                }&action=${item.action}`}
+                              to={`/${pageName[item?.modelName]}?id=${
+                                item._id
+                              }&action=${item.action}`}
                             >
                               <OverlayTrigger
                                 delay={{ hide: 450, show: 300 }}

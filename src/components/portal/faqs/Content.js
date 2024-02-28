@@ -142,15 +142,17 @@ const Content = () => {
                           editor={ClassicEditor}
                           // data={editorData}
                           name="english_answer"
-                          onChange={(event, editor) => handleEditorChange(event, editor, "english_answer")}
-
+                          onChange={(event, editor) =>
+                            handleEditorChange(event, editor, "english_answer")
+                          }
                         />
                         <CKEditor
                           editor={ClassicEditor}
                           // data={editorData}
                           name="marathi_answer"
-                          onChange={(event, editor) => handleEditorChange(event, editor, "marathi_answer")}
-
+                          onChange={(event, editor) =>
+                            handleEditorChange(event, editor, "marathi_answer")
+                          }
                         />
                         {/* <textarea
                           type="text"

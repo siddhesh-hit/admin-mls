@@ -154,6 +154,8 @@ import AddWorkflow from "../pages/home/Add_workflow/AddWorkflow";
 import EditWorkflow from "../pages/home/Add_workflow/EditWorkflow";
 import ViewWorkflow from "../pages/home/Add_workflow/ViewWorkflow";
 import ViewAllWorkflow from "../pages/home/Add_workflow/ViewAllWorkflow";
+import ViewWorkflowHistory from "../pages/home/Add_workflow/ViewWorkflowHistory";
+import ViewArchive from "../pages/home/Add_workflow/ViewArchive";
 
 import AddContact from "../pages/home/contactus/AddContact";
 import EditContact from "../pages/home/contactus/EditContact";
@@ -980,6 +982,20 @@ export const routes = [
     exact: true,
     access: ["SuperAdmin", "Admin", "Reviewer"],
     element: <ViewAllWorkflow />,
+  },
+  {
+    name: "Workflow",
+    path: "/ViewWorkflowHistory",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "Reviewer"],
+    element: <ViewWorkflowHistory />,
+  },
+  {
+    name: "Archive",
+    path: "/ViewArchive",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "Reviewer"],
+    element: <ViewArchive />,
   },
   {
     name: "AuditTrail",
