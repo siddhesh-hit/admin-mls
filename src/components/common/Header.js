@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
 import { decrypt } from "../../config/encrypt";
-import { postApi } from "../../services/axiosInterceptors";
+import { getApiById, postApi } from "../../services/axiosInterceptors";
 import { logout } from "../../redux/authSlice";
 import { API } from "../../config/api";
 
 export default function Header() {
   const [userProfile, setUserProfile] = useState({});
+  const [notification, setNotification] = useState([]);
 
   const state = useSelector((state) => state.auth);
 
@@ -28,6 +29,12 @@ export default function Header() {
       });
   };
 
+  const fetchData = async (id) => {
+    await getApiById("notification", id)
+      .then((res) => setNotification([...res.data.data.user_specific]))
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
     if (state) {
       let deData = JSON.parse(decrypt(state.user));
@@ -35,7 +42,11 @@ export default function Header() {
     }
   }, [state]);
 
-  // console.log(userProfile);
+  useEffect(() => {
+    userProfile.notificationId && fetchData(userProfile.notificationId);
+  }, [userProfile]);
+
+  // console.log(notification);
 
   return (
     <nav className="main-header navbar navbar-expand navbar-white navbar-light">
@@ -57,101 +68,27 @@ export default function Header() {
         <li className="nav-item dropdown">
           <a className="nav-link" data-toggle="dropdown" href="#">
             <i className="far fa-bell"></i>
-            <span className="badge badge-warning navbar-badge">15</span>
+            <span className="badge badge-warning navbar-badge">
+              {notification?.length}
+            </span>
           </a>
-          <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right notouifi" style={{ maxWidth: '100%', minWidth: '300px', background: 'white' }}>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
-            <a href="#" className="dropdown-item">
-              <i className="fas fa-envelope mr-2"></i> 4 new messages
-              <span className="float-right text-muted text-sm">3 mins</span>
-            </a>
+          <div
+            className="dropdown-menu dropdown-menu-lg dropdown-menu-right notouifi"
+            style={{ maxWidth: "100%", minWidth: "300px", background: "white" }}
+          >
+            {notification?.map((item, index) => (
+              <div key={index} className="dropdown-item">
+                <i className="fas fa-envelope mr-2"></i>
+                <span style={{ whiteSpace: "pre-line" }}>{item.name}</span>
+                <span className="float-right text-muted text-sm">
+                  {/* {new Date(item.time_span).toLocaleDateString() ===
+                  new Date().toLocaleDateString()
+                    ? new Date(item?.time_span).toLocaleTimeString()
+                    : new Date(item?.time_span).toLocaleDateString()} */}
+                  {new Date(item.time_span).toLocaleTimeString()}
+                </span>
+              </div>
+            ))}
           </div>
         </li>
 
@@ -172,7 +109,12 @@ export default function Header() {
                   }
                   className="elevation-2"
                   alt="User"
-                  style={{ height: "2.1rem", width: "2.1rem", objectFit: 'fill', borderRadius: '100px' }}
+                  style={{
+                    height: "2.1rem",
+                    width: "2.1rem",
+                    objectFit: "fill",
+                    borderRadius: "100px",
+                  }}
                 />
               </div>
               <div className="info">
