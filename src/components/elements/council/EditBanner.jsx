@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-const EditBanner = ({ data, handleChange, error, back, handleEditorProfileChange }) => {
+const EditBanner = ({ data, handleChange, error, back, handleEditorBannerChange }) => {
+ 
   return (
     <div className="contentofpages">
       <Link to="/ViewAllLegislativeCouncil" className="addpagess">
@@ -73,13 +74,13 @@ const EditBanner = ({ data, handleChange, error, back, handleEditorProfileChange
                         editor={ClassicEditor}
                         data={data.english.description}
                         name="english.description"
-                        onChange={(event, editor) => handleEditorProfileChange(event, editor, "english.description")}
+                        onChange={(event, editor) => handleEditorBannerChange(event, editor, "english.description")}
                       />
                       <CKEditor
                         editor={ClassicEditor}
                         data={data.marathi.description}
                         name="marathi.description"
-                        onChange={(event, editor) => handleEditorProfileChange(event, editor, "marathi.description")}
+                        onChange={(event, editor) => handleEditorBannerChange(event, editor, "marathi.description")}
                       />
                       {/* <textarea
                         name="english.description"

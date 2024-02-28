@@ -79,7 +79,7 @@ const ViewContent = () => {
                     <p>{data.english.place_of_birth}</p>
                   </td>
                   <td>
-                    <p>{data.english.political_career}</p>
+                    <p dangerouslySetInnerHTML={{ __html: data.english.political_career }}></p>
                   </td>
                   <td>
                     <p>{data.marathi.name}</p>
@@ -94,7 +94,7 @@ const ViewContent = () => {
                     <p>{data.marathi.place_of_birth}</p>
                   </td>
                   <td>
-                    <p>{data.marathi.political_career}</p>
+                    <p dangerouslySetInnerHTML={{ __html: data.marathi.political_career }}></p>
                   </td>
                   <td>
                     <p>{data.url}</p>

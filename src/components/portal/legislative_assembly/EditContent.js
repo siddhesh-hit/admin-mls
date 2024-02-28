@@ -436,17 +436,17 @@ const EditContent = () => {
 
   // console.log(server);
   const handleEditorBannerChange = (event, value, name, index) => {
-    // const { name, value, files } = e.target;
 
     const [lang, field] = name.split(".");
     setServer((prev) => ({
       ...prev,
       [lang]: {
         ...prev[lang],
-        [field]: value,
+        [field]: value.getData(),
       },
     }));
   }
+  console.log(server)
 
   const handleEditorProfileChange = (event, value, name) => {
     const [lang, field, index, subField] = name.split(".");
@@ -458,7 +458,7 @@ const EditContent = () => {
           ind === +index
             ? {
               ...item,
-              [subField]: value,
+              [subField]: value.getData(),
             }
             : item
         ),
