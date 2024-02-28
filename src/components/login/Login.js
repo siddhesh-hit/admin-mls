@@ -50,6 +50,10 @@ const Login = () => {
     //   toast.error("Captcha is filled wrong");
     //   return;
     // }
+    // if (!captcha) {
+    //   toast.error("Captcha is filled wrong");
+    //   return;
+    // }
 
     if (Object.keys(errors).every((key) => errors[key] === "")) {
       const data = { email, password };
@@ -100,7 +104,7 @@ const Login = () => {
                   aria-describedby="basic-addon1"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                // onBlur={validateForm} // Validate on blur
+                  // onBlur={validateForm} // Validate on blur
                 />
               </InputGroup>
               {errors.email && <p className="error">{errors.email}</p>}
@@ -115,7 +119,7 @@ const Login = () => {
                   aria-describedby="basic-addon1"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                // onBlur={validateForm} // Validate on blur
+                  // onBlur={validateForm} // Validate on blur
                 />
                 <div className="input-group-btn">
                   <span onClick={togglePassword}>
