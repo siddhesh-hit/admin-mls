@@ -258,7 +258,7 @@ export const routes = [
     path: "/AddLegislativeCouncil",
     exact: true,
     access: ["SuperAdmin", "Admin", "ContentCreator"],
-    element: <AddLegislativeCouncil />,
+    element: <AddLegislativeCouncil />
   },
   {
     name: "VidhanParishad",
