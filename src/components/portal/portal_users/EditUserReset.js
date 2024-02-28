@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Form, InputGroup } from "react-bootstrap";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { getApiById, putApi } from "../../../services/axiosInterceptors";
 import { toast } from "react-toastify";
@@ -36,7 +35,7 @@ const EditUserReset = () => {
     await putApi("user/resetAdmin", id, data)
       .then((res) => {
         if (res.data.success) {
-          toast.success("User block status updated successfully!");
+          toast.success("User password changed!");
           setTimeout(() => {
             navigate(`/ViewPortalUsers`);
           }, 1110);

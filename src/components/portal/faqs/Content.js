@@ -7,8 +7,8 @@ import addwhite from "../../../images/addwhite.svg";
 import back from "../../../images/back.svg";
 
 import { postApi } from "../../../services/axiosInterceptors";
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 const Content = () => {
   const [divCount, setDivCount] = useState(1);
   const [data, setData] = useState({
@@ -56,21 +56,6 @@ const Content = () => {
     const { name, value } = e.target;
     const [field, subField] = name.split("_");
 
-    // setData((prev) => [
-    //   ...prev.map((item, i) => {
-    //     if (i === index) {
-    //       return {
-    //         ...item,
-    //         [field]: {
-    //           ...item[field],
-    //           [subField]: value,
-    //         },
-    //       };
-    //     }
-    //     return item;
-    //   }),
-    // ]);
-
     setData((prev) => ({
       ...prev,
       [field]: {
@@ -104,8 +89,8 @@ const Content = () => {
         [subField]: value?.getData(),
       },
     }));
-  }
-  console.log(data)
+  };
+  console.log(data);
   return (
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
