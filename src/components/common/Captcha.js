@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
-const Captcha = () => {
+const Captcha = ({ getIsCurrent }) => {
+  const canvasRef = useRef(null);
+
   const generateOTP = () => {
     const lowercaseLetters = "abcdefghijklmnopqrstuvwxyz";
     const uppercaseLetters = lowercaseLetters.toUpperCase();
@@ -31,20 +33,36 @@ const Captcha = () => {
   const handleRefresh = () => {
     setOtp(generateOTP());
     setUserInput("");
-    setIsCorrect(false); // reset verification status
+    setIsCorrect(false);
   };
 
-  console.log(isCorrect);
+  const drawOTP = (otpText) => {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d");
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.font = "30px Arial";
+    ctx.fillText(otpText, 10, 40);
+  };
 
   useEffect(() => {
+    drawOTP(otp);
     handleVerification();
   }, [userInput]);
 
+  useEffect(() => {
+    drawOTP(otp);
+  }, [handleRefresh]);
+
+  useEffect(() => {
+    getIsCurrent(isCorrect);
+  }, [isCorrect]);
+
   return (
     <div className="captcha-container">
-      <p>Captcha:</p>
+      {/* <p>Captcha:</p> */}
       <div className="d-flex" style={{ flexFlow: "column" }}>
-        <span className="captcha-text">{otp}</span>
+        <canvas ref={canvasRef} width="500" height="50"></canvas>
         <div>
           <input
             type="text"
@@ -52,18 +70,19 @@ const Captcha = () => {
             onChange={handleInputChange}
             placeholder="Enter Captcha"
           />
-          <button onClick={handleRefresh}>
-            <i class="fa fa-refresh" aria-hidden="true"></i>
-          </button>
+          <span
+            style={{
+              cursor: "pointer",
+              marginLeft: "10px",
+              padding: "2px 3px",
+              textAlign: "center",
+              border: "1px solid black",
+            }}
+            onClick={handleRefresh}
+          >
+            <i className="fa fa-refresh" aria-hidden="true"></i>
+          </span>
         </div>
-      </div>
-      <div class="mb-3 d-flex align-items-center">
-        <canvas id="captcha" width="200" height="80">
-          {otp}
-        </canvas>
-        <button type="button" class="btn btn-secondary" id="refresh-captcha">
-          <i class="fa fa-refresh"></i>
-        </button>
       </div>
     </div>
   );
