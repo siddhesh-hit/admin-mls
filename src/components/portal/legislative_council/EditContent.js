@@ -447,13 +447,17 @@ const EditContent = () => {
       ...prev,
       [lang]: {
         ...prev[lang],
-        [field]: value,
+        [field]: value.getData(),
       },
     }));
   }
 
   const handleEditorProfileChange = (event, value, name) => {
+    // const { name, value, files } = e.target;
     const [lang, field, index, subField] = name.split(".");
+
+    // console.log(name, value.getData())
+
     setServer((prev) => ({
       ...prev,
       [lang]: {
@@ -462,13 +466,14 @@ const EditContent = () => {
           ind === +index
             ? {
               ...item,
-              [subField]: value,
+              [subField]: value.getData(),
             }
             : item
         ),
       },
     }));
   }
+  console.log(server)
 
   return (
     <div className="content-wrapper pt-4">

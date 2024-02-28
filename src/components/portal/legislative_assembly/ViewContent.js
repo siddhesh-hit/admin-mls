@@ -64,13 +64,13 @@ const ViewContent = () => {
                       <td className="scrolltabss">
                         {/* Display description for English */}
                         <p>
-                          <span>{data.english.description}</span>
+                          <span dangerouslySetInnerHTML={{ __html: data.english.description }}></span>
                         </p>
                       </td>
                       <td className="scrolltabss">
                         {/* Display description for Marathi */}
                         <p>
-                          <span>{data.marathi.description}</span>
+                          <span dangerouslySetInnerHTML={{ __html: data.marathi.description }}></span>
                         </p>
                       </td>
                       <td>
@@ -346,22 +346,18 @@ const ViewContent = () => {
                         </td>
                         <td className="scrolltabss">
                           <p>
-                            <span>
-                              {
-                                data.english.legislative_council[index]
-                                  .council_description
-                              }
-                            </span>
+                            <span dangerouslySetInnerHTML={{
+                              __html: data.english.legislative_council[index]
+                                .council_description
+                            }}></span>
                           </p>
                         </td>
                         <td className="scrolltabss">
                           <p>
-                            <span>
-                              {
-                                data.marathi.legislative_council[index]
-                                  .council_description
-                              }
-                            </span>
+                            <span dangerouslySetInnerHTML={{
+                              __html: data.marathi.legislative_council[index]
+                                .council_description
+                            }}></span>
                           </p>
                         </td>
                         <td>

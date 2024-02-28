@@ -129,7 +129,7 @@ const EditProfile = ({
                       editor={ClassicEditor}
                       data={item.council_description}
                       name={`english.legislative_council.${index}.council_description`}
-                      onChange={(event, editor) => handleEditorProfileChange(event, editor, "english.legislative_council.${index}.council_description")}
+                      onChange={(event, editor) => handleEditorProfileChange(event, editor, `english.legislative_council.${index}.council_description`)}
                     />
                     <CKEditor
                       editor={ClassicEditor}
@@ -138,7 +138,7 @@ const EditProfile = ({
                           .council_description
                       }
                       name={`marathi.legislative_council.${index}.council_description`}
-                      onChange={(event, editor) => handleEditorProfileChange(event, editor, "marathi.legislative_council.${index}.council_description")}
+                      onChange={(event, editor) => handleEditorProfileChange(event, editor, `marathi.legislative_council.${index}.council_description`)}
                     />
                     {/* <textarea
                       name={`english.legislative_council.${index}.council_description`}

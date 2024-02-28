@@ -111,15 +111,17 @@ const EditContent = () => {
 
   const handleEditorChange = (event, value, name) => {
     const [field, subField] = name.split("_");
-
-    setData((prev) => ({
+    setServerData((prev) => ({
       ...prev,
       [field]: {
         ...prev[field],
-        [subField]: value,
+        [subField]: value.getData(),
       },
     }));
   }
+
+
+  // console.log(serverData)
 
   return (
     <div className="content-wrapper pt-4">

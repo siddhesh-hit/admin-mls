@@ -41,9 +41,7 @@ const ViewContent = () => {
           Add Portal User
         </Link>
         <h4 className="page-title">• View Portal User</h4>
-        <div className="card card-info">
-          <div className="row pt-5 pb-5">
-            <div className="col-lg-11">
+            <div className="col-lg-12">
               <table className="table table-striped table-bordered mb-0 view_vidhan_mandal respon">
                 <thead>
                   <tr>
@@ -178,8 +176,6 @@ const ViewContent = () => {
                     ))}
                 </tbody>
               </table>
-            </div>
-          </div>
         </div>
       </div>
     </div>
