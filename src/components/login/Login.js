@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button, Form, InputGroup, Row, Col } from "react-bootstrap";
 import { toast } from "react-toastify";
@@ -9,6 +9,7 @@ import logo from "../../images/logo.svg";
 import { postApi } from "../../services/axiosInterceptors";
 import { login } from "../../redux/authSlice";
 import { encrypt } from "../../config/encrypt";
+import Captcha from "../common/Captcha";
 
 const Login = () => {
   // const naviagte = useNavigate();
@@ -22,10 +23,6 @@ const Login = () => {
 
   const togglePassword = () => {
     setPasswordType(passwordType === "password" ? "text" : "password");
-  };
-
-  const handleCaptchaChange = (value) => {
-    value ? setCaptcha(true) : setCaptcha(false);
   };
 
   // const validateForm = () => {
@@ -46,14 +43,15 @@ const Login = () => {
     e.preventDefault();
     // validateForm();
 
-    // if (!captcha) {
-    //   toast.error("Captcha is filled wrong");
-    //   return;
-    // }
-    // if (!captcha) {
-    //   toast.error("Captcha is filled wrong");
-    //   return;
-    // }
+    if (!email || !password) {
+      toast.error("Fill the fields first!");
+      return;
+    }
+
+    if (!captcha) {
+      toast.error("Captcha is filled wrong");
+      return;
+    }
 
     if (Object.keys(errors).every((key) => errors[key] === "")) {
       const data = { email, password };
@@ -80,6 +78,14 @@ const Login = () => {
         });
     }
   };
+
+  const getIsCurrent = (data) => {
+    console.log(data);
+    setCaptcha(data);
+  };
+  // useEffect(() => {
+  //   getIsCurrent();
+  // }, [captcha]);
 
   return (
     <div className="container-fluid loginboxpage" style={{ height: "100vh" }}>
@@ -136,12 +142,7 @@ const Login = () => {
                 <p className="error">{"something went wromg"}</p>
               )}
 
-              {/* <Captcha
-                onChange={handleCaptchaChange}
-                // onRefresh={true}
-                placeholder="Enter captcha"
-                length={10}
-              /> */}
+              <Captcha getIsCurrent={getIsCurrent} />
 
               <Button type="submit" variant="primary" className="mt-3">
                 Sign In

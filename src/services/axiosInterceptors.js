@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const axiosInstance = axios.create({
-  // baseURL: "http://localhost:8484/api/v1/",
+  baseURL: "http://localhost:8484/api/v1/",
   // baseURL: "https://mlsapi.handsintechnology.in/api/v1/",
-  baseURL: "https://mlsapi.sblcorp.com/api/v1/",
+  // baseURL: "https://mlsapi.sblcorp.com/api/v1/",
   withCredentials: true,
 });
 
@@ -21,18 +21,15 @@ axiosInstance.interceptors.response.use(
   (res) => res,
   async (error) => {
     const originalRequest = error.config;
-    if (
-      (error.response.status === 401 && !originalRequest._retry) ||
-      (error.response.status === 403 && !originalRequest._retry)
-    ) {
+    if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
         const res = await axios
           .post(
-            // "http://localhost:8484/api/v1/user/accessToken",
+            "http://localhost:8484/api/v1/user/accessToken",
             // "https://mlsapi.handsintechnology.in/api/v1/accessToken",
-            "https://mlsapi.sblcorp.com/api/v1/user/accessToken",
+            // "https://mlsapi.sblcorp.com/api/v1/user/accessToken",
             {},
             { withCredentials: true }
           )
