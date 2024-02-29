@@ -1,17 +1,17 @@
 import Footer from "../../../components/common/Footer";
 import Header from "../../../components/common/Header";
 import Menu from "../../../components/common/Menu";
-import ViewGalleryImage from "../../../components/portal/gallery/ViewGalleryImage";
+import ViewHistory from "../../../components/home/workflow/ViewHistory";
 
-const ViewGalleryImages = () => {
+const ViewWorkflowHistory = () => {
   return (
     <div>
       <Header />
       <Menu />
-      <ViewGalleryImage />
+      <ViewHistory />
       <Footer />
     </div>
   );
 };
 
-export default ViewGalleryImages;
+export default ViewWorkflowHistory;

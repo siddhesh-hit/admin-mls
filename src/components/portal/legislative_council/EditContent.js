@@ -179,12 +179,12 @@ const EditContent = () => {
             [field]: prev[field].map((item, ind) =>
               ind === +index
                 ? {
-                  ...item,
-                  [lang]: {
-                    ...item[lang],
-                    [subField]: files[0],
-                  },
-                }
+                    ...item,
+                    [lang]: {
+                      ...item[lang],
+                      [subField]: files[0],
+                    },
+                  }
                 : item
             ),
           }));
@@ -198,12 +198,12 @@ const EditContent = () => {
         [field]: prev[field].map((item, ind) =>
           ind === +index
             ? {
-              ...item,
-              [lang]: {
-                ...item[lang],
-                [subField]: value,
-              },
-            }
+                ...item,
+                [lang]: {
+                  ...item[lang],
+                  [subField]: value,
+                },
+              }
             : item
         ),
       }));
@@ -268,9 +268,9 @@ const EditContent = () => {
             legislative_council: prev.legislative_council.map((item, ind) =>
               ind === +index
                 ? {
-                  ...item,
-                  [field]: files[0],
-                }
+                    ...item,
+                    [field]: files[0],
+                  }
                 : item
             ),
           }));
@@ -287,9 +287,9 @@ const EditContent = () => {
           [field]: prev[lang][field].map((item, ind) =>
             ind === +index
               ? {
-                ...item,
-                [subField]: value,
-              }
+                  ...item,
+                  [subField]: value,
+                }
               : item
           ),
         },
@@ -388,7 +388,7 @@ const EditContent = () => {
     //   formData.append("legislative_profile", legislativeProfile);
     // }
 
-    server.isUpdated = true;
+    // server.isUpdated = true;
 
     const formData = new FormData();
 
@@ -413,9 +413,9 @@ const EditContent = () => {
       .then((res) => {
         if (res.data.success) {
           toast.success("VidhanParishad updated successfully");
-          setTimeout(() => {
-            navigate("/ViewAllLegislativeCouncil");
-          }, 1000);
+          // setTimeout(() => {
+          //   navigate("/ViewAllLegislativeCouncil");
+          // }, 1000);
         }
       })
       .catch((err) => {
@@ -450,7 +450,7 @@ const EditContent = () => {
         [field]: value.getData(),
       },
     }));
-  }
+  };
 
   const handleEditorProfileChange = (event, value, name) => {
     // const { name, value, files } = e.target;
@@ -465,15 +465,15 @@ const EditContent = () => {
         [field]: prev[lang][field].map((item, ind) =>
           ind === +index
             ? {
-              ...item,
-              [subField]: value.getData(),
-            }
+                ...item,
+                [subField]: value.getData(),
+              }
             : item
         ),
       },
     }));
-  }
-  console.log(server)
+  };
+  console.log(server);
 
   return (
     <div className="content-wrapper pt-4">

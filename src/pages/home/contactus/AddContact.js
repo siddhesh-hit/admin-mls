@@ -1,11 +1,74 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+
 import Footer from "../../../components/common/Footer";
 import Header from "../../../components/common/Header";
 import Menu from "../../../components/common/Menu";
 import add from "../../../images/back.svg";
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+import { postApi } from "../../../services/axiosInterceptors";
+
 const AddContact = () => {
+  const [data, setData] = useState({
+    marathi: {
+      address: "",
+      telephone: "",
+      fax: "",
+      email: "",
+      map_url: "",
+    },
+    english: {
+      address: "",
+      telephone: "",
+      fax: "",
+      email: "",
+      map_url: "",
+    },
+  });
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const [lang, field] = name.split(".");
+
+    setData((prev) => ({
+      ...prev,
+      [lang]: {
+        ...prev[lang],
+        [field]: value,
+      },
+    }));
+  };
+
+  const handleEditorChange = (event, value, name) => {
+    const [lang, field] = name.split(".");
+
+    setData((prev) => ({
+      ...prev,
+      [lang]: {
+        ...prev[lang],
+        [field]: value.getData(),
+      },
+    }));
+  };
+
+  const handleSubmit = async () => {
+    await postApi(`/contact`, data).then((res) => {
+      if (res.data.success) {
+        toast.success("Contact Us entry created!");
+        setTimeout(() => {
+          navigate("/ViewContact");
+        }, 1100);
+      }
+    });
+  };
+
+  console.log(data);
+
   return (
     <div>
       <Header />
@@ -32,11 +95,26 @@ const AddContact = () => {
                         </label>
                         <div className="col-sm-8">
                           <CKEditor
+                            config={{ placeholder: "Enter Address" }}
                             editor={ClassicEditor}
-                            // data={editorData}
+                            onChange={(event, editor) =>
+                              handleEditorChange(
+                                event,
+                                editor,
+                                "english.address"
+                              )
+                            }
                           />
                           <CKEditor
+                            config={{ placeholder: "पत्ता प्रविष्ट करा" }}
                             editor={ClassicEditor}
+                            onChange={(event, editor) =>
+                              handleEditorChange(
+                                event,
+                                editor,
+                                "marathi.address"
+                              )
+                            }
                           />
                         </div>
                       </div>
@@ -49,12 +127,16 @@ const AddContact = () => {
                         </label>
                         <div className="col-sm-8">
                           <input
-                            type="text"
+                            type="email"
+                            name="english.email"
+                            onChange={handleChange}
                             className="form-control mb-3"
                             placeholder="Enter Email"
                           />
                           <input
-                            type="text"
+                            type="email"
+                            name="marathi.email"
+                            onChange={handleChange}
                             className="form-control"
                             placeholder="ईमेल प्रविष्ट करा"
                           />
@@ -70,11 +152,15 @@ const AddContact = () => {
                         <div className="col-sm-8">
                           <input
                             type="text"
+                            name="english.fax"
+                            onChange={handleChange}
                             className="form-control mb-3"
                             placeholder="Enter Fax Number"
                           />
                           <input
                             type="text"
+                            name="marathi.fax"
+                            onChange={handleChange}
                             className="form-control"
                             placeholder="फॅक्स क्रमांक प्रविष्ट करा"
                           />
@@ -90,13 +176,41 @@ const AddContact = () => {
                         <div className="col-sm-8">
                           <input
                             type="text"
+                            name="english.telephone"
+                            onChange={handleChange}
                             className="form-control mb-3"
                             placeholder="Enter Legislature No"
                           />
                           <input
                             type="text"
+                            name="marathi.telephone"
+                            onChange={handleChange}
                             className="form-control"
                             placeholder="विधानमंडळ क्रमांक प्रविष्ट करा"
+                          />
+                        </div>
+                      </div>
+                      <div className="form-group row">
+                        <label
+                          htmlFor="inputPassword3"
+                          className="col-sm-4 col-form-label"
+                        >
+                          Add Map Url :
+                        </label>
+                        <div className="col-sm-8">
+                          <input
+                            type="text"
+                            name="english.map_url"
+                            onChange={handleChange}
+                            className="form-control mb-3"
+                            placeholder="Enter Map Url"
+                          />
+                          <input
+                            type="text"
+                            name="marathi.map_url"
+                            onChange={handleChange}
+                            className="form-control"
+                            placeholder="नकशा Url प्रविष्ट करा"
                           />
                         </div>
                       </div>
@@ -104,7 +218,9 @@ const AddContact = () => {
                   </form>
                 </div>
               </div>
-              <button className="submit123 mt-5">Submit</button>
+              <button className="submit123 mt-5" onClick={handleSubmit}>
+                Submit
+              </button>
             </div>
           </div>
         </div>

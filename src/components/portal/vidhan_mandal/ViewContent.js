@@ -76,14 +76,22 @@ const Viewcontent = () => {
                         <td className="scrolltabss">
                           {/* Display description for English */}
                           <p>
-                            <span dangerouslySetInnerHTML={{ __html: item.description }}></span>
+                            <span
+                              dangerouslySetInnerHTML={{
+                                __html: item.description,
+                              }}
+                            ></span>
                           </p>
                         </td>
                         <td className="scrolltabss">
                           {/* Display description for Marathi */}
                           <p>
-                            <span dangerouslySetInnerHTML={{ __html: data.marathi.about_us[index].description }}>
-                            </span>
+                            <span
+                              dangerouslySetInnerHTML={{
+                                __html:
+                                  data.marathi.about_us[index].description,
+                              }}
+                            ></span>
                           </p>
                         </td>
                         <td>
@@ -114,9 +122,7 @@ const Viewcontent = () => {
                           </span>
                         </td>
                         <td>
-                          <Link
-                            to={`/EditVidhanMandal?id=${data._id}`}
-                          >
+                          <Link to={`/EditVidhanMandal?id=${data._id}`}>
                             <OverlayTrigger
                               delay={{ hide: 450, show: 300 }}
                               overlay={(props) => (

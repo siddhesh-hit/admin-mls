@@ -6,28 +6,17 @@ import Footer from "../../../components/common/Footer";
 import Header from "../../../components/common/Header";
 import Menu from "../../../components/common/Menu";
 import add from "../../../images/add.svg";
+import history from "../../../images/history.svg";
 
 import { getApi } from "../../../services/axiosInterceptors";
+import { newPageName } from "../../../data/fileName";
+
 const ViewAllFaqs = () => {
   const [data, setData] = useState({
     create: [],
     update: [],
     delete: [],
   });
-
-  const pageName = {
-    Debate: "",
-    Faq: "ViewFaqs",
-    MandalGallery: "ViewGallery",
-    Library: "ViewLibrary",
-    VidhanMandal: "ViewVidhanMandal",
-    Member: "ViewLegislativeMember",
-    Minister: "ViewMantriMandal",
-    VidhanParishad: "ViewLegislativeCouncil",
-    RajyapalMember: "ViewRajyapal",
-    VidhanSabha: "ViewLegislativeAssembly",
-    SessionCalendar: "ViewCalendar",
-  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -66,12 +55,17 @@ const ViewAllFaqs = () => {
     };
     fetchData();
   }, []);
+
   return (
     <div>
       <Header />
       <Menu />
       <div className="content-wrapper pt-4">
         <div className="contentofpages">
+          <Link to="/ViewWorkflowHistory" className="addpagess">
+            <img src={history} alt="history" />
+            Workflow history
+          </Link>
           <h4 className="page-title">• View All CREATE Workflow</h4>
           <div className="card card-info">
             <div className="row">
@@ -96,7 +90,7 @@ const ViewAllFaqs = () => {
                           <td>{item?.action}</td>
                           <td>{item?.modelName}</td>
                           <td>
-                            {item?.modelName === "MandalGallery" ? (
+                            {/* {item?.modelName === "MandalGallery" ? (
                               <Link
                                 to={`https://mlsapi.sblcorp.com/images/mandal/${item?.modelId}`}
                               >
@@ -113,25 +107,23 @@ const ViewAllFaqs = () => {
                                   ></i>
                                 </OverlayTrigger>
                               </Link>
-                            ) : (
-                              <Link
-                                to={`/${pageName[item?.modelName]}?id=${item.modelId
-                                  }`}
+                            ) : ( */}
+                            <Link
+                              to={`/${newPageName[item?.modelName]}?id=${
+                                item._id
+                              }&action=${item.action}`}
+                            >
+                              <OverlayTrigger
+                                delay={{ hide: 450, show: 300 }}
+                                overlay={(props) => (
+                                  <Tooltip {...props}>View the data.</Tooltip>
+                                )}
+                                placement="bottom"
                               >
-                                <OverlayTrigger
-                                  delay={{ hide: 450, show: 300 }}
-                                  overlay={(props) => (
-                                    <Tooltip {...props}>View the data.</Tooltip>
-                                  )}
-                                  placement="bottom"
-                                >
-                                  <i
-                                    className="fa fa-eye"
-                                    aria-hidden="true"
-                                  ></i>
-                                </OverlayTrigger>
-                              </Link>
-                            )}
+                                <i className="fa fa-eye" aria-hidden="true"></i>
+                              </OverlayTrigger>
+                            </Link>
+                            {/* )} */}
                           </td>
                           <td>
                             <Link
@@ -185,7 +177,7 @@ const ViewAllFaqs = () => {
                           <td>{item?.action}</td>
                           <td>{item?.modelName}</td>
                           <td>
-                            {item?.modelName === "MandalGallery" ? (
+                            {/* {item?.modelName === "MandalGallery" ? (
                               <Link
                                 to={`https://mlsapi.sblcorp.com/images/mandal/${item?.data_object}`}
                               >
@@ -202,25 +194,23 @@ const ViewAllFaqs = () => {
                                   ></i>
                                 </OverlayTrigger>
                               </Link>
-                            ) : (
-                              <Link
-                                to={`/${pageName[item?.modelName]}?id=${item._id
-                                  }&pending=update`}
+                            ) : ( */}
+                            <Link
+                              to={`/${newPageName[item?.modelName]}?id=${
+                                item._id
+                              }&action=${item.action}`}
+                            >
+                              <OverlayTrigger
+                                delay={{ hide: 450, show: 300 }}
+                                overlay={(props) => (
+                                  <Tooltip {...props}>View the data.</Tooltip>
+                                )}
+                                placement="bottom"
                               >
-                                <OverlayTrigger
-                                  delay={{ hide: 450, show: 300 }}
-                                  overlay={(props) => (
-                                    <Tooltip {...props}>View the data.</Tooltip>
-                                  )}
-                                  placement="bottom"
-                                >
-                                  <i
-                                    className="fa fa-eye"
-                                    aria-hidden="true"
-                                  ></i>
-                                </OverlayTrigger>
-                              </Link>
-                            )}
+                                <i className="fa fa-eye" aria-hidden="true"></i>
+                              </OverlayTrigger>
+                            </Link>
+                            {/* )} */}
                           </td>
                           <td>
                             <Link
@@ -274,7 +264,11 @@ const ViewAllFaqs = () => {
                           <td>{item?.action}</td>
                           <td>{item?.modelName}</td>
                           <td>
-                            <Link to={`/ViewWorkflow?id=${item._id}`}>
+                            <Link
+                              to={`/${newPageName[item?.modelName]}?id=${
+                                item._id
+                              }&action=${item.action}`}
+                            >
                               <OverlayTrigger
                                 delay={{ hide: 450, show: 300 }}
                                 overlay={(props) => (
@@ -288,8 +282,7 @@ const ViewAllFaqs = () => {
                           </td>
                           <td>
                             <Link
-                              to={`/${pageName[item?.modelName]}?id=${item._id
-                                }&action=${item.action}`}
+                              to={`/EditWorkflow?id=${item._id}&action=${item.action}`}
                             >
                               <OverlayTrigger
                                 delay={{ hide: 450, show: 300 }}
