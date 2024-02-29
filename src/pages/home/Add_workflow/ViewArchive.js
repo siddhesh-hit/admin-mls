@@ -8,24 +8,37 @@ import Menu from "../../../components/common/Menu";
 import add from "../../../images/add.svg";
 import history from "../../../images/history.svg";
 
-import { getApi } from "../../../services/axiosInterceptors";
+import { getApi, postApi, putApi } from "../../../services/axiosInterceptors";
 import { pageName } from "../../../data/fileName";
+import { toast } from "react-toastify";
 
 const ViewArchive = () => {
   const [data, setData] = useState([]);
 
+  const fetchData = async () => {
+    await getApi(`/archive?action=Archive&isReverted=${false}`)
+      .then((res) => {
+        if (res.data.success) {
+          setData(res.data.data);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleUpdate = async (data) => {
+    await putApi(`/archive/`, data?._id, data)
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("Unarchived the data!");
+          fetchData();
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   useEffect(() => {
-    const fetchData = async () => {
-      await getApi(`/archive`)
-        .then((res) => {
-          if (res.data.success) {
-            setData(res.data.data);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    };
     fetchData();
   }, []);
 
@@ -50,9 +63,10 @@ const ViewArchive = () => {
                       <th>Performed On</th>
                       <th>Action</th>
                       <th>Model Name</th>
-                      <th>State</th>
+                      {/* <th>State</th> */}
                       <th>View</th>
-                      <th>Edit</th>
+                      {/* <th>Edit</th> */}
+                      <th>Unarchive</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -67,7 +81,7 @@ const ViewArchive = () => {
                           </td>
                           <td>{item?.action}</td>
                           <td>{item?.modelName}</td>
-                          <td>{item?.state}</td>
+                          {/* <td>{item?.state}</td> */}
                           <td>
                             {item?.modelName === "MandalGallery" ? (
                               <Link
@@ -107,7 +121,7 @@ const ViewArchive = () => {
                               </Link>
                             )}
                           </td>
-                          <td>
+                          {/* <td>
                             <Link
                               to={`/EditWorkflow?id=${item._id}&action=${item.action}`}
                             >
@@ -121,6 +135,24 @@ const ViewArchive = () => {
                                 <i className="fa fa-edit"></i>
                               </OverlayTrigger>
                             </Link>
+                          </td> */}
+                          <td>
+                            <button onClick={() => handleUpdate(item)}>
+                              <OverlayTrigger
+                                delay={{ hide: 450, show: 300 }}
+                                overlay={(props) => (
+                                  <Tooltip {...props}>
+                                    Unarchive the data.
+                                  </Tooltip>
+                                )}
+                                placement="bottom"
+                              >
+                                <i
+                                  className="fa fa-archive"
+                                  aria-hidden="true"
+                                ></i>
+                              </OverlayTrigger>
+                            </button>
                           </td>
                         </tr>
                       ))

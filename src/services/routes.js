@@ -157,6 +157,19 @@ import ViewAllWorkflow from "../pages/home/Add_workflow/ViewAllWorkflow";
 import ViewWorkflowHistory from "../pages/home/Add_workflow/ViewWorkflowHistory";
 import ViewArchive from "../pages/home/Add_workflow/ViewArchive";
 
+import ViewWorkflowVidhanMandal from "../pages/pendings/ViewWorkflowVidhanMandal";
+import ViewWorkflowMantriMandal from "../pages/pendings/ViewWorkflowMantriMandal";
+import ViewWorkflowCalendar from "../pages/pendings/ViewWorkflowCalendar";
+import ViewWorkflowFaqs from "../pages/pendings/ViewWorkflowFaqs";
+import ViewWorkflowGallery from "../pages/pendings/ViewWorkflowGallery";
+import ViewWorkflowInterestRequest from "../pages/pendings/ViewWorkflowInterestRequest";
+import ViewWorkflowLegislativeAssembly from "../pages/pendings/ViewWorkflowLegislativeAssembly";
+import ViewWorkflowLegislativeCouncil from "../pages/pendings/ViewWorkflowLegislativeCouncil";
+import ViewWorkflowLibrary from "../pages/pendings/ViewWorkflowLibrary";
+import ViewWorkflowRajyapal from "../pages/pendings/ViewWorkflowRajyapal";
+import ViewWorkflowMemberProfile from "../pages/pendings/ViewWorkflowMemberProfile";
+import ViewWorkflowGalleryImage from "../pages/pendings/ViewWorkflowGalleryImage";
+
 import AddContact from "../pages/home/contactus/AddContact";
 import EditContact from "../pages/home/contactus/EditContact";
 import ViewContact from "../pages/home/contactus/ViewContact";
@@ -260,7 +273,7 @@ export const routes = [
     path: "/AddLegislativeCouncil",
     exact: true,
     access: ["SuperAdmin", "Admin", "ContentCreator"],
-    element: <AddLegislativeCouncil />
+    element: <AddLegislativeCouncil />,
   },
   {
     name: "VidhanParishad",
@@ -418,7 +431,7 @@ export const routes = [
   },
   {
     name: "Gallery",
-    path: "/ViewGalleryImages",
+    path: "/ViewGalleryImage",
     exact: true,
     access: ["SuperAdmin", "Admin", "ContentCreator"],
     element: <ViewGalleryImages />,
@@ -989,6 +1002,90 @@ export const routes = [
     exact: true,
     access: ["SuperAdmin", "Admin", "Reviewer"],
     element: <ViewWorkflowHistory />,
+  },
+  {
+    name: "Workflow",
+    path: "/ViewWorkflowVidhanMandal",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "Reviewer"],
+    element: <ViewWorkflowVidhanMandal />,
+  },
+  {
+    name: "Workflow",
+    path: "/ViewWorkflowMantriMandal",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "Reviewer"],
+    element: <ViewWorkflowMantriMandal />,
+  },
+  {
+    name: "Workflow",
+    path: "/ViewWorkflowCalendar",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "Reviewer"],
+    element: <ViewWorkflowCalendar />,
+  },
+  {
+    name: "Workflow",
+    path: "/ViewWorkflowFaqs",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "Reviewer"],
+    element: <ViewWorkflowFaqs />,
+  },
+  {
+    name: "Workflow",
+    path: "/ViewWorkflowGallery",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "Reviewer"],
+    element: <ViewWorkflowGallery />,
+  },
+  {
+    name: "Workflow",
+    path: "/ViewWorkflowInterestRequest",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "Reviewer"],
+    element: <ViewWorkflowInterestRequest />,
+  },
+  {
+    name: "Workflow",
+    path: "/ViewWorkflowLegislativeAssembly",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "Reviewer"],
+    element: <ViewWorkflowLegislativeAssembly />,
+  },
+  {
+    name: "Workflow",
+    path: "/ViewWorkflowLegislativeCouncil",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "Reviewer"],
+    element: <ViewWorkflowLegislativeCouncil />,
+  },
+  {
+    name: "Workflow",
+    path: "/ViewWorkflowLibrary",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "Reviewer"],
+    element: <ViewWorkflowLibrary />,
+  },
+  {
+    name: "Workflow",
+    path: "/ViewWorkflowRajyapal",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "Reviewer"],
+    element: <ViewWorkflowRajyapal />,
+  },
+  {
+    name: "Workflow",
+    path: "/ViewWorkflowMemberProfile",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "Reviewer"],
+    element: <ViewWorkflowMemberProfile />,
+  },
+  {
+    name: "Workflow",
+    path: "/ViewWorkflowGalleryImage",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "Reviewer"],
+    element: <ViewWorkflowGalleryImage />,
   },
   {
     name: "Archive",

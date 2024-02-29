@@ -39,8 +39,16 @@ const ViewContent = () => {
                     <tr>
                       <td>{data.english.question}</td>
                       <td>{data.marathi.question}</td>
-                      <td dangerouslySetInnerHTML={{ __html: data.english.answer }}></td>
-                      <td dangerouslySetInnerHTML={{ __html: data.marathi.answer }}></td>
+                      <td
+                        dangerouslySetInnerHTML={{
+                          __html: data.english.answer,
+                        }}
+                      ></td>
+                      <td
+                        dangerouslySetInnerHTML={{
+                          __html: data.marathi.answer,
+                        }}
+                      ></td>
                       <td>
                         <Link to={`/EditFaqs?id=${data._id}`}>
                           <OverlayTrigger

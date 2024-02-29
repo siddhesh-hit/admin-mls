@@ -7,9 +7,8 @@ import remove from "../../../images/remove.svg";
 import back from "../../../images/back.svg";
 
 import { postApi } from "../../../services/axiosInterceptors";
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const Content = () => {
   const [divCount, setDivCount] = useState(1);
@@ -162,7 +161,7 @@ const Content = () => {
         ],
       },
     }));
-  }
+  };
 
   const validateData = (data) => {
     const errors = {
@@ -263,7 +262,7 @@ const Content = () => {
     // }
   };
 
-  console.log(serverData)
+  console.log(serverData);
 
   return (
     <div className="content-wrapper pt-4">
@@ -292,10 +291,11 @@ const Content = () => {
                             type="text"
                             name="english.about_us-title"
                             onChange={(e) => handleChange(e, index)}
-                            className={`form-control mb-3 ${error?.english?.about_us[index]?.title
-                              ? "activeError"
-                              : ""
-                              }`}
+                            className={`form-control mb-3 ${
+                              error?.english?.about_us[index]?.title
+                                ? "activeError"
+                                : ""
+                            }`}
                             placeholder="Enter Title"
                           />
                           {error?.english?.about_us[index]?.title ? (
@@ -309,10 +309,11 @@ const Content = () => {
                             type="text"
                             name="marathi.about_us-title"
                             onChange={(e) => handleChange(e, index)}
-                            className={`form-control ${error?.marathi?.about_us[index]?.title
-                              ? "activeError"
-                              : ""
-                              }`}
+                            className={`form-control ${
+                              error?.marathi?.about_us[index]?.title
+                                ? "activeError"
+                                : ""
+                            }`}
                             placeholder="शीर्षक प्रविष्ट करा"
                           />
                           {error?.marathi?.about_us[index]?.title ? (
@@ -336,12 +337,20 @@ const Content = () => {
                           <CKEditor
                             editor={ClassicEditor}
                             // data={editorData}
-                            className={`${error?.english?.about_us[index]?.description
-                              ? "activeError"
-                              : ""
-                              }`}
+                            className={`${
+                              error?.english?.about_us[index]?.description
+                                ? "activeError"
+                                : ""
+                            }`}
                             name="english.about_us-description"
-                            onChange={(event, editor) => handleEditorChange(event, editor, "english.about_us-description", index)}
+                            onChange={(event, editor) =>
+                              handleEditorChange(
+                                event,
+                                editor,
+                                "english.about_us-description",
+                                index
+                              )
+                            }
                           />
                           {error?.english?.about_us[index]?.description ? (
                             <span className="red-error">
@@ -387,13 +396,20 @@ const Content = () => {
                           <CKEditor
                             editor={ClassicEditor}
                             // data={editorData}
-                            className={`${error?.marathi?.about_us[index]?.description
-                              ? "activeError"
-                              : ""
-                              }`}
+                            className={`${
+                              error?.marathi?.about_us[index]?.description
+                                ? "activeError"
+                                : ""
+                            }`}
                             name="marathi.about_us-description"
-                            onChange={(event, editor) => handleEditorChange(event, editor, "marathi.about_us-description", index)}
-
+                            onChange={(event, editor) =>
+                              handleEditorChange(
+                                event,
+                                editor,
+                                "marathi.about_us-description",
+                                index
+                              )
+                            }
                           />
                           {error?.marathi?.about_us[index]?.description ? (
                             <span className="red-error">
@@ -419,7 +435,7 @@ const Content = () => {
                               title={
                                 serverData.mandal_image[index].image
                                   ? serverData.mandal_image[index].image.name ||
-                                  "Please choose a file"
+                                    "Please choose a file"
                                   : "Please choose a file"
                               }
                               name="image"
@@ -430,7 +446,7 @@ const Content = () => {
                             />
 
                             {error.mandal_image &&
-                              error?.mandal_image[index]?.image ? (
+                            error?.mandal_image[index]?.image ? (
                               <p className="red-error mt-3">
                                 {error.mandal_image[index].image}
                               </p>
@@ -439,16 +455,17 @@ const Content = () => {
                             )}
 
                             <label
-                              className={`custom-file-label ${error.mandal_image &&
+                              className={`custom-file-label ${
+                                error.mandal_image &&
                                 error?.mandal_image[index]?.image
-                                ? "activeError"
-                                : ""
-                                }`}
+                                  ? "activeError"
+                                  : ""
+                              }`}
                               htmlFor="customFile"
                             >
                               Images -{" "}
                               {serverData.mandal_image &&
-                                serverData.mandal_image[index].image
+                              serverData.mandal_image[index].image
                                 ? serverData.mandal_image[index].image.name
                                 : ""}
                             </label>
@@ -474,7 +491,7 @@ const Content = () => {
                               title={
                                 serverData.mandal_image[index].documents
                                   ? serverData.mandal_image[index].documents
-                                    .name || "Please choose a file"
+                                      .name || "Please choose a file"
                                   : "Please choose a file"
                               }
                               name="documents"
@@ -485,7 +502,7 @@ const Content = () => {
                             />
 
                             {error.mandal_image &&
-                              error?.mandal_image[index]?.documents ? (
+                            error?.mandal_image[index]?.documents ? (
                               <p className="red-error mt-3">
                                 {error.mandal_image[index].documents}
                               </p>
@@ -494,16 +511,17 @@ const Content = () => {
                             )}
 
                             <label
-                              className={`custom-file-label ${error.mandal_image &&
+                              className={`custom-file-label ${
+                                error.mandal_image &&
                                 error?.mandal_image[index]?.documents
-                                ? "activeError"
-                                : ""
-                                }`}
+                                  ? "activeError"
+                                  : ""
+                              }`}
                               htmlFor="customFile"
                             >
                               Document -{" "}
                               {serverData.mandal_image &&
-                                serverData.mandal_image[index].documents
+                              serverData.mandal_image[index].documents
                                 ? serverData.mandal_image[index].documents.name
                                 : ""}
                             </label>
@@ -545,6 +563,5 @@ const Content = () => {
       </div>
     </div>
   );
-
-}
+};
 export default Content;

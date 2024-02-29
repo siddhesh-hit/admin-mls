@@ -1,17 +1,19 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import add from "../../../images/add.svg";
 
-import { getApi, deleteApi } from "../../../services/axiosInterceptors";
+import {
+  getApi,
+  postApi,
+  deleteApi,
+} from "../../../services/axiosInterceptors";
 import { API } from "../../../config/api";
 
 const ViewContent = () => {
   const [data, setData] = useState([]);
-
-  const navigate = useNavigate();
 
   const fetchData = async () => {
     await getApi("gallery")
@@ -24,31 +26,41 @@ const ViewContent = () => {
       });
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const handleArchiveSubmit = async (data) => {
+    let newData = {
+      data_object: data,
+      action: "Archive",
+      state: "Archived",
+      modelName: "MandalGallery",
+      modelId: data._id,
+    };
+
+    await postApi(`/archive`, newData)
+      .then((res) => {
+        if (res.data.success) {
+          toast.success("An entry archived!");
+          fetchData();
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete it?") === true) {
-      console.log("cehck");
       await deleteApi("gallery", id)
         .then((res) => {
           if (res.status === 204) {
-            toast.success("Deleted the gallery.");
-            setTimeout(() => {
-              navigate("/ViewGallery");
-              fetchData();
-            }, 1100);
+            toast.success("Delete request forwaded!");
+            fetchData();
           }
         })
-        .catch((err) => {
-          console.log(err);
-          toast.error("Failed to delete the gallery.");
-        });
+        .catch((err) => toast.error("Failed to delete the gallery."));
     }
   };
 
-  console.log(data);
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div className="content-wrapper pt-4">
@@ -70,6 +82,7 @@ const ViewContent = () => {
                     <th>View File</th>
                     <th>Edit</th>
                     <th>Delete</th>
+                    <th>Archive</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -83,14 +96,15 @@ const ViewContent = () => {
                           <h4>Maharashtra Legislative Secretariat</h4>
                         </td>
                         <td>
-                          <OverlayTrigger
-                            delay={{ hide: 450, show: 300 }}
-                            overlay={(props) => (
-                              <Tooltip {...props}>View the data.</Tooltip>
-                            )}
-                            placement="bottom"
-                          >
-                            <a
+                          <Link to={`/ViewGalleryImage?id=${item._id}`}>
+                            <OverlayTrigger
+                              delay={{ hide: 450, show: 300 }}
+                              overlay={(props) => (
+                                <Tooltip {...props}>View the data.</Tooltip>
+                              )}
+                              placement="bottom"
+                            >
+                              {/* <a
                               href={
                                 API.baseUrl +
                                 item.destination +
@@ -99,10 +113,11 @@ const ViewContent = () => {
                               }
                               target="_blank"
                               rel="noreferrer"
-                            >
+                            > */}
                               <i className="fa fa-eye" aria-hidden="true"></i>
-                            </a>
-                          </OverlayTrigger>
+                              {/* </a> */}
+                            </OverlayTrigger>
+                          </Link>
                         </td>
                         <td>
                           <Link to={`/EditGallery?id=${item._id}`}>
@@ -129,6 +144,19 @@ const ViewContent = () => {
                               <i className="fa fa-trash"></i>
                             </OverlayTrigger>
                           </Link>
+                        </td>
+                        <td>
+                          <button onClick={() => handleArchiveSubmit(item)}>
+                            <OverlayTrigger
+                              delay={{ hide: 450, show: 300 }}
+                              overlay={(props) => (
+                                <Tooltip {...props}>Archive the data.</Tooltip>
+                              )}
+                              placement="bottom"
+                            >
+                              <i class="fa fa-archive" aria-hidden="true"></i>
+                            </OverlayTrigger>
+                          </button>
                         </td>
                       </tr>
                     ))

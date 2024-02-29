@@ -1,5 +1,5 @@
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 const EditProfile = ({
   data,
   handleChange,
@@ -11,7 +11,7 @@ const EditProfile = ({
   isToggled,
   handleToggle,
   handleSubmit,
-  handleEditorProfileChange
+  handleEditorProfileChange,
 }) => {
   return (
     <div className="contentofpages">
@@ -36,10 +36,10 @@ const EditProfile = ({
                         title={
                           data.legislative_council[index].council_profile
                             ? data.legislative_council[index].council_profile
-                              .filename ||
-                            data.legislative_council[index].council_profile
-                              .name ||
-                            "Please choose a file"
+                                .filename ||
+                              data.legislative_council[index].council_profile
+                                .name ||
+                              "Please choose a file"
                             : "Please choose a file"
                         }
                         accept="image/png, image/jpeg, image/jpg"
@@ -74,10 +74,11 @@ const EditProfile = ({
                       name={`english.legislative_council.${index}.council_name`}
                       defaultValue={item.council_name}
                       onChange={handleChange}
-                      className={`form-control mb-3 ${error?.english?.legislative_council[index]?.council_name
-                        ? "activeError"
-                        : ""
-                        }`}
+                      className={`form-control mb-3 ${
+                        error?.english?.legislative_council[index]?.council_name
+                          ? "activeError"
+                          : ""
+                      }`}
                       placeholder="Edit Name"
                     />
                     {error?.english?.legislative_council[index]
@@ -98,10 +99,11 @@ const EditProfile = ({
                         data.marathi.legislative_council[index].council_name
                       }
                       onChange={handleChange}
-                      className={`form-control ${error?.marathi?.legislative_council[index]?.council_name
-                        ? "activeError"
-                        : ""
-                        }`}
+                      className={`form-control ${
+                        error?.marathi?.legislative_council[index]?.council_name
+                          ? "activeError"
+                          : ""
+                      }`}
                       placeholder="नाव प्रविष्ट करा"
                     />
                     {error?.marathi?.legislative_council[index]
@@ -126,18 +128,33 @@ const EditProfile = ({
                   </label>
                   <div className="col-sm-9">
                     <CKEditor
-                      editor={ClassicEditor}
-                      data={data.marathi.legislative_council[index]
-                        .council_description}
-                      name={`marathi.legislative_council.${index}.council_description`}
-                      onChange={(event, editor) => handleEditorProfileChange(event, editor, `marathi.legislative_council.${index}.council_description`)}
-                    />
-                    <CKEditor
                       data={item.council_description}
                       editor={ClassicEditor}
                       name={`english.legislative_council.${index}.council_description`}
-                      onChange={(event, editor) => handleEditorProfileChange(event, editor, `english.legislative_council.${index}.council_description`)}
+                      onChange={(event, editor) =>
+                        handleEditorProfileChange(
+                          event,
+                          editor,
+                          `english.legislative_council.${index}.council_description`
+                        )
+                      }
                     />
+                    <CKEditor
+                      editor={ClassicEditor}
+                      data={
+                        data.marathi.legislative_council[index]
+                          .council_description
+                      }
+                      name={`marathi.legislative_council.${index}.council_description`}
+                      onChange={(event, editor) =>
+                        handleEditorProfileChange(
+                          event,
+                          editor,
+                          `marathi.legislative_council.${index}.council_description`
+                        )
+                      }
+                    />
+
                     {/* <textarea
                       name={`english.legislative_council.${index}.council_description`}
                       defaultValue={item.council_description}

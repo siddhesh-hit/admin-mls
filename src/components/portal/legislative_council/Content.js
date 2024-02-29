@@ -199,7 +199,7 @@ const Content = () => {
       },
     }));
     console.log(data);
-  }
+  };
 
   const handlePublicationChange = (e) => {
     const { name, value, files } = e.target;
@@ -217,12 +217,12 @@ const Content = () => {
             [field]: prev[field].map((item, ind) =>
               ind === +index
                 ? {
-                  ...item,
-                  [lang]: {
-                    ...item[lang],
-                    [subField]: files[0],
-                  },
-                }
+                    ...item,
+                    [lang]: {
+                      ...item[lang],
+                      [subField]: files[0],
+                    },
+                  }
                 : item
             ),
           }));
@@ -236,12 +236,12 @@ const Content = () => {
         [field]: prev[field].map((item, ind) =>
           ind === +index
             ? {
-              ...item,
-              [lang]: {
-                ...item[lang],
-                [subField]: value,
-              },
-            }
+                ...item,
+                [lang]: {
+                  ...item[lang],
+                  [subField]: value,
+                },
+              }
             : item
         ),
       }));
@@ -306,9 +306,9 @@ const Content = () => {
             legislative_council: prev.legislative_council.map((item, ind) =>
               ind === +index
                 ? {
-                  ...item,
-                  [field]: files[0],
-                }
+                    ...item,
+                    [field]: files[0],
+                  }
                 : item
             ),
           }));
@@ -325,9 +325,9 @@ const Content = () => {
           [field]: prev[lang][field].map((item, ind) =>
             ind === +index
               ? {
-                ...item,
-                [subField]: value,
-              }
+                  ...item,
+                  [subField]: value,
+                }
               : item
           ),
         },
@@ -344,15 +344,15 @@ const Content = () => {
         [field]: prev[lang][field].map((item, ind) =>
           ind === +index
             ? {
-              ...item,
-              [subField]: value.getData(),
-            }
+                ...item,
+                [subField]: value.getData(),
+              }
             : item
         ),
       },
     }));
     console.log(data);
-  }
+  };
 
   const handleSubmit = async () => {
     // const { isValid, errors } = validateData(data, council);

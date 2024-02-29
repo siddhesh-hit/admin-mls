@@ -1,5 +1,5 @@
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 const Profile = ({
   data,
   handleChange,
@@ -10,7 +10,7 @@ const Profile = ({
   addwhite,
   remove,
   handleSubmit,
-  handleEditorProfileChange
+  handleEditorProfileChange,
 }) => {
   return (
     <div className="contentofpages">
@@ -37,8 +37,8 @@ const Profile = ({
                               title={
                                 data.legislative_council[index].council_profile
                                   ? data.legislative_council[index]
-                                    .council_profile.name ||
-                                  "Please choose a file"
+                                      .council_profile.name ||
+                                    "Please choose a file"
                                   : "Please choose a file"
                               }
                               accept="image/png, image/jpeg, image.jpg"
@@ -49,7 +49,7 @@ const Profile = ({
                             />
 
                             {error.council &&
-                              error?.council[index]?.legislative_profile ? (
+                            error?.council[index]?.legislative_profile ? (
                               <p className="red-error mt-3">
                                 {error.council[index].legislative_profile}
                               </p>
@@ -58,17 +58,18 @@ const Profile = ({
                             )}
 
                             <label
-                              className={`custom-file-label ${error.council &&
+                              className={`custom-file-label ${
+                                error.council &&
                                 error?.council[index]?.legislative_profile
-                                ? "activeError"
-                                : ""
-                                }`}
+                                  ? "activeError"
+                                  : ""
+                              }`}
                               htmlFor="customFile"
                             >
                               Image -{" "}
                               {data.legislative_council[index].council_profile
                                 ? data.legislative_council[index]
-                                  .council_profile.name
+                                    .council_profile.name
                                 : ""}
                             </label>
                           </div>
@@ -90,15 +91,16 @@ const Profile = ({
                             type="text"
                             name={`english.legislative_council.${index}.council_name`}
                             onChange={handleChange}
-                            className={`form-control mb-3 ${error.council &&
+                            className={`form-control mb-3 ${
+                              error.council &&
                               error?.council[index]?.council_name_en
-                              ? "activeError"
-                              : ""
-                              }`}
+                                ? "activeError"
+                                : ""
+                            }`}
                             placeholder="Enter Name"
                           />
                           {error.council &&
-                            error?.council[index]?.council_name_en ? (
+                          error?.council[index]?.council_name_en ? (
                             <p className="red-error mt-3">
                               {error.council[index].council_name_en}
                             </p>
@@ -109,15 +111,16 @@ const Profile = ({
                             type="text"
                             name={`marathi.legislative_council.${index}.council_name`}
                             onChange={handleChange}
-                            className={`form-control ${error.council &&
+                            className={`form-control ${
+                              error.council &&
                               error?.council[index]?.council_name_en
-                              ? "activeError"
-                              : ""
-                              }`}
+                                ? "activeError"
+                                : ""
+                            }`}
                             placeholder="नाव प्रविष्ट करा"
                           />
                           {error.council &&
-                            error?.council[index]?.council_name_mr ? (
+                          error?.council[index]?.council_name_mr ? (
                             <p className="red-error mt-3">
                               {error.council[index].council_name_mr}
                             </p>
@@ -138,13 +141,25 @@ const Profile = ({
                             editor={ClassicEditor}
                             // data={editorData}
                             name="english.legislative_council.${index}.council_description"
-                            onChange={(event, editor) => handleEditorProfileChange(event, editor, "english.legislative_council.${index}.council_description")}
+                            onChange={(event, editor) =>
+                              handleEditorProfileChange(
+                                event,
+                                editor,
+                                `english.legislative_council.${index}.council_description`
+                              )
+                            }
                           />
                           <CKEditor
                             editor={ClassicEditor}
                             // data={editorData}
                             name="marathi.legislative_council.${index}.council_description"
-                            onChange={(event, editor) => handleEditorProfileChange(event, editor, "marathi.legislative_council.${index}.council_description")}
+                            onChange={(event, editor) =>
+                              handleEditorProfileChange(
+                                event,
+                                editor,
+                                `marathi.legislative_council.${index}.council_description`
+                              )
+                            }
                           />
                           {/* <input
                             type="text"

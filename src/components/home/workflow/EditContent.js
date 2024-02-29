@@ -23,14 +23,10 @@ const EditContent = () => {
   const id = location.search.split("&")[0].split("=")[1];
   const action = location.search.split("&")[1].split("=")[1];
 
-  console.log(action);
-
   const fetchData = async () => {
     await getApiById("pending", id)
       .then((res) => setData(res.data.data))
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err));
   };
 
   const handleChange = (e) => {

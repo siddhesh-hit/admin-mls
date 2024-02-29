@@ -9,7 +9,7 @@ import add from "../../../images/add.svg";
 import history from "../../../images/history.svg";
 
 import { getApi } from "../../../services/axiosInterceptors";
-import { pageName } from "../../../data/fileName";
+import { newPageName } from "../../../data/fileName";
 
 const ViewAllFaqs = () => {
   const [data, setData] = useState({
@@ -90,7 +90,7 @@ const ViewAllFaqs = () => {
                           <td>{item?.action}</td>
                           <td>{item?.modelName}</td>
                           <td>
-                            {item?.modelName === "MandalGallery" ? (
+                            {/* {item?.modelName === "MandalGallery" ? (
                               <Link
                                 to={`https://mlsapi.sblcorp.com/images/mandal/${item?.modelId}`}
                               >
@@ -107,26 +107,23 @@ const ViewAllFaqs = () => {
                                   ></i>
                                 </OverlayTrigger>
                               </Link>
-                            ) : (
-                              <Link
-                                to={`/${pageName[item?.modelName]}?id=${
-                                  item.modelId
-                                }`}
+                            ) : ( */}
+                            <Link
+                              to={`/${newPageName[item?.modelName]}?id=${
+                                item._id
+                              }&action=${item.action}`}
+                            >
+                              <OverlayTrigger
+                                delay={{ hide: 450, show: 300 }}
+                                overlay={(props) => (
+                                  <Tooltip {...props}>View the data.</Tooltip>
+                                )}
+                                placement="bottom"
                               >
-                                <OverlayTrigger
-                                  delay={{ hide: 450, show: 300 }}
-                                  overlay={(props) => (
-                                    <Tooltip {...props}>View the data.</Tooltip>
-                                  )}
-                                  placement="bottom"
-                                >
-                                  <i
-                                    className="fa fa-eye"
-                                    aria-hidden="true"
-                                  ></i>
-                                </OverlayTrigger>
-                              </Link>
-                            )}
+                                <i className="fa fa-eye" aria-hidden="true"></i>
+                              </OverlayTrigger>
+                            </Link>
+                            {/* )} */}
                           </td>
                           <td>
                             <Link
@@ -180,7 +177,7 @@ const ViewAllFaqs = () => {
                           <td>{item?.action}</td>
                           <td>{item?.modelName}</td>
                           <td>
-                            {item?.modelName === "MandalGallery" ? (
+                            {/* {item?.modelName === "MandalGallery" ? (
                               <Link
                                 to={`https://mlsapi.sblcorp.com/images/mandal/${item?.data_object}`}
                               >
@@ -197,26 +194,23 @@ const ViewAllFaqs = () => {
                                   ></i>
                                 </OverlayTrigger>
                               </Link>
-                            ) : (
-                              <Link
-                                to={`/${pageName[item?.modelName]}?id=${
-                                  item._id
-                                }&pending=update`}
+                            ) : ( */}
+                            <Link
+                              to={`/${newPageName[item?.modelName]}?id=${
+                                item._id
+                              }&action=${item.action}`}
+                            >
+                              <OverlayTrigger
+                                delay={{ hide: 450, show: 300 }}
+                                overlay={(props) => (
+                                  <Tooltip {...props}>View the data.</Tooltip>
+                                )}
+                                placement="bottom"
                               >
-                                <OverlayTrigger
-                                  delay={{ hide: 450, show: 300 }}
-                                  overlay={(props) => (
-                                    <Tooltip {...props}>View the data.</Tooltip>
-                                  )}
-                                  placement="bottom"
-                                >
-                                  <i
-                                    className="fa fa-eye"
-                                    aria-hidden="true"
-                                  ></i>
-                                </OverlayTrigger>
-                              </Link>
-                            )}
+                                <i className="fa fa-eye" aria-hidden="true"></i>
+                              </OverlayTrigger>
+                            </Link>
+                            {/* )} */}
                           </td>
                           <td>
                             <Link
@@ -270,7 +264,11 @@ const ViewAllFaqs = () => {
                           <td>{item?.action}</td>
                           <td>{item?.modelName}</td>
                           <td>
-                            <Link to={`/ViewWorkflow?id=${item._id}`}>
+                            <Link
+                              to={`/${newPageName[item?.modelName]}?id=${
+                                item._id
+                              }&action=${item.action}`}
+                            >
                               <OverlayTrigger
                                 delay={{ hide: 450, show: 300 }}
                                 overlay={(props) => (
@@ -284,9 +282,7 @@ const ViewAllFaqs = () => {
                           </td>
                           <td>
                             <Link
-                              to={`/${pageName[item?.modelName]}?id=${
-                                item._id
-                              }&action=${item.action}`}
+                              to={`/EditWorkflow?id=${item._id}&action=${item.action}`}
                             >
                               <OverlayTrigger
                                 delay={{ hide: 450, show: 300 }}
