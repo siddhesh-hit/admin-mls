@@ -160,6 +160,9 @@ import EditContact from "../pages/home/contactus/EditContact";
 import ViewContact from "../pages/home/contactus/ViewContact";
 
 import ViewAudit from "../pages/home/Audit_Trail/ViewAudit";
+import ViewSeo from "../pages/home/Add_Seo/ViewSeos";
+import AddSEO from "../pages/home/Add_Seo/AddSeos";
+import EditSEO from "../pages/home/Add_Seo/EditSeos";
 
 export const routes = [
   {
@@ -833,6 +836,27 @@ export const routes = [
     exact: true,
     access: ["SuperAdmin", "Admin", "ContentCreator"],
     element: <ViewLegislativePositions />,
+  },
+  {
+    name: "SEO",
+    path: "/Viewseo",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <ViewSeo />,
+  },
+  {
+    name: "SEO",
+    path: "/AddSEO",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <AddSEO />,
+  },
+  {
+    name: "SEO",
+    path: "/EditSEO",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <EditSEO />,
   },
   {
     name: "Legislative Positions",
