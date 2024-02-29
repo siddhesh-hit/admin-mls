@@ -226,6 +226,7 @@ export const routes = [
   "AuditTrail",
   "Workflow",
   "Archive",
+  "SEO"
 ];
 
 export const authDesc = [
