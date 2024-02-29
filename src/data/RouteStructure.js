@@ -217,6 +217,7 @@ export const routes = [
   "ContactUs",
   "Workflow",
   "AuditTrail",
+  "SEO"
 ];
 
 export const authDesc = [
