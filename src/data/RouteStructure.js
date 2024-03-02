@@ -226,7 +226,7 @@ export const routes = [
   "AuditTrail",
   "Workflow",
   "Archive",
-  "SEO"
+  "SEO",
 ];
 
 export const authDesc = [
@@ -235,4 +235,41 @@ export const authDesc = [
   "User, can visit and perform basic functionality.",
   "Reviewer, he can approve the tasks.",
   "Admin, has functionality similar to SA but with some exceptions.",
+];
+
+export const websiteName = [
+  "HomePage",
+  "Register",
+  "Login",
+  "PhoneLogin",
+  "VerifyOTP",
+  "ResetPassword",
+  "ForgetPassword",
+  "AboutUs",
+  "Debate",
+  "Debate",
+  "Rajyapal",
+  "Rajyapal",
+  "Search",
+  "ContactUs",
+  "Library",
+  "HelpDesk",
+  "MemberAssembly",
+  "MantriParishad",
+  "AllLink",
+  "Feedback",
+  "MemberAssembly",
+  "MemberCouncil",
+  "MemberCouncil",
+  "Gallery",
+  "LegislativeAssembly",
+  "LegislativeCouncil",
+  "Judgment",
+  "SessionCalender",
+  "Gazetteers",
+  "Publication",
+  "Gazette",
+  "ElectionResult",
+  "BudgetYear",
+  "LegislationsBill",
 ];
