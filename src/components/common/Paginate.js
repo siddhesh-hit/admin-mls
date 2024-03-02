@@ -89,12 +89,13 @@ const Paginate = ({ totalCount, perPage, handlePageChange, initialPage }) => {
     ));
   };
 
-  console.log(initialPage)
-
   return (
-
     <div className="paginationcss">
-      <ShowingEntries start={(initialPage - 1) * 10 + 1} end={(initialPage * perPage)} total={totalCount} />
+      <ShowingEntries
+        start={initialPage * 10 + 1}
+        end={(initialPage + 1) * perPage}
+        total={totalCount}
+      />
 
       <div className="paginationnew">
         <button onClick={goToPrevPage} disabled={currentPage === 1}>
