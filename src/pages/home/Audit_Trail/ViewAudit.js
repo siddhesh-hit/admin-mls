@@ -108,7 +108,6 @@ const ViewAudit = () => {
                     totalCount={count}
                     perPage={pageOptions.page}
                     handlePageChange={(currentPage) => {
-                      console.log(`Current page: ${currentPage}`);
                       setPageOptions((prev) => ({
                         ...prev,
                         current: currentPage,

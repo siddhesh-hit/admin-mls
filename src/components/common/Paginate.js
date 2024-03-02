@@ -3,14 +3,14 @@ import ShowingEntries from "../../table/ShowingEntries";
 
 const Paginate = ({ totalCount, perPage, handlePageChange, initialPage }) => {
   const [currentPage, setCurrentPage] = useState(initialPage);
-  const numberOfPages = Math.round(totalCount / perPage);
+  const numberOfPages = Math.floor(totalCount / perPage);
   const pageToShow = 5;
   const displayPage = [];
 
   const countPagesToShow = () => {
     if (numberOfPages <= pageToShow) {
       // Show all pages if total pages are less than or equal to the display limit
-      for (let i = 1; i <= numberOfPages; i++) {
+      for (let i = 0; i <= numberOfPages; i++) {
         displayPage.push(i);
       }
     } else {
@@ -18,24 +18,24 @@ const Paginate = ({ totalCount, perPage, handlePageChange, initialPage }) => {
 
       if (currentPage <= pageToShow / 2 + 1) {
         // Show first few pages and ellipses
-        for (let i = 1; i <= pageToShow; i++) {
+        for (let i = 0; i <= pageToShow; i++) {
           displayPage.push(i);
         }
         displayPage.push("...");
-        displayPage.push(lastPage - 1);
+        displayPage.push(lastPage);
       } else if (currentPage >= numberOfPages - pageToShow / 2) {
         // Show last few pages and ellipses
-        displayPage.push(1); // Show the first page
+        displayPage.push(0); // Show the first page
         displayPage.push("...");
         for (
           let i = Math.max(lastPage - pageToShow + 1, 2);
-          i <= lastPage - 1;
+          i <= lastPage;
           i++
         ) {
           displayPage.push(i);
         }
       } else {
-        displayPage.push(1); // Show the first page
+        displayPage.push(0); // Show the first page
         displayPage.push("...");
         for (
           let i = Math.max(currentPage - Math.floor(pageToShow / 2), 2);
@@ -45,32 +45,34 @@ const Paginate = ({ totalCount, perPage, handlePageChange, initialPage }) => {
           displayPage.push(i);
         }
         displayPage.push("...");
-        displayPage.push(lastPage - 1); // Show the last page
+        displayPage.push(lastPage); // Show the last page
       }
     }
     return displayPage;
   };
 
   useEffect(() => {
-    // Call `handlePageChange` to update data fetching/display logic when the page changes
     handlePageChange(currentPage);
   }, [currentPage]);
 
   const handleClick = (page) => {
-    if (page !== currentPage && page >= 1 && page <= numberOfPages) {
+    console.log(numberOfPages, page);
+
+    if (page >= 0 && page < numberOfPages + 1) {
       setCurrentPage(page);
     }
   };
 
   const goToPrevPage = () => {
-    if (currentPage > 1) {
+    if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
     }
   };
 
   const goToNextPage = () => {
-    console.log(currentPage, numberOfPages);
-    if (currentPage < numberOfPages) {
+    if (currentPage < numberOfPages - 1) {
+      // Adjust condition
+
       setCurrentPage(currentPage + 1);
     }
   };
@@ -82,7 +84,7 @@ const Paginate = ({ totalCount, perPage, handlePageChange, initialPage }) => {
         key={index}
         onClick={() => handleClick(page)}
       >
-        {page}
+        {page === "..." ? page : page + 1}
       </span>
     ));
   };
