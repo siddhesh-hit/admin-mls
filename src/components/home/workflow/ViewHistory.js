@@ -5,7 +5,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import retrieve from "../../../images/retrieve.svg";
 
 import { getApi, postApi } from "../../../services/axiosInterceptors";
-import { pageName } from "../../../data/fileName";
+import { newPageName } from "../../../data/fileName";
 import { toast } from "react-toastify";
 
 const ViewHistory = () => {
@@ -93,7 +93,7 @@ const ViewHistory = () => {
                         {/* <td>{item.modelId}</td> */}
                         <td>
                           <Link
-                            to={`/${pageName[item?.modelName]}?id=${
+                            to={`/${newPageName[item?.modelName]}?id=${
                               item._id
                             }&pending=update`}
                           >

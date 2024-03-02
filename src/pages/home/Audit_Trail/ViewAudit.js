@@ -1,26 +1,32 @@
 import { useEffect, useState } from "react";
-import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import { Link } from "react-router-dom";
-
 import Footer from "../../../components/common/Footer";
 import Header from "../../../components/common/Header";
 import Menu from "../../../components/common/Menu";
 
 import { getApi } from "../../../services/axiosInterceptors";
+import Paginate from "../../../components/common/Paginate";
 
 const ViewAudit = () => {
-  const [data, setData] = useState({
-    create: [],
-    update: [],
-    delete: [],
-  });
-
+  const [data, setData] = useState([]);
+  const [count, setCount] = useState("");
   const [query, setQuery] = useState("");
 
+  const [pageOptions, setPageOptions] = useState({
+    current: 0,
+    page: 10,
+  });
+
   const fetchData = async (query = "") => {
-    await getApi(query === "null" ? `audit?userId=${null}` : `audit`)
+    await getApi(
+      query === "null"
+        ? `audit?userId=${false}`
+        : query === "user"
+        ? `audit?userId=${true}`
+        : `audit?perPage=${pageOptions.current}&perLimit=${pageOptions.page}`
+    )
       .then((res) => {
         setData(res.data.data);
+        setCount(res.data.count);
       })
       .catch((err) => {
         console.log(err);
@@ -32,13 +38,15 @@ const ViewAudit = () => {
   }, []);
 
   const handleChange = async (e) => {
-    console.log(e.target.value);
+    // console.log(e.target.value);
     setQuery(e.target.value);
   };
 
   useEffect(() => {
     fetchData(query);
-  }, [query]);
+  }, [query, pageOptions.current, pageOptions.page]);
+
+  // console.log(query);
 
   return (
     <div>
@@ -93,6 +101,18 @@ const ViewAudit = () => {
                       )}
                     </tbody>
                   </table>
+                  <Paginate
+                    totalCount={count}
+                    perPage={pageOptions.page}
+                    handlePageChange={(currentPage) => {
+                      console.log(`Current page: ${currentPage}`);
+                      setPageOptions((prev) => ({
+                        ...prev,
+                        current: currentPage,
+                      }));
+                    }}
+                    initialPage={pageOptions.current}
+                  />
                 </div>
               </div>
             </div>
