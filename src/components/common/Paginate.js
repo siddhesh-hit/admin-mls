@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ShowingEntries from "../../table/ShowingEntries";
 
 const Paginate = ({ totalCount, perPage, handlePageChange, initialPage }) => {
   const [currentPage, setCurrentPage] = useState(initialPage);
@@ -77,14 +78,8 @@ const Paginate = ({ totalCount, perPage, handlePageChange, initialPage }) => {
   const renderPageLinks = () => {
     return countPagesToShow().map((page, index) => (
       <span
+        className={`${page === currentPage ? "active" : "inactive"}`}
         key={index}
-        style={{
-          border: "1px solid black",
-          padding: "5px",
-          margin: "2px",
-          cursor: page === currentPage ? "default" : "pointer",
-          backgroundColor: page === currentPage ? "red" : "white",
-        }}
         onClick={() => handleClick(page)}
       >
         {page}
@@ -92,18 +87,25 @@ const Paginate = ({ totalCount, perPage, handlePageChange, initialPage }) => {
     ));
   };
 
+  console.log(initialPage)
+
   return (
-    <div>
-      <button onClick={goToPrevPage} disabled={currentPage === 1}>
-        Prev
-      </button>
-      {renderPageLinks()}
-      <button
-        onClick={goToNextPage}
-        disabled={currentPage === numberOfPages - 1}
-      >
-        Next
-      </button>
+
+    <div className="paginationcss">
+      <ShowingEntries start={(initialPage - 1) * 10 + 1} end={(initialPage * perPage)} total={totalCount} />
+
+      <div className="paginationnew">
+        <button onClick={goToPrevPage} disabled={currentPage === 1}>
+          «
+        </button>
+        {renderPageLinks()}
+        <button
+          onClick={goToNextPage}
+          disabled={currentPage === numberOfPages - 1}
+        >
+          »
+        </button>
+      </div>
     </div>
   );
 };

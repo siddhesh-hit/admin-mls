@@ -5,6 +5,8 @@ import Menu from "../../../components/common/Menu";
 
 import { getApi } from "../../../services/axiosInterceptors";
 import Paginate from "../../../components/common/Paginate";
+import { Col, Row } from "react-bootstrap";
+import TotalEntries from "../../../table/TotalEntries";
 
 const ViewAudit = () => {
   const [data, setData] = useState([]);
@@ -21,8 +23,8 @@ const ViewAudit = () => {
       query === "null"
         ? `audit?userId=${false}`
         : query === "user"
-        ? `audit?userId=${true}`
-        : `audit?perPage=${pageOptions.current}&perLimit=${pageOptions.page}`
+          ? `audit?userId=${true}`
+          : `audit?perPage=${pageOptions.current}&perLimit=${pageOptions.page}`
     )
       .then((res) => {
         setData(res.data.data);
@@ -68,6 +70,7 @@ const ViewAudit = () => {
               <option value={"user"}>User</option>
               <option value={"null"}>Guest</option>
             </select>
+            <TotalEntries />
             <div className="card card-info">
               <div className="row">
                 <div className="col-lg-12">

@@ -1769,3 +1769,85 @@ td.markyesorno input[type=checkbox] {
   border-radius: 5px;
   margin-bottom: 15px !important;
 }
+
+.paginationcss {
+  align-items: center;
+  justify-content: end;
+  display: flex;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-right: 10px;
+}
+
+.paginationnew span {
+  display: block;
+  text-decoration: none;
+  color: #000;
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  float: left;
+}
+
+.paginationnew button {
+  display: block;
+  text-decoration: none;
+  color: #000;
+  cursor: pointer;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  float: left;
+}
+
+span.active {
+  background-color: #000088;
+  color: #fff;
+}
+
+.dt-length {
+  margin-top: 15px;
+  margin-left: 5px;
+  margin-bottom: 15px;
+}
+
+select.dt-length-control {
+  height: 35px !important;
+  background-color: #ffffff;
+  border: 1px solid #000088;
+  border-radius: 5px;
+  width: 70px;
+  margin-right: 10px;
+  padding: 0px 10px;
+}
+
+.dt-length label {
+  color: #008;
+  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.dt-search {
+  text-align: right;
+}
+
+input.searchtext {
+  height: 35px !important;
+  background-color: #ffffff;
+  border: 1px solid #000088;
+  border-radius: 5px;
+  margin-left: 10px;
+  padding: 0px 10px;
+}
+
+.dt-search label {
+  color: #008;
+  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
+}
+
+.dt-info {
+  color: #008;
+  font-size: 15px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+}
