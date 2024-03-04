@@ -23,8 +23,8 @@ const ViewAudit = () => {
       query === "null"
         ? `audit?userId=${false}`
         : query === "user"
-          ? `audit?userId=${true}`
-          : `audit?perPage=${pageOptions.current}&perLimit=${pageOptions.page}`
+        ? `audit?userId=${true}`
+        : `audit?perPage=${pageOptions.current}&perLimit=${pageOptions.page}`
     )
       .then((res) => {
         setData(res.data.data);
