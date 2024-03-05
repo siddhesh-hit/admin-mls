@@ -3,10 +3,6 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { OverlayTrigger, Tooltip, Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 
-import Header from "../../components/common/Header";
-import Menu from "../../components/common/Menu";
-import Footer from "../../components/common/Footer";
-
 import { API } from "../../config/api";
 import { getApiById, putApi } from "../../services/axiosInterceptors";
 
@@ -61,8 +57,6 @@ const ViewWorkflowCalendar = () => {
 
   return (
     <>
-      <Header />
-      <Menu />
       <div className="content-wrapper pt-4">
         <div className="contentofpages">
           <h4 className="page-title">• View Session Calendar</h4>
@@ -193,7 +187,6 @@ const ViewWorkflowCalendar = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

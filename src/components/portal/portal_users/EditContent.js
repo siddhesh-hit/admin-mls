@@ -2,26 +2,16 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { getApiById, putApi } from "../../../services/axiosInterceptors";
+import { getApiById, getApi, putApi } from "../../../services/axiosInterceptors";
 
 const EditContent = () => {
+  const [navigation, setNavigation] = useState([])
   const [server, setServer] = useState({});
 
   const location = useLocation();
   const id = location.search.split("=")[1];
   const navigate = useNavigate();
 
-  const fetchData = async () => {
-    await getApiById("user", id)
-      .then((res) => {
-        setServer(res.data.data);
-        setServer((prev) => ({
-          ...prev,
-          date_of_birth: prev.date_of_birth.split("T")[0],
-        }));
-      })
-      .catch((err) => console.log(err));
-  };
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -67,9 +57,27 @@ const EditContent = () => {
       });
   };
 
+
   useEffect(() => {
-    fetchData();
-  }, []);
+    const fetchData = async () => {
+      await getApi('navigation').then((res) => {
+        if (res.data.success) {
+          setNavigation(res.data.data)
+        }
+      }).catch((err) => console.log(err))
+
+      await getApiById("user", id)
+        .then((res) => {
+          setServer(res.data.data);
+          setServer((prev) => ({
+            ...prev,
+            date_of_birth: prev.date_of_birth.split("T")[0],
+          }));
+        })
+        .catch((err) => console.log(err));
+    }
+    fetchData()
+  }, [])
 
   console.log(server);
 
@@ -239,6 +247,27 @@ const EditContent = () => {
                         <option value={"Gender 3"}>Gender 3</option>
                         <option value={"Gender 4"}>Gender 4</option>
                         <option value={"Gender 5"}>Gender 5</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <label
+                      htmlFor="inputPassword3"
+                      className="col-sm-3 col-form-label"
+                    >
+                      Edit Interest Area :
+                    </label>
+                    <div className="col-sm-9">
+                      <select
+                        className="form-control select2 mb-3"
+                        name="interest_area"
+                        defaultValue={server.interest_area}
+                        onChange={handleChange}
+                      >
+                        <option hidden>Enter Interest Area</option>
+                        {navigation?.map((item, index) => (
+                          <option key={index} value={item._id}>{item?.english?.navigation}</option>
+                        ))}
                       </select>
                     </div>
                   </div>

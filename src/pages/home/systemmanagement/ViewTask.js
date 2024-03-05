@@ -2,11 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
-import add from "../../../images/add.svg";
-
-import Header from "../../../components/common/Header";
-import Menu from "../../../components/common/Menu";
-import Footer from "../../../components/common/Footer";
 import { getApi } from "../../../services/axiosInterceptors";
 import { routes } from "../../../data/RouteStructure";
 
@@ -29,8 +24,6 @@ const ViewTask = () => {
 
   return (
     <div>
-      <Header />
-      <Menu />
       <div className="content-wrapper pt-4">
         <div className="contentofpages">
           {/* <Link className="addpagess" to="/AddTask">
@@ -126,7 +119,6 @@ const ViewTask = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };
