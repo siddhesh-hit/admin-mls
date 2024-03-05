@@ -1,10 +1,6 @@
 import { useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
-import Header from "../../../components/common/Header";
-import Menu from "../../../components/common/Menu";
-import Footer from "../../../components/common/Footer";
-
 import { auth } from "../../../data/RouteStructure";
 import { getApi } from "../../../services/axiosInterceptors";
 import { Link } from "react-router-dom";
@@ -21,8 +17,6 @@ const UserRole = () => {
 
   return (
     <div>
-      <Header />
-      <Menu />
       <div className="content-wrapper pt-4">
         <div className="contentofpages">
           <div className="panell">Role Based User Access Management System</div>
@@ -155,7 +149,6 @@ const UserRole = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
-import Header from "../../../components/common/Header";
-import Menu from "../../../components/common/Menu";
-import Footer from "../../../components/common/Footer";
-
 import { auth } from "../../../data/RouteStructure";
 import { getApi, putApi } from "../../../services/axiosInterceptors";
 import { toast } from "react-toastify";
@@ -67,8 +63,6 @@ const EditRole = () => {
 
   return (
     <div>
-      <Header />
-      <Menu />
       <div className="content-wrapper pt-4">
         <div className="contentofpages">
           <div className="panell">Edit Role Based Access</div>
@@ -178,7 +172,6 @@ const EditRole = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

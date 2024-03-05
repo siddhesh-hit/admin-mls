@@ -2,10 +2,6 @@ import { useEffect, useState } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import Footer from "../../../components/common/Footer";
-import Header from "../../../components/common/Header";
-import Menu from "../../../components/common/Menu";
-import add from "../../../images/add.svg";
 import history from "../../../images/history.svg";
 
 import { getApi, postApi, putApi } from "../../../services/axiosInterceptors";
@@ -44,8 +40,6 @@ const ViewArchive = () => {
 
   return (
     <div>
-      <Header />
-      <Menu />
       <div className="content-wrapper pt-4">
         <div className="contentofpages">
           <Link to="/ViewWorkflowHistory" className="addpagess">
@@ -166,7 +160,6 @@ const ViewArchive = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

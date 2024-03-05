@@ -1,30 +1,28 @@
 import { useEffect, useState } from "react";
-import Footer from "../../../components/common/Footer";
-import Header from "../../../components/common/Header";
-import Menu from "../../../components/common/Menu";
+
+import Paginate from "../../../components/common/Paginate";
+import TotalEntries from "../../../table/TotalEntries";
 
 import { getApi } from "../../../services/axiosInterceptors";
-import Paginate from "../../../components/common/Paginate";
-import { Col, Row } from "react-bootstrap";
-import TotalEntries from "../../../table/TotalEntries";
 
 const ViewAudit = () => {
   const [data, setData] = useState([]);
-  const [count, setCount] = useState("");
-  const [query, setQuery] = useState("");
+  const [count, setCount] = useState(0);
+  const [query, setQuery] = useState({
+    user: "",
+    message: "",
+  });
 
   const [pageOptions, setPageOptions] = useState({
     current: 0,
     page: 10,
   });
 
-  const fetchData = async (query = "") => {
+  const fetchData = async () => {
     await getApi(
-      query === "null"
-        ? `audit?userId=${false}`
-        : query === "user"
-        ? `audit?userId=${true}`
-        : `audit?perPage=${pageOptions.current}&perLimit=${pageOptions.page}`
+      query.user
+        ? `audit?perPage=${pageOptions.current}&perLimit=${pageOptions.page}&message=${query.message}&userId=${query.user}`
+        : `audit?perPage=${pageOptions.current}&perLimit=${pageOptions.page}&message=${query.message}`
     )
       .then((res) => {
         setData(res.data.data);
@@ -39,21 +37,12 @@ const ViewAudit = () => {
     fetchData();
   }, []);
 
-  const handleChange = async (e) => {
-    // console.log(e.target.value);
-    setQuery(e.target.value);
-  };
-
   useEffect(() => {
     fetchData(query);
-  }, [query, pageOptions.current, pageOptions.page]);
-
-  // console.log(query);
+  }, [query, pageOptions.current, pageOptions.page, query.message]);
 
   return (
     <div>
-      <Header />
-      <Menu />
       <div className="content-wrapper pt-4">
         <div className="contentofpages">
           <h4 className="page-title">• View All Audits</h4>
@@ -63,14 +52,34 @@ const ViewAudit = () => {
             <select
               className="form-control mb-4"
               name="election_data.constituency"
-              value={query}
-              onChange={handleChange}
+              value={query.user}
+              onChange={(e) =>
+                setQuery((prev) => ({
+                  ...prev,
+                  user: e.target.value,
+                }))
+              }
             >
               <option hidden>Select Profile</option>
               <option value={"user"}>User</option>
-              <option value={"null"}>Guest</option>
+              <option value={"guest"}>Guest</option>
             </select>
-            <TotalEntries />
+
+            <TotalEntries
+              returnCount={(data) =>
+                setPageOptions((prev) => ({
+                  ...prev,
+                  page: data,
+                }))
+              }
+              returnSearch={(data) =>
+                setQuery((prev) => ({
+                  ...prev,
+                  message: data,
+                }))
+              }
+            />
+
             <div className="card card-info">
               <div className="row">
                 <div className="col-lg-12">
@@ -104,24 +113,25 @@ const ViewAudit = () => {
                       )}
                     </tbody>
                   </table>
-                  <Paginate
-                    totalCount={count}
-                    perPage={pageOptions.page}
-                    handlePageChange={(currentPage) => {
-                      setPageOptions((prev) => ({
-                        ...prev,
-                        current: currentPage,
-                      }));
-                    }}
-                    initialPage={pageOptions.current}
-                  />
+                  {count > 0 && (
+                    <Paginate
+                      totalCount={count}
+                      perPage={pageOptions.page}
+                      handlePageChange={(currentPage) => {
+                        setPageOptions((prev) => ({
+                          ...prev,
+                          current: currentPage,
+                        }));
+                      }}
+                      initialPage={pageOptions.current}
+                    />
+                  )}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

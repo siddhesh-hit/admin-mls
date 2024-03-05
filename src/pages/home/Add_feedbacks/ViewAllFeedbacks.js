@@ -3,10 +3,6 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-import Footer from "../../../components/common/Footer";
-import Header from "../../../components/common/Header";
-import Menu from "../../../components/common/Menu";
-
 import { getApi, deleteApi } from "../../../services/axiosInterceptors";
 
 const ViewAllFeedbacks = () => {
@@ -44,8 +40,6 @@ const ViewAllFeedbacks = () => {
 
   return (
     <div>
-      <Header />
-      <Menu />
       <div className="content-wrapper pt-4">
         <div className="contentofpages">
           <h4 className="page-title">• View All Feedbacks</h4>
@@ -123,7 +117,6 @@ const ViewAllFeedbacks = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

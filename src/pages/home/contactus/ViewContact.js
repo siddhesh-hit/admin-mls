@@ -1,10 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-import Footer from "../../../components/common/Footer";
-import Header from "../../../components/common/Header";
-import Menu from "../../../components/common/Menu";
-
 import add from "../../../images/add.svg";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { getApi } from "../../../services/axiosInterceptors";
@@ -28,8 +24,6 @@ const ViewContact = () => {
 
   return (
     <div>
-      <Header />
-      <Menu />
       <div className="content-wrapper pt-4">
         <div className="contentofpages">
           <Link className="addpagess" to="/AddContact">
@@ -117,8 +111,6 @@ const ViewContact = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };
