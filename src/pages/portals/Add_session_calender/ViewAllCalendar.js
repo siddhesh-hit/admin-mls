@@ -3,9 +3,6 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
-import Footer from "../../../components/common/Footer";
-import Header from "../../../components/common/Header";
-import Menu from "../../../components/common/Menu";
 import add from "../../../images/add.svg";
 
 import {
@@ -65,8 +62,6 @@ const ViewAllCalendar = () => {
 
   return (
     <div>
-      <Header />
-      <Menu />
       <div className="content-wrapper pt-4">
         <div className="contentofpages">
           <Link to="/AddSessionCalendar" className="addpagess">
@@ -166,7 +161,6 @@ const ViewAllCalendar = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

@@ -1,9 +1,5 @@
 import { useState } from "react";
 
-import Footer from "../../../components/common/Footer";
-import Header from "../../../components/common/Header";
-import Menu from "../../../components/common/Menu";
-
 const ViewAllLibraryDocs = () => {
   const [isToggled, setIsToggled] = useState(false);
 
@@ -12,8 +8,6 @@ const ViewAllLibraryDocs = () => {
   };
   return (
     <div>
-      <Header />
-      <Menu />
       <div className="content-wrapper pt-4">
         <div className="contentofpages">
           <h4 className="page-title">• View All Library Documents</h4>
@@ -65,7 +59,6 @@ const ViewAllLibraryDocs = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

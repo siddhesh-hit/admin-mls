@@ -2,10 +2,6 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Select from "react-select";
 
-import Header from "../../../components/common/Header";
-import Menu from "../../../components/common/Menu";
-import Footer from "../../../components/common/Footer";
-
 import add from "../../../images/back.svg";
 import { routes, auth } from "../../../data/RouteStructure";
 import { getApi } from "../../../services/axiosInterceptors";
@@ -33,8 +29,6 @@ const AddTask = () => {
 
   return (
     <div>
-      <Header />
-      <Menu />
       <div className="content-wrapper pt-4">
         <div className="contentofpages">
           <Link className="addpagess" to={"/ViewTask"}>
@@ -146,7 +140,6 @@ const AddTask = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

@@ -56,8 +56,6 @@ const Paginate = ({ totalCount, perPage, handlePageChange, initialPage }) => {
   }, [currentPage]);
 
   const handleClick = (page) => {
-    console.log(numberOfPages, page);
-
     if (page >= 0 && page < numberOfPages + 1) {
       setCurrentPage(page);
     }
@@ -92,8 +90,12 @@ const Paginate = ({ totalCount, perPage, handlePageChange, initialPage }) => {
   return (
     <div className="paginationcss">
       <ShowingEntries
-        start={initialPage * 10 + 1}
-        end={(initialPage + 1) * perPage}
+        start={initialPage * perPage + 1}
+        end={
+          (initialPage + 1) * perPage > totalCount
+            ? totalCount
+            : (initialPage + 1) * perPage > totalCount
+        }
         total={totalCount}
       />
 

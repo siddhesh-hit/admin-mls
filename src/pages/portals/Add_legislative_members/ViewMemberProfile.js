@@ -1,7 +1,3 @@
-import Footer from "../../../components/common/Footer";
-import Header from "../../../components/common/Header";
-import Menu from "../../../components/common/Menu";
-
 import { API } from "../../../config/api";
 import { useDataFetchingForBothApis } from "../../../hooks/useDataFetchingForBothApis";
 import LoadingComponent from "../../../components/common/Loading";
@@ -14,8 +10,6 @@ const ViewMemberProfile = () => {
 
   return (
     <div>
-      <Header />
-      <Menu />
       <div className="content-wrapper pt-4">
         <div className="contentofpages">
           <h4 className="page-title">• Legislative Member Profile</h4>
@@ -269,7 +263,6 @@ const ViewMemberProfile = () => {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

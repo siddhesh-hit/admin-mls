@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
-import { postApi } from "../../../services/axiosInterceptors";
+import { getApi, postApi } from "../../../services/axiosInterceptors";
 import { useNavigate } from "react-router-dom";
 
 const Content = () => {
+  const [navigation, setNavigation] = useState([]);
   const [data, setData] = useState({
     full_name: "",
     houses: "",
@@ -14,6 +15,7 @@ const Content = () => {
     phone_number: "",
     date_of_birth: "",
     gender: "",
+    interest_area: "",
     user_image: "",
   });
 
@@ -66,7 +68,18 @@ const Content = () => {
       });
   };
 
-  console.log(data);
+  useEffect(() => {
+    const fetchData = async () => {
+      await getApi("navigation")
+        .then((res) => {
+          if (res.data.success) {
+            setNavigation(res.data.data);
+          }
+        })
+        .catch((err) => console.log(err));
+    };
+    fetchData();
+  }, []);
 
   return (
     <div className="content-wrapper pt-4">
@@ -234,6 +247,29 @@ const Content = () => {
                         <option>Gender 3</option>
                         <option>Gender 4</option>
                         <option>Gender 5</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div className="form-group row">
+                    <label
+                      htmlFor="inputPassword3"
+                      className="col-sm-3 col-form-label"
+                    >
+                      Add Interest Area :
+                    </label>
+                    <div className="col-sm-9">
+                      <select
+                        className="form-control select2 mb-3"
+                        name="interest_area"
+                        defaultValue={data.interest_area}
+                        onChange={handleChange}
+                      >
+                        <option hidden>Enter Interest Area</option>
+                        {navigation?.map((item, index) => (
+                          <option key={index} value={item._id}>
+                            {item?.english?.navigation}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>

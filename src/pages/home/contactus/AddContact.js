@@ -4,9 +4,6 @@ import { toast } from "react-toastify";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
-import Footer from "../../../components/common/Footer";
-import Header from "../../../components/common/Header";
-import Menu from "../../../components/common/Menu";
 import add from "../../../images/back.svg";
 
 import { postApi } from "../../../services/axiosInterceptors";
@@ -71,8 +68,6 @@ const AddContact = () => {
 
   return (
     <div>
-      <Header />
-      <Menu />
       <div className="content-wrapper pt-4">
         <div className="contentofpages">
           <a className="addpagess" href="/Dashboard">
@@ -225,8 +220,6 @@ const AddContact = () => {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 };
