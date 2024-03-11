@@ -21,31 +21,13 @@ const EditContent = () => {
       .catch((err) => console.log(err));
   };
 
-  const handleChange = (e, index) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
-    const [field, subField] = name.split(".");
 
-    if (subField) {
-      if (!updatedField.includes(subField)) {
-        setUpdatedField((prev) => [...prev, subField]);
-      }
-
-      setData((prev) => ({
-        ...prev,
-        [field]: {
-          ...prev[field],
-          [subField]: value,
-        },
-      }));
-    } else {
-      if (!updatedField.includes(name)) {
-        setUpdatedField((prev) => [...prev, name]);
-      }
-      setData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
-    }
+    setData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
   const handleSubmit = async () => {
@@ -75,6 +57,8 @@ const EditContent = () => {
     fetchData();
   }, []);
 
+  console.log(data);
+
   return (
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
@@ -86,7 +70,7 @@ const EditContent = () => {
         <div className="card card-info">
           <div className="row mb-4 mt-4">
             <div className="col-lg-9">
-              {data && data.marathi && data.english && (
+              {data && (
                 <form className="form-horizontal border_names">
                   <div className="card-body">
                     <div className="formada">
@@ -100,19 +84,11 @@ const EditContent = () => {
                         <div className="col-sm-9">
                           <input
                             type="number"
-                            name="english.assembly_number"
-                            defaultValue={data.english.assembly_number}
+                            name="assembly_number"
+                            defaultValue={data.assembly_number}
                             onChange={handleChange}
                             className="form-control mb-3"
                             placeholder="Enter Assembly Number"
-                          />
-                          <input
-                            type="number"
-                            name="marathi.assembly_number"
-                            defaultValue={data.marathi.assembly_number}
-                            onChange={handleChange}
-                            className="form-control mb-3"
-                            placeholder="विधानसभा क्रमांक प्रविष्ट करा"
                           />
                         </div>
                       </div>
@@ -126,21 +102,12 @@ const EditContent = () => {
                         <div className="col-sm-9">
                           <textarea
                             type="text"
-                            name="english.assembly_name"
-                            defaultValue={data.english.assembly_name}
+                            name="assembly_name"
+                            defaultValue={data.assembly_name}
                             onChange={handleChange}
                             style={{ height: "auto !important" }}
                             className="form-control mb-3"
                             placeholder="Enter Assembly"
-                          />
-                          <textarea
-                            type="text"
-                            name="marathi.assembly_name"
-                            defaultValue={data.marathi.assembly_name}
-                            onChange={handleChange}
-                            style={{ height: "auto !important" }}
-                            className="form-control"
-                            placeholder="विधानसभा नाव प्रविष्ट करा"
                           />
                         </div>
                       </div>
@@ -181,26 +148,6 @@ const EditContent = () => {
                           />
                         </div>
                       </div>
-                      {/* <div className="form-group row mb-5">
-                        <label
-                          htmlFor="inputPassword3"
-                          className="col-sm-3 col-form-label"
-                        >
-                          *Edit Current Assembly :
-                        </label>
-                        <div className="col-sm-9">
-                          <select
-                            className="form-control"
-                            name="current_assembly"
-                            value={data.current_assembly}
-                            onChange={handleChange}
-                          >
-                            <option hidden>Select Current Assembly</option>
-                            <option>Yes</option>
-                            <option>No</option>
-                          </select>
-                        </div>
-                      </div> */}
                     </div>
                   </div>
                 </form>

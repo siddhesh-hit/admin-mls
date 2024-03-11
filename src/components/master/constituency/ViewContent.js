@@ -63,16 +63,14 @@ const ViewContent = () => {
               <table className="table table-striped table-bordered mb-0 view_vidhan_mandal">
                 <thead>
                   <tr>
-                    <th>Year</th>
-                    <th>Constituency name</th>
-                    <th>मतदारसंघाचे नाव</th>
-                    <th>Assembly Number</th>
-                    <th>विधानसभा क्रमांक</th>
-                    <th>Year</th>
-                    <th>Constituency Type</th>
-                    <th>मतदारसंघाचा प्रकार</th>
                     <th>Constituency Name</th>
-                    <th>मतदारसंघाचे नाव</th>
+                    <th>Constituency Number</th>
+                    <th>Constituency Type</th>
+                    <th>Year</th>
+                    <th>Constituency Name</th>
+                    <th>Assembly Number</th>
+                    <th>Constituency Type</th>
+                    <th>Year</th>
                     <th>Edit</th>
                     <th>Delete</th>
                   </tr>
@@ -82,57 +80,36 @@ const ViewContent = () => {
                     <>
                       {data.map((item, index) => (
                         <tr key={index}>
+                          {/* council */}
                           <td>
-                            <h4>
-                              {new Date(
-                                item.english.assembly.year
-                              ).getFullYear() || "-"}
-                            </h4>
+                            <h4>{item.council.constituency_name || "-"}</h4>
                           </td>
-
+                          <td>
+                            <h4>{item.council.constituency_number || "-"}</h4>
+                          </td>
+                          <td>
+                            <h4>{item.council.constituency_type || "-"}</h4>
+                          </td>
+                          <td>
+                            <h4>{item.council.year || "-"}</h4>
+                          </td>
+                          {/* assembly */}
+                          <td>
+                            <h4>{item.assembly.constituency_name || "-"}</h4>
+                          </td>
                           <td>
                             <h4>
-                              {item.english.assembly.constituency_assembly ||
+                              {item.assembly.assembly_number?.assembly_name ||
                                 "-"}
                             </h4>
                           </td>
                           <td>
+                            <h4>{item.assembly.constituency_type || "-"}</h4>
+                          </td>
+                          <td>
                             <h4>
-                              {item.marathi.assembly.constituency_assembly ||
+                              {new Date(item.assembly.year).getFullYear() ||
                                 "-"}
-                            </h4>
-                          </td>
-                          <td>
-                            <h4>
-                              {item.english.assembly.assembly_number || "-"}
-                            </h4>
-                          </td>
-                          <td>
-                            <h4>
-                              {item.marathi.assembly.assembly_number || "-"}
-                            </h4>
-                          </td>
-                          <td>
-                            <h4>{item.english.council.year || "-"}</h4>
-                          </td>
-                          <td>
-                            <h4>
-                              {item.english.council.constituency_type || "-"}
-                            </h4>
-                          </td>
-                          <td>
-                            <h4>
-                              {item.marathi.council.constituency_type || "-"}
-                            </h4>
-                          </td>
-                          <td>
-                            <h4>
-                              {item.english.council.constituency_name || "-"}
-                            </h4>
-                          </td>
-                          <td>
-                            <h4>
-                              {item.marathi.council.constituency_name || "-"}
                             </h4>
                           </td>
                           <td>

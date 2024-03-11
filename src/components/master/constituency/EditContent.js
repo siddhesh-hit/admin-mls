@@ -5,12 +5,17 @@ import DatePicker from "react-datepicker";
 
 import back from "../../../images/back.svg";
 
-import { getApiById, putApi } from "../../../services/axiosInterceptors";
+import {
+  getApi,
+  getApiById,
+  putApi,
+} from "../../../services/axiosInterceptors";
 
 const EditContent = () => {
   const [data, setData] = useState({});
   const [updatedField, setUpdatedField] = useState([]);
   const [isToggled, setIsToggled] = useState(true);
+  const [assembly, setAssembly] = useState([]);
 
   const [state, setState] = useState({
     assembly: true,
@@ -24,7 +29,25 @@ const EditContent = () => {
 
   const fetchData = async () => {
     await getApiById("constituency", id)
-      .then((res) => setData(res.data.data))
+      .then((res) => {
+        setData(res.data.data);
+        if (res.data.data.isHouse === "Constituency") {
+          setIsToggled(false);
+          setState((prev) => ({
+            ...prev,
+            assembly: false,
+            council: true,
+          }));
+        }
+      })
+      .catch((err) => console.log(err));
+
+    await getApi("assembly")
+      .then((res) => {
+        if (res.data.success) {
+          setAssembly(res.data.data);
+        }
+      })
       .catch((err) => console.log(err));
   };
 
@@ -37,29 +60,17 @@ const EditContent = () => {
     }));
     setData((prev) => ({
       ...prev,
-      marathi: {
-        assembly: {
-          constituency_assembly: "",
-          assembly_number: "",
-          year: "",
-        },
-        council: {
-          constituency_type: "",
-          constituency_name: "",
-          year: "",
-        },
+      assembly: {
+        constituency_name: "",
+        assembly_number: "",
+        constituency_type: "",
+        year: "",
       },
-      english: {
-        assembly: {
-          constituency_assembly: "",
-          assembly_number: "",
-          year: "",
-        },
-        council: {
-          constituency_type: "",
-          constituency_name: "",
-          year: "",
-        },
+      council: {
+        constituency_name: "",
+        constituency_number: "",
+        constituency_type: "",
+        year: "",
       },
       isHouse: !state.assembly ? "Assembly" : "Constituency",
     }));
@@ -67,18 +78,13 @@ const EditContent = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const [lang, field, subField] = name.split(".");
-
-    console.log(lang, field, subField);
+    const [field, subField] = name.split(".");
 
     setData((prev) => ({
       ...prev,
-      [lang]: {
-        ...prev[lang],
-        [field]: {
-          ...prev[lang][field],
-          [subField]: value,
-        },
+      [field]: {
+        ...prev[field],
+        [subField]: value,
       },
     }));
   };
@@ -87,54 +93,33 @@ const EditContent = () => {
     if (name === "assembly") {
       setData((prev) => ({
         ...prev,
-        english: {
-          ...prev.english,
-          assembly: {
-            ...prev.english.assembly,
-            year: e,
-          },
-        },
-        marathi: {
-          ...prev.marathi,
-          assembly: {
-            ...prev.marathi.assembly,
-            year: e,
-          },
+        assembly: {
+          ...prev.assembly,
+          year: e,
         },
       }));
     } else {
       setData((prev) => ({
         ...prev,
-        english: {
-          ...prev.english,
-          council: {
-            ...prev.english.council,
-            year: e,
-          },
-        },
-        marathi: {
-          ...prev.marathi,
-          council: {
-            ...prev.marathi.council,
-            year: e,
-          },
+        council: {
+          ...prev.council,
+          year: e,
         },
       }));
     }
   };
 
   const handleSubmit = async () => {
-    data.isUpdated = true;
     await putApi("constituency", id, data)
       .then((res) => {
         if (res.data.success) {
-          let message = "";
-          updatedField.map((ele, index, array) =>
-            index === array.length - 1
-              ? (message += `${ele.replace(/_/g, " ").toUpperCase()}`)
-              : (message += `${ele.replace(/_/g, " ").toUpperCase()}, `)
-          );
-          toast.success(`${message ? message : "Constituency"} updated.`);
+          // let message = "";
+          // updatedField.map((ele, index, array) =>
+          //   index === array.length - 1
+          //     ? (message += `${ele.replace(/_/g, " ").toUpperCase()}`)
+          //     : (message += `${ele.replace(/_/g, " ").toUpperCase()}, `)
+          // );
+          toast.success(`Constituency updated.`);
           setTimeout(() => {
             navigate("/ViewConstituency");
           }, 1100);
@@ -184,7 +169,7 @@ const EditContent = () => {
                 </div>
               </div>
               <form className="form-horizontal">
-                {data && data.marathi && data.english && (
+                {data && (
                   <>
                     <div className="card-body">
                       <div className="formada border_names">
@@ -195,30 +180,19 @@ const EditContent = () => {
                                 htmlFor="inputPassword3"
                                 className="col-sm-3 col-form-label"
                               >
-                                *Add Constituency Name :
+                                *Edit Constituency Name :
                               </label>
                               <div className="col-sm-9">
                                 <input
                                   type="text"
-                                  name={`english.assembly.constituency_assembly`}
+                                  name={`assembly.constituency_name`}
                                   onChange={handleChange}
                                   defaultValue={
-                                    data?.english.assembly.constituency_assembly
+                                    data?.assembly?.constituency_name
                                   }
                                   className="form-control mb-3"
                                   placeholder="Enter Constitution Name"
                                 />
-                                <input
-                                  type="text"
-                                  name={`marathi.assembly.constituency_assembly`}
-                                  onChange={handleChange}
-                                  defaultValue={
-                                    data?.marathi?.assembly
-                                      .constituency_assembly
-                                  }
-                                  className="form-control mb-3"
-                                  placeholder="मतदारसंघाचे नाव प्रविष्ट करा"
-                                />
                               </div>
                             </div>
                             <div className="form-group row mb-5">
@@ -226,28 +200,41 @@ const EditContent = () => {
                                 htmlFor="inputPassword3"
                                 className="col-sm-3 col-form-label"
                               >
-                                *Add Assembly Number :
+                                *Edit Assembly Number :
+                              </label>
+                              <div className="col-sm-9">
+                                <select
+                                  name={`assembly.assembly_number`}
+                                  onChange={handleChange}
+                                  value={data?.assembly?.assembly_number}
+                                  className="form-control mb-3"
+                                >
+                                  <option hidden>Select Assembly</option>
+                                  {assembly?.map((item, index) => (
+                                    <option key={index} value={item._id}>
+                                      {item.assembly_number}
+                                    </option>
+                                  ))}
+                                </select>
+                              </div>
+                            </div>
+                            <div className="form-group row mb-5">
+                              <label
+                                htmlFor="inputPassword3"
+                                className="col-sm-3 col-form-label"
+                              >
+                                *Edit Constituency Type :
                               </label>
                               <div className="col-sm-9">
                                 <input
-                                  type="number"
-                                  name={`english.assembly.assembly_number`}
+                                  type="text"
+                                  name={`assembly.constituency_type`}
                                   onChange={handleChange}
                                   defaultValue={
-                                    data?.english.assembly.assembly_number
+                                    data?.assembly?.constituency_type
                                   }
                                   className="form-control mb-3"
-                                  placeholder="Enter Assembly Number"
-                                />
-                                <input
-                                  type="number"
-                                  name={`marathi.assembly.assembly_number`}
-                                  onChange={handleChange}
-                                  defaultValue={
-                                    data?.marathi.assembly.assembly_number
-                                  }
-                                  className="form-control mb-3"
-                                  placeholder="विधानसभा क्रमांक प्रविष्ट करा"
+                                  placeholder="Enter Constituency Type"
                                 />
                               </div>
                             </div>
@@ -256,12 +243,12 @@ const EditContent = () => {
                                 htmlFor="inputPassword3"
                                 className="col-sm-3 col-form-label"
                               >
-                                *Add Year :
+                                *Edit Year :
                               </label>
                               <div className="col-sm-9">
                                 <DatePicker
                                   placeholderText="Select year"
-                                  selected={data?.english?.assembly?.year}
+                                  selected={data?.assembly?.year}
                                   showYearPicker
                                   dateFormat={"yyyy"}
                                   onChange={(e) =>
@@ -270,7 +257,7 @@ const EditContent = () => {
                                   className="form-control"
                                   minDate={new Date("02-01-1936")}
                                   maxDate={new Date()}
-                                  name="english.assembly.year"
+                                  name="assembly.year"
                                 />
                               </div>
                             </div>
@@ -284,58 +271,38 @@ const EditContent = () => {
                                 htmlFor="inputPassword3"
                                 className="col-sm-3 col-form-label"
                               >
-                                *Add Constituency type :
+                                *Edit Constituency name :
                               </label>
                               <div className="col-sm-9">
                                 <input
                                   type="text"
-                                  name={`english.council.constituency_type`}
+                                  name={`council.constituency_name`}
                                   onChange={handleChange}
                                   defaultValue={
-                                    data?.english.council.constituency_type
-                                  }
-                                  className="form-control mb-3"
-                                  placeholder="Enter Constitution type"
-                                />
-                                <input
-                                  type="text"
-                                  name={`marathi.council.constituency_type`}
-                                  onChange={handleChange}
-                                  defaultValue={
-                                    data?.marathi.council.constituency_type
-                                  }
-                                  className="form-control mb-3"
-                                  placeholder="मतदारसंघाचा प्रकार प्रविष्ट करा"
-                                />
-                              </div>
-                            </div>
-                            <div className="form-group row mb-5">
-                              <label
-                                htmlFor="inputPassword3"
-                                className="col-sm-3 col-form-label"
-                              >
-                                *Add Constituency name :
-                              </label>
-                              <div className="col-sm-9">
-                                <input
-                                  type="number"
-                                  name={`english.council.constituency_name`}
-                                  onChange={handleChange}
-                                  defaultValue={
-                                    data?.english.council.constituency_name
+                                    data?.council?.constituency_name
                                   }
                                   className="form-control mb-3"
                                   placeholder="Enter Constituency name"
                                 />
+                              </div>
+                            </div>
+                            <div className="form-group row mb-5">
+                              <label
+                                htmlFor="inputPassword3"
+                                className="col-sm-3 col-form-label"
+                              >
+                                *Edit Constituency Number :
+                              </label>
+                              <div className="col-sm-9">
                                 <input
-                                  type="number"
-                                  name={`marathi.council.constituency_name`}
+                                  type="text"
+                                  name={`council.constituency_number`}
                                   onChange={handleChange}
                                   defaultValue={
-                                    data?.marathi.council.constituency_name
+                                    data?.council?.constituency_number
                                   }
                                   className="form-control mb-3"
-                                  placeholder="मतदारसंघाचे नाव टाका"
+                                  placeholder="Enter Constituency name"
                                 />
                               </div>
                             </div>
@@ -344,12 +311,33 @@ const EditContent = () => {
                                 htmlFor="inputPassword3"
                                 className="col-sm-3 col-form-label"
                               >
-                                *Add Year :
+                                *Edit Constituency type :
+                              </label>
+                              <div className="col-sm-9">
+                                <input
+                                  type="text"
+                                  name={`council.constituency_type`}
+                                  onChange={handleChange}
+                                  defaultValue={
+                                    data?.council?.constituency_type
+                                  }
+                                  className="form-control mb-3"
+                                  placeholder="Enter Constitution type"
+                                />
+                              </div>
+                            </div>
+
+                            <div className="form-group row mb-5">
+                              <label
+                                htmlFor="inputPassword3"
+                                className="col-sm-3 col-form-label"
+                              >
+                                *Edit Year :
                               </label>
                               <div className="col-sm-9">
                                 <DatePicker
                                   placeholderText="Select year"
-                                  selected={data?.english?.assembly?.year}
+                                  selected={data?.council?.year}
                                   showYearPicker
                                   dateFormat={"yyyy"}
                                   onChange={(e) =>
@@ -358,7 +346,7 @@ const EditContent = () => {
                                   className="form-control"
                                   minDate={new Date("02-01-1936")}
                                   maxDate={new Date()}
-                                  name="english.council.year"
+                                  name="council.year"
                                 />
                               </div>
                             </div>

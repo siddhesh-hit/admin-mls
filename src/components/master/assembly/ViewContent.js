@@ -25,7 +25,7 @@ const ViewContent = () => {
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete it?") === true) {
-      console.log("cehck");
+      console.log("check");
       await deleteApi("assembly", id)
         .then((res) => {
           if (res.status === 204) {
@@ -63,9 +63,7 @@ const ViewContent = () => {
                 <thead>
                   <tr>
                     <th>Assembly Number</th>
-                    <th>Assembly Number (Marathi)</th>
                     <th>Assembly Name</th>
-                    <th>Assembly Name (Marathi)</th>
                     <th>Start Date</th>
                     <th>End Date</th>
                     <th>Edit</th>
@@ -78,16 +76,10 @@ const ViewContent = () => {
                       {data.map((item, index) => (
                         <tr key={index}>
                           <td>
-                            <h4>{item.english.assembly_number}</h4>
+                            <h4>{item.assembly_number || "-"}</h4>
                           </td>
                           <td>
-                            <h4>{item.marathi.assembly_number}</h4>
-                          </td>
-                          <td>
-                            <h4>{item.english.assembly_name}</h4>
-                          </td>
-                          <td>
-                            <h4>{item.marathi.assembly_name}</h4>
+                            <h4>{item.assembly_name || "-"}</h4>
                           </td>
                           <td>
                             <h4>{item.start_date}</h4>

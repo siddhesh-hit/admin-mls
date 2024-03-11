@@ -10,39 +10,42 @@ import { postApi } from "../../../services/axiosInterceptors";
 
 const Content = () => {
   const [divCount, setDivCount] = useState(1);
-  const [data, setData] = useState(
-    // [
-    {
-      assembly_number: "14",
-      ministry_type: "",
-      member_name: "",
-      designation: "",
-      ministry: "",
-    }
-    //   ]
-  );
+  const [data, setData] = useState({
+    ministry_name: "",
+    minister: "",
+    year: "",
+    sub_ministry: [
+      {
+        name: "",
+        minister: "",
+      },
+    ],
+  });
 
   const navigate = useNavigate();
 
   const addDiv = () => {
     let newData = {
-      marathi: {
-        gender: "",
-      },
-      english: {
-        gender: "",
-      },
+      name: "",
+      minister: "",
     };
-    setData([...data, newData]);
+
+    setData((prev) => ({
+      ...prev,
+      sub_ministry: [...prev.sub_ministry, newData],
+    }));
     setDivCount(divCount + 1);
     alert("You've added one field");
   };
 
   const removeDiv = (index) => {
-    let newData = [...data];
+    let newData = [...data.sub_ministry];
 
     newData.splice(index, 1);
-    setData(newData);
+    setData((prev) => ({
+      ...prev,
+      sub_ministry: newData,
+    }));
 
     if (divCount > 1) {
       setDivCount(divCount - 1);
@@ -50,37 +53,34 @@ const Content = () => {
     alert("You've removed one field");
   };
 
-  //   const handleChange = (e, index) => {
-  //     const { name, value } = e.target;
-  //     const [field, subField] = name.split("_");
-
-  //     setData((prev) => [
-  //       ...prev.map((item, i) => {
-  //         if (i === index) {
-  //           return {
-  //             ...item,
-  //             [field]: {
-  //               ...item[field],
-  //               [subField]: value,
-  //             },
-  //           };
-  //         }
-  //         return item;
-  //       }),
-  //     ]);
-  //   };
-
-  const handleChange = (e, index) => {
+  const handleChange = (e) => {
     const { name, value } = e.target;
+    const [field, index, subField] = name.split(".");
 
-    setData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    if (index) {
+      setData((prev) => ({
+        ...prev,
+        [field]: [
+          ...prev[field].map((item, ind) => {
+            return ind === +index
+              ? {
+                  ...item,
+                  [subField]: value,
+                }
+              : item;
+          }),
+        ],
+      }));
+    } else {
+      setData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
   };
 
   const handleSubmit = async () => {
-    await postApi("minister", data)
+    await postApi("ministry", data)
       .then((res) => {
         if (res.data.success) {
           toast.success("Added ministry");
@@ -118,8 +118,8 @@ const Content = () => {
                       <div className="col-sm-8">
                         <input
                           type="text"
-                          name="member_name"
-                          onChange={(e) => handleChange(e)}
+                          name="ministry_name"
+                          onChange={handleChange}
                           className="form-control"
                           placeholder="Enter Ministry Name"
                         />
@@ -130,15 +130,15 @@ const Content = () => {
                         htmlFor="inputPassword3"
                         className="col-sm-4 col-form-label"
                       >
-                        *Add Designation :
+                        *Add Minister :
                       </label>
                       <div className="col-sm-8">
                         <input
                           type="text"
-                          name="designation"
-                          onChange={(e) => handleChange(e)}
+                          name="minister"
+                          onChange={handleChange}
                           className="form-control"
-                          placeholder="Enter Ministry Name"
+                          placeholder="Enter Minister"
                         />
                       </div>
                     </div>
@@ -147,35 +147,66 @@ const Content = () => {
                         htmlFor="inputPassword3"
                         className="col-sm-4 col-form-label"
                       >
-                        *Minister :
+                        *Add Year :
                       </label>
                       <div className="col-sm-8">
                         <input
                           type="text"
-                          name="ministry"
-                          onChange={(e) => handleChange(e)}
+                          name="year"
+                          onChange={handleChange}
                           className="form-control"
-                          placeholder="Enter Ministry Name"
+                          placeholder="Enter Year"
                         />
                       </div>
                     </div>
-                    <div className="form-group row mb-5">
-                      <label
-                        htmlFor="inputPassword3"
-                        className="col-sm-4 col-form-label"
-                      >
-                        *Minister of State :
-                      </label>
-                      <div className="col-sm-8">
-                        <input
-                          type="text"
-                          name="ministry_type"
-                          onChange={(e) => handleChange(e)}
-                          className="form-control"
-                          placeholder="Enter Ministry Name"
-                        />
-                      </div>
-                    </div>
+                    {[...Array(divCount)].map((_, index) => (
+                      <React.Fragment key={index}>
+                        <div className="form-group row mb-2">
+                          <label
+                            htmlFor="inputPassword3"
+                            className="col-sm-4 col-form-label"
+                          >
+                            *Add Sub Ministry {index + 1}:
+                          </label>
+                          <div className="col-sm-8">
+                            <input
+                              type="text"
+                              name={`sub_ministry.${index}.name`}
+                              onChange={handleChange}
+                              className="form-control mb-3"
+                              placeholder="Enter Sub Ministry name"
+                            />
+                            <input
+                              type="text"
+                              name={`sub_ministry.${index}.minister`}
+                              onChange={handleChange}
+                              className="form-control mb-3"
+                              placeholder="Enter Sub Ministry minister"
+                            />
+                          </div>
+                        </div>
+                        {index === 0 && (
+                          <div
+                            onClick={() => addDiv()}
+                            className="addSubButton"
+                          >
+                            <img src={addwhite} alt="white" />
+                          </div>
+                        )}
+                        {index !== 0 && (
+                          <div
+                            onClick={() => removeDiv(index)}
+                            className="addSubButton"
+                          >
+                            <img
+                              src={remove}
+                              alt="remove"
+                              style={{ height: "25px", width: "25px" }}
+                            />
+                          </div>
+                        )}
+                      </React.Fragment>
+                    ))}
                   </div>
                 </div>
               </form>
