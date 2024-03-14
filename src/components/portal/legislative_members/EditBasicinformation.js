@@ -56,11 +56,8 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
                   <option hidden>Select Assembly Number</option>
                   {Data.assembly.length > 0 ? (
                     Data.assembly.map((item) => (
-                      <option
-                        key={item._id}
-                        value={item.english.assembly_number}
-                      >
-                        {item.english.assembly_number}
+                      <option key={item._id} value={item._id}>
+                        {item.assembly_number}
                       </option>
                     ))
                   ) : (
@@ -146,11 +143,10 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
               <option hidden>Select Constituency</option>
               {Data.constituency.length > 0 ? (
                 Data.constituency.map((item) => (
-                  <option
-                    key={item._id}
-                    value={item.english.constituency_assembly}
-                  >
-                    {item.english.constituency_assembly}
+                  <option key={item._id} value={item._id}>
+                    {item.council.constituency_name !== ""
+                      ? item.council.constituency_name
+                      : item.assembly.constituency_name}
                   </option>
                 ))
               ) : (
@@ -173,7 +169,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
               <option hidden>Select Party</option>
               {Data.party.length > 0 ? (
                 Data.party.map((item) => (
-                  <option key={item._id} value={item.english.party_name}>
+                  <option key={item._id} value={item._id}>
                     {item.english.party_name}
                   </option>
                 ))
@@ -197,8 +193,8 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
               <option hidden>Select Gender</option>
               {Data.gender.length > 0 ? (
                 Data.gender.map((item) => (
-                  <option key={item._id} value={item.english.gender}>
-                    {item.english.gender}
+                  <option key={item._id} value={item._id}>
+                    {item.marathi.gender}
                   </option>
                 ))
               ) : (
@@ -221,7 +217,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
               <option hidden>Select District</option>
               {Data.district.length > 0 ? (
                 Data.district.map((item) => (
-                  <option key={item._id} value={item.english.district}>
+                  <option key={item._id} value={item._id}>
                     {item.english.district}
                   </option>
                 ))

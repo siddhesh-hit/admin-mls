@@ -6,6 +6,7 @@ import { decrypt } from "../../config/encrypt";
 import { getApiById, postApi } from "../../services/axiosInterceptors";
 import { logout } from "../../redux/authSlice";
 import { API } from "../../config/api";
+import { useNavigate } from "react-router-dom";
 
 export default function Header() {
   const [userProfile, setUserProfile] = useState({});
@@ -14,6 +15,7 @@ export default function Header() {
   const state = useSelector((state) => state.auth);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     await postApi("user/logout", {})
@@ -36,9 +38,11 @@ export default function Header() {
   };
 
   useEffect(() => {
-    if (state) {
+    if (state && state.user && decrypt(state.user)) {
       let deData = JSON.parse(decrypt(state.user));
-      setUserProfile(deData);
+      deData && setUserProfile(deData);
+    } else {
+      navigate("/");
     }
   }, [state]);
 

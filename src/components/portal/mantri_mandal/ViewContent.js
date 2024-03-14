@@ -31,26 +31,33 @@ const Viewcontent = () => {
                     <th>Assembly Number</th>
                     <th>Member Name</th>
                     <th>Designation</th>
-                    <th>Ministry </th>
+                    <th>Year </th>
                     <th>Edit</th>
                   </tr>
                 </thead>
                 <tbody>
                   {data && (
                     <tr>
-                      <td>{data?.ministry_type}</td>
+                      <td>{data?.ministry_type?.ministry_name}</td>
                       <td>
-                        <h4>{data?.assembly_number}</h4>
+                        <h4>{data?.assembly_number?.assembly_name}</h4>
                       </td>
                       <td>
-                        <p>{data?.member_name}</p>
+                        <p>{data?.member_name?.basic_info.name}</p>
                       </td>
                       <td>
-                        <p>{data?.designation}</p>
+                        <p>
+                          {data?.designation?.map((item, index, array) => (
+                            <span key={index}>
+                              {item.name}
+                              {index === array.length - 1 ? "" : ", "}
+                            </span>
+                          ))}
+                        </p>
                       </td>
-                      <td>{data?.ministry}</td>
+                      <td>{new Date(data?.year).getFullYear()}</td>
                       <td>
-                        <Link to={`/EditMantriMandal?id=${data._id}}`}>
+                        <Link to={`/EditMantriMandal?id=${data._id}`}>
                           <OverlayTrigger
                             delay={{ hide: 450, show: 300 }}
                             overlay={(props) => (

@@ -65,8 +65,7 @@ const ViewWorkflowCalendar = () => {
               <thead>
                 <tr>
                   <th>Sr.No</th>
-                  <th>English Session</th>
-                  <th>Marathi Session</th>
+                  <th>Session</th>
                   <th>Topic Name</th>
                   <th>Houses</th>
                   <th>Year</th>
@@ -75,55 +74,48 @@ const ViewWorkflowCalendar = () => {
                 </tr>
               </thead>
               <tbody>
-                {data?.data_object &&
-                  data?.data_object?.marathi &&
-                  data?.data_object?.english &&
-                  data?.data_object?.documents.length > 0 && (
-                    <tr>
-                      <td>{1}</td>
-                      <td>
-                        <p>{data?.data_object?.english.session}</p>
-                      </td>
-                      <td>
-                        <p>{data?.data_object?.marathi.session}</p>
-                      </td>
-                      <td>
-                        <p>{data?.data_object?.topic_name}</p>
-                      </td>
-                      <td>
-                        <p>{data?.data_object?.houses}</p>
-                      </td>
-                      <td>
-                        <p>{data?.data_object?.year}</p>
-                      </td>
-                      <td>
-                        <p>{data?.data_object?.date}</p>
-                      </td>
-                      <td>
-                        <a
-                          href={
-                            API.baseUrl +
-                            data?.data_object?.documents[0].document
-                              .destination +
-                            "/" +
-                            data?.data_object?.documents[0].document.filename
-                          }
-                          target="_blank"
-                          rel="noreferrer"
+                {data?.data_object && (
+                  <tr>
+                    <td>{1}</td>
+                    <td>
+                      <p>{data?.data_object?.session?.name}</p>
+                    </td>
+                    <td>
+                      <p>{data?.data_object?.topic_name}</p>
+                    </td>
+                    <td>
+                      <p>{data?.data_object?.houses}</p>
+                    </td>
+                    <td>
+                      <p>{data?.data_object?.year}</p>
+                    </td>
+                    <td>
+                      <p>{data?.data_object?.date}</p>
+                    </td>
+                    <td>
+                      <a
+                        href={
+                          API.baseUrl +
+                          data?.data_object?.documents[0].document.destination +
+                          "/" +
+                          data?.data_object?.documents[0].document.filename
+                        }
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <OverlayTrigger
+                          delay={{ hide: 450, show: 300 }}
+                          overlay={(props) => (
+                            <Tooltip {...props}>View the data.</Tooltip>
+                          )}
+                          placement="bottom"
                         >
-                          <OverlayTrigger
-                            delay={{ hide: 450, show: 300 }}
-                            overlay={(props) => (
-                              <Tooltip {...props}>View the data.</Tooltip>
-                            )}
-                            placement="bottom"
-                          >
-                            <i className="fa fa-eye" aria-hidden="true"></i>
-                          </OverlayTrigger>
-                        </a>
-                      </td>
-                    </tr>
-                  )}
+                          <i className="fa fa-eye" aria-hidden="true"></i>
+                        </OverlayTrigger>
+                      </a>
+                    </td>
+                  </tr>
+                )}
               </tbody>
             </table>
           </div>

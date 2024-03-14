@@ -6,18 +6,20 @@ import addwhite from "../../../images/addwhite.svg";
 import remove from "../../../images/remove.svg";
 import back from "../../../images/back.svg";
 
-import { getApiById, putApi } from "../../../services/axiosInterceptors";
+import {
+  getApiById,
+  putApi,
+  getApi,
+} from "../../../services/axiosInterceptors";
 
 const EditContent = () => {
   const [divCount, setDivCount] = useState(1);
-  const [year, setYear] = useState([]);
+  const [option, setOption] = useState({
+    year: [],
+    session: [],
+  });
   const [data, setData] = useState({
-    marathi: {
-      session: "",
-    },
-    english: {
-      session: "",
-    },
+    session: "",
     topic_name: "",
     houses: "",
     year: "",
@@ -69,15 +71,7 @@ const EditContent = () => {
 
     const maxAllowedSize = 2.5 * 1024 * 1024;
 
-    if (lang === "marathi" || lang === "english") {
-      setData((data) => ({
-        ...data,
-        [lang]: {
-          ...data.lang,
-          [field]: value,
-        },
-      }));
-    } else if (index) {
+    if (index) {
       if (files) {
         if (files[0].type.startsWith("application/pdf")) {
           if (files[0].size > maxAllowedSize) {
@@ -116,6 +110,11 @@ const EditContent = () => {
   };
 
   const handleSubmit = async () => {
+    data.session =
+      typeof data.session === "object" ? data.session._id : data.session;
+
+    // console.log(typeof data.session === "object" ? "check" : data.session);
+    // console.log(data);
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
 
@@ -131,32 +130,40 @@ const EditContent = () => {
             navigate("/ViewAllCalendar");
           }, 1100);
         }
-        console.log(res.data);
       })
-      .catch((err) => toast.error("Failed to add session."));
+      .catch((err) => toast.error("Failed to edit session."));
   };
 
-  const fetchData = async () => {
-    await getApiById("session", id)
-      .then((res) => setData(res.data.data))
-      .catch((err) => console.log(err));
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      await getApiById("session", id)
+        .then((res) => setData(res.data.data))
+        .catch((err) => console.log(err));
+
+      await getApi("sessionField")
+        .then((res) => {
+          if (res.data.success) {
+            setOption((prev) => ({ ...prev, session: res.data.data }));
+          }
+        })
+        .catch((err) => console.log(err));
+    };
+
+    fetchData();
+  }, []);
 
   useMemo(() => {
     let current = new Date().getFullYear();
+
     let years = [];
     for (let i = 1937; i < current; i++) {
       years.push(i);
     }
-    setYear(years);
-  }, []);
 
-  useEffect(() => {
-    fetchData();
+    setOption((prev) => ({ ...prev, year: years }));
   }, []);
 
   console.log(data);
-
   return (
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
@@ -175,40 +182,21 @@ const EditContent = () => {
                       htmlFor="inputPassword3"
                       className="col-sm-3 col-form-label"
                     >
-                      Edit Marathi Session :
+                      Edit Session :
                     </label>
                     <div className="col-sm-9">
                       <select
                         className="form-control select2"
-                        name="session.marathi"
-                        value={data.marathi.session}
+                        name="session"
+                        value={data?.session?._id}
                         onChange={handleChange}
                       >
-                        <option hidden>Select Marathi Houses</option>
-                        <option value={"Marathi 2"}>Marathi 2</option>
-                        <option value={"Marathi 3"}>Marathi 3</option>
-                        <option value={"Marathi 4"}>Marathi 4</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="form-group row">
-                    <label
-                      htmlFor="inputPassword3"
-                      className="col-sm-3 col-form-label"
-                    >
-                      Edit English Session :
-                    </label>
-                    <div className="col-sm-9">
-                      <select
-                        className="form-control select2"
-                        name="session.english"
-                        value={data.english.session}
-                        onChange={handleChange}
-                      >
-                        <option hidden>Select English Houses</option>
-                        <option value={"English 2"}>English 2</option>
-                        <option value={"English 3"}>English 3</option>
-                        <option value={"English 4"}>English 4</option>
+                        <option hidden>Select Session</option>
+                        {option.session?.map((item, index) => (
+                          <option key={index} value={item._id}>
+                            {item.name}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -265,9 +253,9 @@ const EditContent = () => {
                         onChange={handleChange}
                       >
                         <option hidden>Select Year</option>
-                        {year.length > 0 ? (
+                        {option.year.length > 0 ? (
                           <>
-                            {year.map((item, index) => (
+                            {option.year.map((item, index) => (
                               <option key={index}>{item}</option>
                             ))}
                           </>
@@ -395,4 +383,5 @@ const EditContent = () => {
     </div>
   );
 };
+
 export default EditContent;

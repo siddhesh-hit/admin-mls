@@ -43,7 +43,7 @@ const ViewMemberProfile = () => {
                     aria-controls="custom-tabs-one-profile"
                     aria-selected="false"
                   >
-                    Political Journey
+                    Legislative Journey
                   </a>
                 </li>
                 <li className="nav-item">
@@ -120,11 +120,17 @@ const ViewMemberProfile = () => {
                               <b>Business :</b> {data.basic_info.business}
                             </p>
                             <p>
-                              <b>Party :</b> {data.basic_info.party}
+                              <b>Party :</b>
+                              {data.basic_info.party.marathi.party_name}
                             </p>
                             <p>
                               <b>Constituency :</b>
-                              {data.basic_info.constituency}
+                              {data.basic_info.constituency.council
+                                .constituency_name !== ""
+                                ? data.basic_info.constituency.council
+                                    .constituency_name
+                                : data.basic_info.constituency.assembly
+                                    .constituency_name}
                             </p>
                             <p>
                               <b>Hobby :</b> {data.basic_info.hobby}
@@ -134,7 +140,8 @@ const ViewMemberProfile = () => {
                               {data.basic_info.foreign_migration}
                             </p>
                             <p>
-                              <b>Gender :</b> {data.basic_info.gender}
+                              <b>Gender :</b>{" "}
+                              {data.basic_info.gender.english.gender}
                             </p>
                             <p>
                               <b>Address :</b> {data.basic_info.address}
@@ -188,7 +195,13 @@ const ViewMemberProfile = () => {
                               <div className="timeline-marker" />
                               <div className="timeline-content">
                                 <h3 className="timeline-title">{item.date}</h3>
-                                <p>{item.title}</p>
+                                <p>Title : {item.title}</p>
+                                <p>Presiding Officer : {item.presiding.name}</p>
+                                <p>
+                                  Legislative Position :{" "}
+                                  {item.legislative_position.name}
+                                </p>
+                                <p>Designation : {item.designation.name}</p>
                               </div>
                             </li>
                           ))}
@@ -208,7 +221,12 @@ const ViewMemberProfile = () => {
                       <div className="col-lg-12">
                         <h4 className="eclecresult">Election Result</h4>
                         <h3 className="gondiaa">
-                          {data.election_data.constituency}
+                          {data.election_data.constituency.council
+                            .constituency_name !== ""
+                            ? data.election_data.constituency.council
+                                .constituency_name
+                            : data.election_data.constituency.assembly
+                                .constituency_name}
                         </h3>
                         <div className="row votes_abcdss">
                           <div className="col-lg-5">
@@ -248,7 +266,7 @@ const ViewMemberProfile = () => {
                                   <h4>{item.votes}</h4>
                                 </td>
                                 <td>
-                                  <h4>{item.party}</h4>
+                                  <h4>{item.party.marathi.party_name}</h4>
                                 </td>
                               </tr>
                             )

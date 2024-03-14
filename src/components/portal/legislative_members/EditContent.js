@@ -48,6 +48,9 @@ const EditContent = () => {
       {
         date: "",
         title: "",
+        presiding: "",
+        legislative_position: "",
+        designation: "",
       },
     ],
     election_data: {
@@ -71,6 +74,9 @@ const EditContent = () => {
     party: [],
     gender: [],
     district: [],
+    officer: [],
+    position: [],
+    designation: [],
   });
 
   const navigate = useNavigate();
@@ -90,6 +96,9 @@ const EditContent = () => {
     let object = {
       date: "",
       title: "",
+      presiding: "",
+      legislative_position: "",
+      designation: "",
     };
 
     setData((prev) => ({
@@ -162,7 +171,7 @@ const EditContent = () => {
       .catch((err) => console.log(err));
 
     for (let key in Data) {
-      await getApi(key)
+      await getApi(key + "/option")
         .then((res) => {
           console.log(res.data.data);
           seObjects((prevData) => ({ ...prevData, [key]: res.data.data }));
@@ -296,7 +305,7 @@ const EditContent = () => {
         if (res.data.success) {
           toast.success("Legislative Member updated successfully.");
           setTimeout(() => {
-            navigate("/ViewLegislativeMember");
+            navigate("/ViewAllLegislativeMembers");
           }, 1100);
         }
       })
@@ -312,7 +321,7 @@ const EditContent = () => {
   return (
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
-        <Link to="/ViewLegislativeMember" className="addpagess">
+        <Link to="/ViewAllLegislativeMembers" className="addpagess">
           <img src={back} style={{ width: "25px" }} alt="add" />
           Go back
         </Link>

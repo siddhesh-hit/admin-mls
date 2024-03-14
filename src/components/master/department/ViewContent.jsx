@@ -3,33 +3,19 @@ import { Link, useNavigate } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { toast } from "react-toastify";
 
-import Paginate from "../../../components/common/Paginate";
-import TotalEntries from "../../../table/TotalEntries";
 import add from "../../../images/add.svg";
 
 import { deleteApi, getApi } from "../../../services/axiosInterceptors";
 
 const ViewContent = () => {
   const [data, setData] = useState([]);
-  const [pageOptions, setPageOptions] = useState({
-    current: 0,
-    page: 10,
-    count: 0,
-    ministry_name: "",
-  });
+
+  const navigate = useNavigate();
 
   const fetchData = async () => {
-    await getApi(
-      `ministry?perPage=${pageOptions.current}&perLimit=${pageOptions.page}&ministry_name=${pageOptions.ministry_name}`
-    )
+    await getApi("department")
       .then((res) => {
-        if (res.data.success) {
-          setData(res.data.data);
-          setPageOptions((prev) => ({
-            ...prev,
-            count: res.data.count,
-          }));
-        }
+        setData(res.data.data);
       })
       .catch((err) => {
         console.log(err);
@@ -38,58 +24,45 @@ const ViewContent = () => {
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete it?") === true) {
-      await deleteApi("ministry", id)
+      await deleteApi("department", id)
         .then((res) => {
           if (res.status === 204) {
-            toast.success("Deleted the ministry.");
-            fetchData();
+            toast.success("Deleted the department.");
+            setTimeout(() => {
+              fetchData();
+            }, 1100);
           }
         })
         .catch((err) => {
           console.log(err);
-          toast.error("Failed to delete the ministry.");
+          toast.error("Failed to delete the department.");
         });
     }
   };
 
   useEffect(() => {
     fetchData();
-  }, [pageOptions.page, pageOptions.current, pageOptions.ministry_name]);
+  }, []);
 
   return (
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
-        <Link to="/AddMinistry" className="addpagess">
+        <Link to="/AddDepartment" className="addpagess">
           <img src={add} alt="add" />
-          Add Ministry
+          Add Department
         </Link>
 
-        <h4 className="page-title">• View Ministry</h4>
-        <TotalEntries
-          returnCount={(data) =>
-            setPageOptions((prev) => ({
-              ...prev,
-              page: data,
-            }))
-          }
-          returnSearch={(data) =>
-            setPageOptions((prev) => ({
-              ...prev,
-              ministry_name: data,
-            }))
-          }
-        />
-
+        <h4 className="page-title">• View Department</h4>
         <div className="card card-info">
           <div className="row">
             <div className="col-lg-12">
               <table className="table table-striped table-bordered mb-0 view_vidhan_mandal">
                 <thead>
                   <tr>
-                    <th>Ministry Name</th>
-                    <th>Minister</th>
+                    <th>Name</th>
                     <th>Year</th>
-                    <th>Sub Ministry</th>
+                    <th>Sub Department</th>
+                    <th>Designation</th>
                     <th>Edit</th>
                     <th>Delete</th>
                   </tr>
@@ -100,26 +73,19 @@ const ViewContent = () => {
                       {data.map((item, index) => (
                         <tr key={index}>
                           <td>
-                            <h4>{item.ministry_name}</h4>
+                            <h4>{item.name}</h4>
                           </td>
                           <td>
-                            <h4>{item.minister}</h4>
+                            <h4>{new Date(item.year).getFullYear()}</h4>
                           </td>
                           <td>
-                            <h4>{item.year}</h4>
+                            <h4>{item.sub_dep}</h4>
                           </td>
                           <td>
-                            <h4>
-                              {item?.sub_ministry.map((it, i, arr) => (
-                                <span>
-                                  {it.name}
-                                  {i !== arr?.length - 1 ? ", " : ""}
-                                </span>
-                              ))}
-                            </h4>
+                            <h4>{item.designation.name}</h4>
                           </td>
                           <td>
-                            <Link to={`/EditMinistry?id=${item._id}`}>
+                            <Link to={`/EditDepartment?id=${item._id}`}>
                               <OverlayTrigger
                                 delay={{ hide: 450, show: 300 }}
                                 overlay={(props) => (
@@ -152,19 +118,6 @@ const ViewContent = () => {
                   )}
                 </tbody>
               </table>
-              {pageOptions.count > 0 && (
-                <Paginate
-                  totalCount={pageOptions.count}
-                  perPage={pageOptions.page}
-                  handlePageChange={(currentPage) => {
-                    setPageOptions((prev) => ({
-                      ...prev,
-                      current: currentPage,
-                    }));
-                  }}
-                  initialPage={pageOptions.current}
-                />
-              )}
             </div>
           </div>
         </div>

@@ -2,23 +2,40 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
+import Paginate from "../../../components/common/Paginate";
+import TotalEntries from "../../../table/TotalEntries";
+
 import { getApi } from "../../../services/axiosInterceptors";
 import { routes } from "../../../data/RouteStructure";
 
 const ViewTask = () => {
   const [roles, setRoles] = useState([]);
+  const [pageOptions, setPageOptions] = useState({
+    current: 0,
+    page: 10,
+    count: 0,
+    "userId.full_name": "",
+  });
 
   useEffect(() => {
     const fetchData = async () => {
-      await getApi("user/roletask")
-        .then((res) => setRoles(res.data.data))
+      await getApi(
+        `user/roletask?perPage=${pageOptions.current}&perLimit=${pageOptions.page}&userId.full_name=${pageOptions["userId.full_name"]}`
+      )
+        .then((res) => {
+          if (res.data.success) {
+            setRoles(res.data.data);
+            setPageOptions((prev) => ({
+              ...prev,
+              count: res.data.count,
+            }));
+          }
+        })
         .catch((err) => console.log(err));
     };
 
     fetchData();
-  }, []);
-
-  console.log(routes.length);
+  }, [pageOptions.page, pageOptions.current, pageOptions["userId.full_name"]]);
 
   const handleDelete = () => {};
 
@@ -31,6 +48,22 @@ const ViewTask = () => {
             Add Task Management
           </Link> */}
           <h4 className="page-title">• View All Task Management</h4>
+
+          <TotalEntries
+            returnCount={(data) =>
+              setPageOptions((prev) => ({
+                ...prev,
+                page: data,
+              }))
+            }
+            returnSearch={(data) =>
+              setPageOptions((prev) => ({
+                ...prev,
+                "userId.full_name": data,
+              }))
+            }
+          />
+
           <div className="card card-info">
             <div className="row">
               <div className="col-lg-12">
@@ -114,6 +147,19 @@ const ViewTask = () => {
                       ))}
                   </tbody>
                 </table>
+                {pageOptions.count > 0 && (
+                  <Paginate
+                    totalCount={pageOptions.count}
+                    perPage={pageOptions.page}
+                    handlePageChange={(currentPage) => {
+                      setPageOptions((prev) => ({
+                        ...prev,
+                        current: currentPage,
+                      }));
+                    }}
+                    initialPage={pageOptions.current}
+                  />
+                )}
               </div>
             </div>
           </div>

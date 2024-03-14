@@ -1,17 +1,34 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Select from "react-select";
 
 import back from "../../../images/back.svg";
-import { postApi } from "../../../services/axiosInterceptors";
+
+import { getApi, postApi } from "../../../services/axiosInterceptors";
 
 const Content = () => {
   const [minister, setMinister] = useState({
     ministry_type: "",
     assembly_number: "",
     member_name: "",
-    designation: "",
-    ministry: "",
+    designation: [],
+    year: "",
+  });
+
+  const [options, setOptions] = useState({
+    ministry: [],
+    assembly: [],
+    member: [],
+    designation: [],
+  });
+
+  const desOpt = options?.designation?.map((item) => {
+    let data = {
+      value: item._id,
+      label: item.name,
+    };
+    return data;
   });
 
   const navigate = useNavigate();
@@ -24,26 +41,77 @@ const Content = () => {
     }));
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    minister.designation = minister.designation.map((item) => item.value);
+    console.log(minister.designation);
     await postApi("minister", minister)
       .then((res) => {
         if (res.data.success) {
           toast.success("Minister is created successfully.");
-          navigate("/ViewMantriMandal");
+          navigate("/ViewAllMantriMandal");
         }
       })
       .catch((err) => console.log(err));
   };
 
-  const options = {
-    ministry_type: ["Chief Minister", "Deputy Chief Minister", "Minister"],
-    assembly_number: [12, 13, 14, 15],
-    member_name: ["check1", "check2", "check3"],
-    designation: ["check1", "check2", "check3"],
-    ministry: [1, 2, 3, 4],
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      await getApi("ministry")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prevData) => ({
+              ...prevData,
+              ministry: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
 
-  console.log(minister);
+      await getApi("assembly")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prevData) => ({
+              ...prevData,
+              assembly: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      await getApi("member?status=Approved")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prevData) => ({
+              ...prevData,
+              member: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      await getApi("designation")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prevData) => ({
+              ...prevData,
+              designation: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+
+    fetchData();
+  }, []);
 
   return (
     <div>
@@ -58,7 +126,7 @@ const Content = () => {
             <div className="row">
               <div className="col-lg-10">
                 <div className="">
-                  <form className="form-horizontal">
+                  <form onSubmit={handleSubmit} className="form-horizontal">
                     <div className="card-body border_names">
                       <div className="form-group row">
                         <label
@@ -75,9 +143,9 @@ const Content = () => {
                             onChange={handleChange}
                           >
                             <option hidden>Select Ministry Type</option>
-                            {options.ministry_type.map((item, index) => (
-                              <option key={index} value={item}>
-                                {item}
+                            {options.ministry.map((item, index) => (
+                              <option key={index} value={item._id}>
+                                {item.ministry_name}
                               </option>
                             ))}
                           </select>
@@ -98,9 +166,9 @@ const Content = () => {
                             onChange={handleChange}
                           >
                             <option hidden>Select Assembly Number</option>
-                            {options.assembly_number.map((item, index) => (
-                              <option key={index} value={item}>
-                                {item}
+                            {options.assembly.map((item, index) => (
+                              <option key={index} value={item._id}>
+                                {item.assembly_number}
                               </option>
                             ))}
                           </select>
@@ -121,9 +189,11 @@ const Content = () => {
                             onChange={handleChange}
                           >
                             <option hidden>Select Member Name</option>
-                            {options.member_name.map((item, index) => (
-                              <option key={index} value={item}>
-                                {item}
+                            {options.member.map((item, index) => (
+                              <option key={index} value={item._id}>
+                                {item.basic_info.surname +
+                                  " " +
+                                  item.basic_info.name}
                               </option>
                             ))}
                           </select>
@@ -137,19 +207,20 @@ const Content = () => {
                           Designation :
                         </label>
                         <div className="col-sm-8">
-                          <select
-                            className="form-control"
+                          <Select
+                            isMulti
                             name="designation"
-                            value={minister.designation}
-                            onChange={handleChange}
-                          >
-                            <option hidden>Select Designation</option>
-                            {options.designation.map((item, index) => (
-                              <option key={index} value={item}>
-                                {item}
-                              </option>
-                            ))}
-                          </select>
+                            options={desOpt}
+                            onChange={(e) =>
+                              setMinister((prev) => ({
+                                ...prev,
+                                designation: e,
+                              }))
+                            }
+                            className=""
+                            classNamePrefix="select"
+                            placeholder="Select Designation"
+                          />
                         </div>
                       </div>
                       <div className="form-group row">
@@ -157,31 +228,24 @@ const Content = () => {
                           htmlFor="inputPassword3"
                           className="col-sm-4 col-form-label"
                         >
-                          Ministry :
+                          Year :
                         </label>
                         <div className="col-sm-8">
-                          <select
+                          <input
                             className="form-control"
-                            name="ministry"
-                            value={minister.ministry}
+                            name="year"
+                            type="date"
                             onChange={handleChange}
-                          >
-                            <option hidden>Select Ministry</option>
-                            {options.ministry.map((item, index) => (
-                              <option key={index} value={item}>
-                                {item}
-                              </option>
-                            ))}
-                          </select>
+                          />
                         </div>
                       </div>
                     </div>
+                    <button type="submit" className="submit123 mt-5">
+                      Submit
+                    </button>
                   </form>
                 </div>
               </div>
-              <button className="submit123 mt-5" onClick={handleSubmit}>
-                Submit
-              </button>
             </div>
           </div>
         </div>
