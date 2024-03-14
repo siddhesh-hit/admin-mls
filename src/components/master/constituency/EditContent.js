@@ -291,18 +291,18 @@ const EditContent = () => {
                                 htmlFor="inputPassword3"
                                 className="col-sm-3 col-form-label"
                               >
-                                *Edit Constituency Number :
+                                *Edit Constituency Sub type :
                               </label>
                               <div className="col-sm-9">
                                 <input
                                   type="text"
-                                  name={`council.constituency_number`}
+                                  name={`council.constituency_subtype`}
                                   onChange={handleChange}
                                   defaultValue={
                                     data?.council?.constituency_number
                                   }
                                   className="form-control mb-3"
-                                  placeholder="Enter Constituency name"
+                                  placeholder="Enter Constituency Sub type"
                                 />
                               </div>
                             </div>

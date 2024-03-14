@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
+import Paginate from "../../../components/common/Paginate";
+import TotalEntries from "../../../table/TotalEntries";
 import retrieve from "../../../images/retrieve.svg";
 
 import { getApi, postApi } from "../../../services/axiosInterceptors";
@@ -11,6 +13,12 @@ import { toast } from "react-toastify";
 const ViewHistory = () => {
   const [data, setData] = useState([]);
   const [role, setRole] = useState("");
+  const [pageOptions, setPageOptions] = useState({
+    current: 0,
+    page: 10,
+    count: 0,
+    modelName: "",
+  });
   const roleOpt = ["Create", "Update", "Delete"];
 
   const navigate = useNavigate();
@@ -28,16 +36,19 @@ const ViewHistory = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await getApi(role ? `reset?action=${role}` : `reset`)
+      await getApi(
+        `reset?perPage=${pageOptions.current}&perLimit=${pageOptions.page}&action=${role}&modelName=${pageOptions.modelName}`
+      )
         .then((res) => {
           setData(res.data.data);
+          setPageOptions((prev) => ({ ...prev, count: res.data.count }));
         })
         .catch((err) => {
           console.log(err);
         });
     };
     fetchData();
-  }, [role]);
+  }, [role, pageOptions.page, pageOptions.current, pageOptions.modelName]);
 
   return (
     <div className="content-wrapper pt-4">
@@ -61,6 +72,7 @@ const ViewHistory = () => {
           }}
         >
           <option hidden>Select a role type</option>
+          <option value={""}>ALL</option>
           {roleOpt.map((item, index) => (
             <option key={index} value={item}>
               {item}
@@ -69,6 +81,20 @@ const ViewHistory = () => {
         </select>
 
         <h4 className="page-title">• View Workflow History</h4>
+        <TotalEntries
+          returnCount={(data) =>
+            setPageOptions((prev) => ({
+              ...prev,
+              page: data,
+            }))
+          }
+          returnSearch={(data) =>
+            setPageOptions((prev) => ({
+              ...prev,
+              modelName: data,
+            }))
+          }
+        />
         <div className="card card-info">
           <div className="row">
             <div className="col-lg-12">
@@ -126,6 +152,19 @@ const ViewHistory = () => {
                     ))}
                 </tbody>
               </table>
+              {pageOptions.count > 0 && (
+                <Paginate
+                  totalCount={pageOptions.count}
+                  perPage={pageOptions.page}
+                  handlePageChange={(currentPage) => {
+                    setPageOptions((prev) => ({
+                      ...prev,
+                      current: currentPage,
+                    }));
+                  }}
+                  initialPage={pageOptions.current}
+                />
+              )}
             </div>
           </div>
         </div>

@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
+import Paginate from "../../../components/common/Paginate";
+import TotalEntries from "../../../table/TotalEntries";
 import add from "../../../images/add.svg";
 
 import { getApi } from "../../../services/axiosInterceptors";
@@ -9,16 +11,28 @@ import { API } from "../../../config/api";
 
 const ViewContent = () => {
   const [data, setData] = useState([]);
+  const [pageOptions, setPageOptions] = useState({
+    current: 0,
+    page: 10,
+    action: "",
+    count: 0,
+    full_name: "",
+  });
 
   const fetchData = async () => {
-    await getApi("user")
+    await getApi(
+      `user?perPage=${pageOptions.current}&perLimit=${pageOptions.page}&role_taskId.role=${pageOptions.action}&full_name=${pageOptions.full_name}`
+    )
       .then((res) => {
-        // console.log(res);
-        setData(res.data.data);
+        if (res.data.success) {
+          setData(res.data.data);
+          setPageOptions((prev) => ({
+            ...prev,
+            count: res.data.count,
+          }));
+        }
       })
-      .catch((err) => {
-        // console.log(err);
-      });
+      .catch((err) => console.log(err));
   };
 
   const dateToFromat = (date) => {
@@ -31,7 +45,12 @@ const ViewContent = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [
+    pageOptions.action,
+    pageOptions.page,
+    pageOptions.current,
+    pageOptions.full_name,
+  ]);
 
   return (
     <div className="content-wrapper pt-4">
@@ -41,6 +60,43 @@ const ViewContent = () => {
           Add Portal User
         </Link>
         <h4 className="page-title">• View Portal User</h4>
+
+        <select
+          className="form-control mb-4"
+          name="action"
+          value={pageOptions.action}
+          onChange={(e) =>
+            setPageOptions((prev) => ({
+              ...prev,
+              action: e.target.value,
+            }))
+          }
+        >
+          <option hidden>Select Action</option>
+          <option value={"SuperAdmin"}>SuperAdmin</option>
+          <option value={"Admin"}>Admin</option>
+          <option value={"Reviewer"}>Reviewer</option>
+          <option value={"ContentCreator"}>ContentCreator</option>
+          <option value={"User"}>User</option>
+        </select>
+
+        <TotalEntries
+          returnCount={(data) =>
+            setPageOptions((prev) => ({
+              ...prev,
+              page: data,
+            }))
+          }
+          returnSearch={(data) =>
+            setPageOptions((prev) => ({
+              ...prev,
+              full_name: data,
+            }))
+          }
+        />
+
+        <div className="card card-info">
+          <div className="row">
             <div className="col-lg-12">
               <table className="table table-striped table-bordered mb-0 view_vidhan_mandal respon">
                 <thead>
@@ -176,6 +232,21 @@ const ViewContent = () => {
                     ))}
                 </tbody>
               </table>
+              {pageOptions.count > 0 && (
+                <Paginate
+                  totalCount={pageOptions.count}
+                  perPage={pageOptions.page}
+                  handlePageChange={(currentPage) => {
+                    setPageOptions((prev) => ({
+                      ...prev,
+                      current: currentPage,
+                    }));
+                  }}
+                  initialPage={pageOptions.current}
+                />
+              )}
+            </div>
+          </div>
         </div>
       </div>
     </div>

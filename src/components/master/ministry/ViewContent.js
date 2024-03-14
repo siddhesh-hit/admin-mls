@@ -3,17 +3,33 @@ import { Link, useNavigate } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { toast } from "react-toastify";
 
+import Paginate from "../../../components/common/Paginate";
+import TotalEntries from "../../../table/TotalEntries";
 import add from "../../../images/add.svg";
 
 import { deleteApi, getApi } from "../../../services/axiosInterceptors";
 
 const ViewContent = () => {
   const [data, setData] = useState([]);
+  const [pageOptions, setPageOptions] = useState({
+    current: 0,
+    page: 10,
+    count: 0,
+    ministry_name: "",
+  });
 
   const fetchData = async () => {
-    await getApi("ministry")
+    await getApi(
+      `ministry?perPage=${pageOptions.current}&perLimit=${pageOptions.page}&ministry_name=${pageOptions.ministry_name}`
+    )
       .then((res) => {
-        setData(res.data.data);
+        if (res.data.success) {
+          setData(res.data.data);
+          setPageOptions((prev) => ({
+            ...prev,
+            count: res.data.count,
+          }));
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -38,7 +54,7 @@ const ViewContent = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [pageOptions.page, pageOptions.current, pageOptions.ministry_name]);
 
   return (
     <div className="content-wrapper pt-4">
@@ -49,6 +65,21 @@ const ViewContent = () => {
         </Link>
 
         <h4 className="page-title">• View Ministry</h4>
+        <TotalEntries
+          returnCount={(data) =>
+            setPageOptions((prev) => ({
+              ...prev,
+              page: data,
+            }))
+          }
+          returnSearch={(data) =>
+            setPageOptions((prev) => ({
+              ...prev,
+              ministry_name: data,
+            }))
+          }
+        />
+
         <div className="card card-info">
           <div className="row">
             <div className="col-lg-12">
@@ -121,6 +152,19 @@ const ViewContent = () => {
                   )}
                 </tbody>
               </table>
+              {pageOptions.count > 0 && (
+                <Paginate
+                  totalCount={pageOptions.count}
+                  perPage={pageOptions.page}
+                  handlePageChange={(currentPage) => {
+                    setPageOptions((prev) => ({
+                      ...prev,
+                      current: currentPage,
+                    }));
+                  }}
+                  initialPage={pageOptions.current}
+                />
+              )}
             </div>
           </div>
         </div>

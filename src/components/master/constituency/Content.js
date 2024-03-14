@@ -24,8 +24,8 @@ const Content = () => {
     },
     council: {
       constituency_name: "",
-      constituency_number: "",
       constituency_type: "",
+      constituency_subtype: "",
       year: "",
     },
     isHouse: "Assembly",
@@ -151,7 +151,7 @@ const Content = () => {
                     >
                       <div className={`slider ${isToggled ? "active" : ""}`} />
                       <div className="button-text">
-                        {isToggled ? "Assembly" : "Constituency"}
+                        {isToggled ? "Assembly" : "Council"}
                       </div>
                     </div>
                   </div>
@@ -266,15 +266,15 @@ const Content = () => {
                             htmlFor="inputPassword3"
                             className="col-sm-3 col-form-label"
                           >
-                            *Add Constituency Number :
+                            *Add Constituency Sub type :
                           </label>
                           <div className="col-sm-9">
                             <input
                               type="text"
-                              name={`council.constituency_number`}
+                              name={`council.constituency_subtype`}
                               onChange={handleChange}
                               className="form-control mb-3"
-                              placeholder="Enter Constituency Number"
+                              placeholder="Enter Constituency Sub type"
                             />
                           </div>
                         </div>

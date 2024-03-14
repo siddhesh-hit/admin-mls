@@ -1,13 +1,36 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Select from "react-select";
 
 import back from "../../../images/back.svg";
-import { getApiById, putApi } from "../../../services/axiosInterceptors";
+
+import {
+  getApi,
+  getApiById,
+  putApi,
+} from "../../../services/axiosInterceptors";
 
 const EditContent = () => {
   const [data, setData] = useState([]);
   const [isToggled, setIsToggled] = useState(false);
+
+  const [options, setOptions] = useState({
+    ministry: [],
+    assembly: [],
+    member: [],
+    designation: [],
+  });
+
+  const desOpt = options?.designation?.map((item) => {
+    let data = {
+      value: item._id,
+      label: item.name,
+    };
+    return data;
+  });
+
+  const [defaultDesOpt, setDefaultDesOpt] = useState([]);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -29,13 +52,21 @@ const EditContent = () => {
     }));
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    data.designation = defaultDesOpt.map((item) => item.value);
+    data.assembly_number = data.assembly_number._id;
+    data.member_name = data.member_name._id;
+    data.ministry_type = data.ministry_type._id;
+
+    console.log(data);
+
     await putApi("minister", id, data)
       .then((res) => {
         if (res.data.success) {
           toast.success("Ministry updated Successfully");
           setTimeout(() => {
-            navigate(`/ViewMantriMandal?id=${data._id}`);
+            navigate(`/ViewAllMantriMandal`);
           }, 1100);
         }
       })
@@ -49,7 +80,68 @@ const EditContent = () => {
       await getApiById("minister", id)
         .then((res) => {
           setData(res.data.data);
+          setDefaultDesOpt(
+            res?.data?.data?.designation?.map((item) => {
+              let data = {
+                value: item._id,
+                label: item.name,
+              };
+              return data;
+            })
+          );
           setIsToggled(res.data.data.isActive);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      await getApi("ministry")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prevData) => ({
+              ...prevData,
+              ministry: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      await getApi("assembly")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prevData) => ({
+              ...prevData,
+              assembly: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      await getApi("member?status=Approved")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prevData) => ({
+              ...prevData,
+              member: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      await getApi("designation")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prevData) => ({
+              ...prevData,
+              designation: res.data.data,
+            }));
+          }
         })
         .catch((err) => {
           console.log(err);
@@ -57,14 +149,6 @@ const EditContent = () => {
     };
     fetchData();
   }, []);
-
-  const options = {
-    ministry_type: ["Chief Minister", "Deputy Chief Minister", "Minister"],
-    assembly_number: [12, 13, 14, 15],
-    member_name: ["check1", "check2", "check3"],
-    designation: ["check1", "check2", "check3"],
-    ministry: [1, 2, 3, 4],
-  };
 
   return (
     <div className="content-wrapper pt-4">
@@ -77,7 +161,10 @@ const EditContent = () => {
         <div className="card card-info">
           <div className="row">
             <div className="col-lg-9">
-              <form className="form-horizontal border_names">
+              <form
+                onSubmit={handleSubmit}
+                className="form-horizontal border_names"
+              >
                 {data && (
                   <div className="card-body">
                     <div className="form-group row">
@@ -91,13 +178,13 @@ const EditContent = () => {
                         <select
                           className="form-control"
                           name="ministry_type"
-                          value={data?.ministry_type}
+                          value={data?.ministry_type?._id}
                           onChange={handleChange}
                         >
                           <option hidden>Select Ministry Type</option>
-                          {options.ministry_type.map((item, index) => (
-                            <option key={index} value={item}>
-                              {item}
+                          {options.ministry.map((item, index) => (
+                            <option key={index} value={item._id}>
+                              {item.ministry_name}
                             </option>
                           ))}
                         </select>
@@ -114,13 +201,13 @@ const EditContent = () => {
                         <select
                           className="form-control"
                           name="assembly_number"
-                          value={data?.assembly_number}
+                          value={data?.assembly_number?._id}
                           onChange={handleChange}
                         >
                           <option hidden>Select Assembly Number</option>
-                          {options.assembly_number.map((item, index) => (
-                            <option key={index} value={item}>
-                              {item}
+                          {options.assembly.map((item, index) => (
+                            <option key={index} value={item._id}>
+                              {item.assembly_number}
                             </option>
                           ))}
                         </select>
@@ -137,13 +224,15 @@ const EditContent = () => {
                         <select
                           className="form-control"
                           name="member_name"
-                          value={data?.member_name}
+                          value={data?.member_name?._id}
                           onChange={handleChange}
                         >
                           <option hidden>Select Member name</option>
-                          {options.member_name.map((item, index) => (
-                            <option key={index} value={item}>
-                              {item}
+                          {options.member.map((item, index) => (
+                            <option key={index} value={item._id}>
+                              {item.basic_info.surname +
+                                " " +
+                                item.basic_info.name}
                             </option>
                           ))}
                         </select>
@@ -157,19 +246,16 @@ const EditContent = () => {
                         Edit Designation :
                       </label>
                       <div className="col-sm-8">
-                        <select
-                          className="form-control"
+                        <Select
+                          isMulti
                           name="designation"
-                          value={data?.designation}
-                          onChange={handleChange}
-                        >
-                          <option hidden>Select Designation</option>
-                          {options.designation.map((item, index) => (
-                            <option key={index} value={item}>
-                              {item}
-                            </option>
-                          ))}
-                        </select>
+                          options={desOpt}
+                          onChange={(e) => setDefaultDesOpt(e)}
+                          value={defaultDesOpt}
+                          closeMenuOnSelect={false}
+                          classNamePrefix="select"
+                          placeholder="Select Designation"
+                        />
                       </div>
                     </div>
                     <div className="form-group row">
@@ -177,57 +263,47 @@ const EditContent = () => {
                         htmlFor="inputPassword3"
                         className="col-sm-3 col-form-label"
                       >
-                        Edit Ministry :
+                        Edit Year :
                       </label>
                       <div className="col-sm-8">
-                        <select
+                        <input
+                          type="date"
+                          defaultValue={data?.year}
                           className="form-control"
-                          name="ministry"
-                          value={data?.ministry}
+                          name="year"
                           onChange={handleChange}
-                        >
-                          <option hidden>Select Ministry</option>
-                          {options.ministry.map((item, index) => (
-                            <option key={index} value={item}>
-                              {item}
-                            </option>
-                          ))}
-                        </select>
+                        />
                       </div>
                     </div>
+                    <div className="form-group row">
+                      <label
+                        htmlFor="inputPassword3"
+                        className="col-sm-3 col-form-label"
+                      >
+                        Edit Status :
+                      </label>
+                      <div className="col-sm-8">
+                        <div
+                          className={`toggle-button ${
+                            isToggled ? "active" : ""
+                          }`}
+                          onClick={handleToggle}
+                        >
+                          <div
+                            className={`slider ${isToggled ? "active" : ""}`}
+                          />
+                          <div className="button-text">
+                            {isToggled ? "Active" : "Inactive"}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <button className="submit123 mt-5">Submit</button>
                   </div>
                 )}
               </form>
             </div>
           </div>
-          <div className="row">
-            <div className="col-lg-9">
-              <div className="card-body">
-                <div className="form-group row">
-                  <label
-                    htmlFor="inputPassword3"
-                    className="col-sm-4 col-form-label"
-                  >
-                    Edit Status :
-                  </label>
-                  <div className="col-sm-8">
-                    <div
-                      className={`toggle-button ${isToggled ? "active" : ""}`}
-                      onClick={handleToggle}
-                    >
-                      <div className={`slider ${isToggled ? "active" : ""}`} />
-                      <div className="button-text">
-                        {isToggled ? "Active" : "Inactive"}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <button className="submit123 mt-5" onClick={() => handleSubmit()}>
-            Submit
-          </button>
         </div>
       </div>
     </div>

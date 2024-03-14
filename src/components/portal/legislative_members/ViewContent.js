@@ -21,6 +21,8 @@ const ViewContent = () => {
     fetchData();
   }, []);
 
+  console.log("cc");
+
   return (
     <div className="content-wrapper pt-4">
       <div className="contentofpages">

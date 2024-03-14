@@ -19,6 +19,8 @@ const Content = () => {
     basic_info: {
       house: "",
       assembly_number: "",
+      constituency_from: "",
+      constituency_to: "",
       profile: "",
       name: "",
       surname: "",
@@ -44,6 +46,9 @@ const Content = () => {
       {
         date: "",
         title: "",
+        presiding: "",
+        legislative_position: "",
+        designation: "",
       },
     ],
     election_data: {
@@ -67,15 +72,18 @@ const Content = () => {
     party: [],
     gender: [],
     district: [],
+    officer: [],
+    position: [],
+    designation: [],
   });
 
   const navigate = useNavigate();
 
   const fetchData = async () => {
     for (let key in Data) {
-      await getApi(key)
+      console.log(key);
+      await getApi(key + "/option")
         .then((res) => {
-          // console.log(res.data.data);
           seObjects((prevData) => ({ ...prevData, [key]: res.data.data }));
         })
         .catch((err) => {
@@ -87,13 +95,13 @@ const Content = () => {
   const nextStep = () => {
     // const { isValid, errors } = validateData(data);
 
-    if (!data.basic_info.house) {
-      // setError(errors);
-      toast.error("Please select Assebly");
-      return;
-    } else {
-      setCurrentStep(currentStep + 1);
-    }
+    // if (!data.basic_info.house) {
+    //   // setError(errors);
+    //   toast.error("Please select Assebly");
+    //   return;
+    // } else {
+    setCurrentStep(currentStep + 1);
+    // }
   };
 
   const prevStep = () => {
@@ -104,6 +112,9 @@ const Content = () => {
     let object = {
       date: "",
       title: "",
+      presiding: "",
+      legislative_position: "",
+      designation: "",
     };
 
     setData((prev) => ({
@@ -185,7 +196,9 @@ const Content = () => {
             [field]: {
               ...prev[field],
               house: value,
-              assembly_number: "N/A",
+              assembly_number: null,
+              constituency_from: "",
+              constituency_to: "",
             },
           }))
         : setData((prev) => ({
@@ -194,6 +207,8 @@ const Content = () => {
               ...prev[field],
               house: value,
               assembly_number: "",
+              constituency_from: null,
+              constituency_to: null,
             },
           }));
     } else {
@@ -367,7 +382,7 @@ const Content = () => {
         if (res.data.success) {
           toast.success("Legislative Member added successfully.");
           setTimeout(() => {
-            navigate("/ViewLegislativeMember");
+            navigate("/ViewAllLegislativeMembers");
           }, 1100);
         }
       })
@@ -378,10 +393,12 @@ const Content = () => {
     fetchData();
   }, []);
 
+  console.log(data);
+
   return (
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
-        <Link to="/ViewLegislativeMember" className="addpagess">
+        <Link to="/ViewAllLegislativeMembers" className="addpagess">
           <img src={back} style={{ width: "25px" }} alt="add" />
           Go back
         </Link>

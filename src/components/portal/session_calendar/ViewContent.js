@@ -27,8 +27,7 @@ const ViewContent = () => {
             <thead>
               <tr>
                 <th>Sr.No</th>
-                <th>English Session</th>
-                <th>Marathi Session</th>
+                <th>Session</th>
                 <th>Topic Name</th>
                 <th>Houses</th>
                 <th>Year</th>

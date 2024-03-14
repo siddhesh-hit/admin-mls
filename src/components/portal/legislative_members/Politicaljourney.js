@@ -57,6 +57,84 @@ function Politicaljourney({
                 />
               </div>
             </div>
+            <div className="form-group row">
+              <label
+                htmlFor="inputPassword3"
+                className="col-sm-4 col-form-label"
+              >
+                Add Presiding Officer :
+              </label>
+              <div className="col-sm-8">
+                <select
+                  className="form-control"
+                  name={`political_journey.presiding.${index}`}
+                  onChange={handleChange}
+                >
+                  <option hidden>Select Presiding Officer</option>
+                  {Data.officer.length > 0 ? (
+                    Data.officer.map((it) => (
+                      <option key={it._id} value={it._id}>
+                        {it.name}
+                      </option>
+                    ))
+                  ) : (
+                    <option hidden>Select Presiding Officer</option>
+                  )}
+                </select>
+              </div>
+            </div>
+            <div className="form-group row">
+              <label
+                htmlFor="inputPassword3"
+                className="col-sm-4 col-form-label"
+              >
+                Add Legislative Position :
+              </label>
+              <div className="col-sm-8">
+                <select
+                  className="form-control"
+                  name={`political_journey.legislative_position.${index}`}
+                  onChange={handleChange}
+                >
+                  <option hidden>Select Legislative Position</option>
+                  {Data.position.length > 0 ? (
+                    Data.position.map((it) => (
+                      <option key={it._id} value={it._id}>
+                        {it.name}
+                      </option>
+                    ))
+                  ) : (
+                    <option hidden>Select Legislative Position</option>
+                  )}
+                </select>
+              </div>
+            </div>
+            <div className="form-group row">
+              <label
+                htmlFor="inputPassword3"
+                className="col-sm-4 col-form-label"
+              >
+                Add Designation :
+              </label>
+              <div className="col-sm-8">
+                <select
+                  className="form-control"
+                  name={`political_journey.designation.${index}`}
+                  onChange={handleChange}
+                >
+                  <option hidden>Select Designation</option>
+                  {Data.designation.length > 0 ? (
+                    Data.designation.map((it) => (
+                      <option key={it._id} value={it._id}>
+                        {it.name}
+                      </option>
+                    ))
+                  ) : (
+                    <option hidden>Select Designation</option>
+                  )}
+                </select>
+              </div>
+            </div>
             {index === 0 && (
               <div onClick={addDiv} className="addSubButton">
                 <img

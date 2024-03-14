@@ -3,20 +3,35 @@ import { Link, useNavigate } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { toast } from "react-toastify";
 
+import Paginate from "../../../components/common/Paginate";
+import TotalEntries from "../../../table/TotalEntries";
 import add from "../../../images/add.svg";
 
 import { deleteApi, getApi } from "../../../services/axiosInterceptors";
 
 const ViewContent = () => {
   const [data, setData] = useState([]);
+  const [pageOptions, setPageOptions] = useState({
+    current: 0,
+    page: 10,
+    count: 0,
+    assembly_name: "",
+  });
 
   const navigate = useNavigate();
 
   const fetchData = async () => {
-    await getApi("assembly")
+    await getApi(
+      `assembly?perPage=${pageOptions.current}&perLimit=${pageOptions.page}&assembly_name=${pageOptions.assembly_name}`
+    )
       .then((res) => {
-        console.log(res);
-        setData(res.data.data);
+        if (res.data.success) {
+          setData(res.data.data);
+          setPageOptions((prev) => ({
+            ...prev,
+            count: res.data.count,
+          }));
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -45,7 +60,7 @@ const ViewContent = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [pageOptions.page, pageOptions.current, pageOptions.assembly_name]);
 
   return (
     <div className="content-wrapper pt-4">
@@ -56,6 +71,20 @@ const ViewContent = () => {
         </Link>
 
         <h4 className="page-title">• View Assembly</h4>
+        <TotalEntries
+          returnCount={(data) =>
+            setPageOptions((prev) => ({
+              ...prev,
+              page: data,
+            }))
+          }
+          returnSearch={(data) =>
+            setPageOptions((prev) => ({
+              ...prev,
+              assembly_name: data,
+            }))
+          }
+        />
         <div className="card card-info">
           <div className="row">
             <div className="col-lg-12">
@@ -121,6 +150,19 @@ const ViewContent = () => {
                   )}
                 </tbody>
               </table>
+              {pageOptions.count > 0 && (
+                <Paginate
+                  totalCount={pageOptions.count}
+                  perPage={pageOptions.page}
+                  handlePageChange={(currentPage) => {
+                    setPageOptions((prev) => ({
+                      ...prev,
+                      current: currentPage,
+                    }));
+                  }}
+                  initialPage={pageOptions.current}
+                />
+              )}
             </div>
           </div>
         </div>

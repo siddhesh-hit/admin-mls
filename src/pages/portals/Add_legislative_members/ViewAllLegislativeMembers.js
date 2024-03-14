@@ -3,6 +3,8 @@ import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 
+import Paginate from "../../../components/common/Paginate";
+import TotalEntries from "../../../table/TotalEntries";
 import add from "../../../images/add.svg";
 
 import {
@@ -13,11 +15,23 @@ import {
 
 const ViewAllLegislativeMembers = () => {
   const [data, setData] = useState([]);
+  const [pageOptions, setPageOptions] = useState({
+    current: 0,
+    page: 10,
+    count: 0,
+    "basic_info.house": "",
+  });
 
   const fetchData = async () => {
-    await getApi("member?status=Approved")
+    await getApi(
+      `member?status=Approved&perPage=${pageOptions.current}&perLimit=${pageOptions.page}`
+    )
       .then((res) => {
         setData(res.data.data);
+        setPageOptions((prev) => ({
+          ...prev,
+          count: res.data.count,
+        }));
       })
       .catch((err) => {
         console.log(err);
@@ -58,7 +72,8 @@ const ViewAllLegislativeMembers = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [pageOptions.page, pageOptions.current, pageOptions["basic_info.house"]]);
+
   return (
     <div>
       <div className="content-wrapper pt-4">
@@ -68,6 +83,20 @@ const ViewAllLegislativeMembers = () => {
             Add Legislative Member
           </Link>
           <h4 className="page-title">• View All Legislative Members</h4>
+          <TotalEntries
+            returnCount={(data) =>
+              setPageOptions((prev) => ({
+                ...prev,
+                page: data,
+              }))
+            }
+            returnSearch={(data) =>
+              setPageOptions((prev) => ({
+                ...prev,
+                "basic_info.house": data,
+              }))
+            }
+          />
           <div className="card card-info">
             <div className="row">
               <div className="col-lg-12">
@@ -77,7 +106,8 @@ const ViewAllLegislativeMembers = () => {
                       <th>Sr No.</th>
                       <th>Name</th>
                       <th>View</th>
-                      <th>Edit</th> <th>Delete</th>
+                      <th>Edit</th>
+                      <th>Delete</th>
                       <th>Archive</th>
                     </tr>
                   </thead>
@@ -143,7 +173,10 @@ const ViewAllLegislativeMembers = () => {
                                 )}
                                 placement="bottom"
                               >
-                                <i class="fa fa-archive" aria-hidden="true"></i>
+                                <i
+                                  className="fa fa-archive"
+                                  aria-hidden="true"
+                                ></i>
                               </OverlayTrigger>
                             </button>
                           </td>
@@ -154,6 +187,19 @@ const ViewAllLegislativeMembers = () => {
                     )}
                   </tbody>
                 </table>
+                {pageOptions.count > 0 && (
+                  <Paginate
+                    totalCount={pageOptions.count}
+                    perPage={pageOptions.page}
+                    handlePageChange={(currentPage) => {
+                      setPageOptions((prev) => ({
+                        ...prev,
+                        current: currentPage,
+                      }));
+                    }}
+                    initialPage={pageOptions.current}
+                  />
+                )}
               </div>
             </div>
           </div>

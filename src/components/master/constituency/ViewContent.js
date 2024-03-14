@@ -3,19 +3,35 @@ import { Link, useNavigate } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { toast } from "react-toastify";
 
+import Paginate from "../../../components/common/Paginate";
+import TotalEntries from "../../../table/TotalEntries";
 import add from "../../../images/add.svg";
 
 import { deleteApi, getApi } from "../../../services/axiosInterceptors";
 
 const ViewContent = () => {
   const [data, setData] = useState([]);
+  const [pageOptions, setPageOptions] = useState({
+    current: 0,
+    page: 10,
+    count: 0,
+    assembly_name: "",
+  });
 
   const navigate = useNavigate();
 
   const fetchData = async () => {
-    await getApi("constituency")
+    await getApi(
+      `constituency?perPage=${pageOptions.current}&perLimit=${pageOptions.page}`
+    )
       .then((res) => {
-        setData(res.data.data);
+        if (res.data.success) {
+          setData(res.data.data);
+          setPageOptions((prev) => ({
+            ...prev,
+            count: res.data.count,
+          }));
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -44,7 +60,7 @@ const ViewContent = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [pageOptions.page, pageOptions.current, pageOptions.assembly_name]);
 
   console.log(data);
 
@@ -57,6 +73,20 @@ const ViewContent = () => {
         </Link>
 
         <h4 className="page-title">• View Constituency</h4>
+        <TotalEntries
+          returnCount={(data) =>
+            setPageOptions((prev) => ({
+              ...prev,
+              page: data,
+            }))
+          }
+          returnSearch={(data) =>
+            setPageOptions((prev) => ({
+              ...prev,
+              assembly_name: data,
+            }))
+          }
+        />
         <div className="card card-info">
           <div className="row">
             <div className="col-lg-12">
@@ -64,8 +94,8 @@ const ViewContent = () => {
                 <thead>
                   <tr>
                     <th>Constituency Name</th>
-                    <th>Constituency Number</th>
                     <th>Constituency Type</th>
+                    <th>Constituency SubType</th>
                     <th>Year</th>
                     <th>Constituency Name</th>
                     <th>Assembly Number</th>
@@ -85,10 +115,10 @@ const ViewContent = () => {
                             <h4>{item.council.constituency_name || "-"}</h4>
                           </td>
                           <td>
-                            <h4>{item.council.constituency_number || "-"}</h4>
+                            <h4>{item.council.constituency_type || "-"}</h4>
                           </td>
                           <td>
-                            <h4>{item.council.constituency_type || "-"}</h4>
+                            <h4>{item.council.constituency_subtype || "-"}</h4>
                           </td>
                           <td>
                             <h4>{item.council.year || "-"}</h4>
@@ -146,6 +176,19 @@ const ViewContent = () => {
                   )}
                 </tbody>
               </table>
+              {pageOptions.count > 0 && (
+                <Paginate
+                  totalCount={pageOptions.count}
+                  perPage={pageOptions.page}
+                  handlePageChange={(currentPage) => {
+                    setPageOptions((prev) => ({
+                      ...prev,
+                      current: currentPage,
+                    }));
+                  }}
+                  initialPage={pageOptions.current}
+                />
+              )}
             </div>
           </div>
         </div>
