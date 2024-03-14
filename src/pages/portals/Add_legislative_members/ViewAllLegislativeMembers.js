@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 
 import Paginate from "../../../components/common/Paginate";
 import TotalEntries from "../../../table/TotalEntries";
+
 import add from "../../../images/add.svg";
 
 import {
