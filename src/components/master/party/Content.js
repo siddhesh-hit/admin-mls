@@ -23,6 +23,7 @@ const Content = () => {
       },
       party_flag: {},
       party_symbol: {},
+      isHouse: "",
     },
   ]);
 
@@ -40,6 +41,7 @@ const Content = () => {
       },
       party_flag: {},
       party_symbol: {},
+      isHouse: "",
     };
     setData([...data, newData]);
     setDivCount(divCount + 1);
@@ -60,10 +62,10 @@ const Content = () => {
 
   const handleChange = (e, index) => {
     const { name, value, files } = e.target;
-    const [field, subField] = name.split(".");
+    const [field, subField] = name?.split(".");
     const maxAllowedSize = 2.5 * 1024 * 1024;
 
-    if (!files) {
+    if (!files && name !== "isHouse") {
       setData((prev) => [
         ...prev.map((item, i) => {
           if (i === index) {
@@ -79,29 +81,45 @@ const Content = () => {
         }),
       ]);
     } else {
-      if (
-        files[0].type.startsWith("image/png") ||
-        files[0].type.startsWith("image/jpeg") ||
-        files[0].type.startsWith("image/jpg")
-      ) {
-        if (files[0].size > maxAllowedSize) {
-          alert("Upload the file of size less than 2MB.");
+      if (files && files.length > 0) {
+        if (
+          files[0].type.startsWith("image/png") ||
+          files[0].type.startsWith("image/jpeg") ||
+          files[0].type.startsWith("image/jpg")
+        ) {
+          if (files[0].size > maxAllowedSize) {
+            alert("Upload the file of size less than 2MB.");
+          } else {
+            setData((prev) => [
+              ...prev.map((item, i) => {
+                if (i === index) {
+                  return {
+                    ...item,
+                    [name]: files[0],
+                  };
+                }
+                return item;
+              }),
+            ]);
+          }
         } else {
-          setData((prev) => [
-            ...prev.map((item, i) => {
-              if (i === index) {
-                return {
-                  ...item,
-                  [name]: files[0],
-                };
-              }
-              return item;
-            }),
-          ]);
+          alert("Only upload JPEG/JPG/PNG format images");
         }
-      } else {
-        alert("Only upload JPEG/JPG/PNG format images");
       }
+    }
+
+    if (name === "isHouse") {
+      setData((prev) => [
+        ...prev.map((item, i) => {
+          if (i === +index) {
+            return {
+              ...item,
+              [name]: value,
+            };
+          }
+          return item;
+        }),
+      ]);
     }
   };
 
@@ -259,6 +277,31 @@ const Content = () => {
                           <p className="photo_disclaimer">
                             *Only upload JPEG/JPG/PNG format images.
                           </p>
+                        </div>
+                      </div>
+
+                      <div className="form-group row mb-3">
+                        <label
+                          htmlFor="inputPassword3"
+                          className="col-sm-3 col-form-label"
+                        >
+                          *Add Party House :
+                        </label>
+                        <div className="col-sm-9">
+                          <div className="custom-file">
+                            <select
+                              type="text"
+                              name="isHouse"
+                              onChange={(e) => handleChange(e, index)}
+                              className="form-control mb-3"
+                            >
+                              <option hidden>Enter House</option>
+                              <option value={"Assembly"}>Assembly</option>
+                              <option value={"Constituency"}>
+                                Constituency
+                              </option>
+                            </select>
+                          </div>
                         </div>
                       </div>
 

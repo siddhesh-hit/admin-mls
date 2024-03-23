@@ -9,11 +9,18 @@ import { getApi, postApi } from "../../../services/axiosInterceptors";
 
 const Content = () => {
   const [minister, setMinister] = useState({
-    ministry_type: "",
     assembly_number: "",
     member_name: "",
+    ministry_type: [],
     designation: [],
-    year: "",
+    des_from: "",
+    des_to: "",
+    presiding: [],
+    pres_from: "",
+    pres_to: "",
+    legislative_position: [],
+    lp_from: "",
+    lp_to: "",
   });
 
   const [options, setOptions] = useState({
@@ -21,12 +28,35 @@ const Content = () => {
     assembly: [],
     member: [],
     designation: [],
+    presiding: [],
+    legislative_position: [],
   });
 
   const desOpt = options?.designation?.map((item) => {
     let data = {
       value: item._id,
       label: item.name,
+    };
+    return data;
+  });
+  const presOpt = options?.presiding?.map((item) => {
+    let data = {
+      value: item._id,
+      label: item.name,
+    };
+    return data;
+  });
+  const lpOpt = options?.legislative_position?.map((item) => {
+    let data = {
+      value: item._id,
+      label: item.name,
+    };
+    return data;
+  });
+  const minisOpt = options?.ministry?.map((item) => {
+    let data = {
+      value: item._id,
+      label: item.ministry_name,
     };
     return data;
   });
@@ -44,11 +74,17 @@ const Content = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     minister.designation = minister.designation.map((item) => item.value);
+    minister.presiding = minister.presiding.map((item) => item.value);
+    minister.legislative_position = minister.legislative_position.map(
+      (item) => item.value
+    );
+    minister.ministry_type = minister.ministry_type.map((item) => item.value);
+
     console.log(minister.designation);
     await postApi("minister", minister)
       .then((res) => {
         if (res.data.success) {
-          toast.success("Minister is created successfully.");
+          toast.success("Minister create request forwaded!");
           navigate("/ViewAllMantriMandal");
         }
       })
@@ -57,7 +93,7 @@ const Content = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      await getApi("ministry")
+      await getApi("ministry/option")
         .then((res) => {
           if (res.data.success) {
             setOptions((prevData) => ({
@@ -70,7 +106,7 @@ const Content = () => {
           console.log(err);
         });
 
-      await getApi("assembly")
+      await getApi("assembly/option")
         .then((res) => {
           if (res.data.success) {
             setOptions((prevData) => ({
@@ -83,20 +119,7 @@ const Content = () => {
           console.log(err);
         });
 
-      await getApi("member?status=Approved")
-        .then((res) => {
-          if (res.data.success) {
-            setOptions((prevData) => ({
-              ...prevData,
-              member: res.data.data,
-            }));
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-      await getApi("designation")
+      await getApi("designation/option")
         .then((res) => {
           if (res.data.success) {
             setOptions((prevData) => ({
@@ -108,10 +131,56 @@ const Content = () => {
         .catch((err) => {
           console.log(err);
         });
+
+      await getApi("officer/option")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prevData) => ({
+              ...prevData,
+              presiding: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      await getApi("position/option")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prevData) => ({
+              ...prevData,
+              legislative_position: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
 
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await getApi(
+        `member/all?status=Approved&basic_info.house=Assembly&basic_info.assembly_number=${minister.assembly_number}`
+      )
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prevData) => ({
+              ...prevData,
+              member: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    fetchData();
+  }, [minister.assembly_number]);
 
   return (
     <div>
@@ -128,29 +197,6 @@ const Content = () => {
                 <div className="">
                   <form onSubmit={handleSubmit} className="form-horizontal">
                     <div className="card-body border_names">
-                      <div className="form-group row">
-                        <label
-                          htmlFor="inputPassword3"
-                          className="col-sm-4 col-form-label"
-                        >
-                          Ministry Type :
-                        </label>
-                        <div className="col-sm-8">
-                          <select
-                            className="form-control"
-                            name="ministry_type"
-                            value={minister.ministry_type}
-                            onChange={handleChange}
-                          >
-                            <option hidden>Select Ministry Type</option>
-                            {options.ministry.map((item, index) => (
-                              <option key={index} value={item._id}>
-                                {item.ministry_name}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      </div>
                       <div className="form-group row">
                         <label
                           htmlFor="inputPassword3"
@@ -204,6 +250,30 @@ const Content = () => {
                           htmlFor="inputPassword3"
                           className="col-sm-4 col-form-label"
                         >
+                          Ministry Type :
+                        </label>
+                        <div className="col-sm-8">
+                          <Select
+                            isMulti
+                            name="ministry_type"
+                            options={minisOpt}
+                            onChange={(e) =>
+                              setMinister((prev) => ({
+                                ...prev,
+                                ministry_type: e,
+                              }))
+                            }
+                            className=""
+                            classNamePrefix="select"
+                            placeholder="Select Ministry Type"
+                          />
+                        </div>
+                      </div>
+                      <div className="form-group row">
+                        <label
+                          htmlFor="inputPassword3"
+                          className="col-sm-4 col-form-label"
+                        >
                           Designation :
                         </label>
                         <div className="col-sm-8">
@@ -228,13 +298,139 @@ const Content = () => {
                           htmlFor="inputPassword3"
                           className="col-sm-4 col-form-label"
                         >
-                          Year :
+                          Designation Year :
                         </label>
-                        <div className="col-sm-8">
+                        <div className="col-sm-4">
                           <input
                             className="form-control"
-                            name="year"
+                            name="des_from"
                             type="date"
+                            min={"1937-01-01"}
+                            max={new Date().toISOString().slice(0, 10)}
+                            onChange={handleChange}
+                          />
+                        </div>
+                        <div className="col-sm-4">
+                          <input
+                            className="form-control"
+                            name="des_to"
+                            type="date"
+                            min={
+                              minister.des_from
+                                ? minister.des_from
+                                : "1937-01-01"
+                            }
+                            max={new Date().toISOString().slice(0, 10)}
+                            onChange={handleChange}
+                          />
+                        </div>
+                      </div>
+                      <div className="form-group row">
+                        <label
+                          htmlFor="inputPassword3"
+                          className="col-sm-4 col-form-label"
+                        >
+                          Presiding Officer :
+                        </label>
+                        <div className="col-sm-8">
+                          <Select
+                            isMulti
+                            name="presiding"
+                            options={presOpt}
+                            onChange={(e) =>
+                              setMinister((prev) => ({
+                                ...prev,
+                                presiding: e,
+                              }))
+                            }
+                            className=""
+                            classNamePrefix="select"
+                            placeholder="Select Presiding Officer"
+                          />
+                        </div>
+                      </div>
+                      <div className="form-group row">
+                        <label
+                          htmlFor="inputPassword3"
+                          className="col-sm-4 col-form-label"
+                        >
+                          Presiding Officer Year :
+                        </label>
+                        <div className="col-sm-4">
+                          <input
+                            className="form-control"
+                            name="pres_from"
+                            type="date"
+                            min={"1937-01-01"}
+                            max={new Date().toISOString().slice(0, 10)}
+                            onChange={handleChange}
+                          />
+                        </div>
+                        <div className="col-sm-4">
+                          <input
+                            className="form-control"
+                            name="pres_to"
+                            type="date"
+                            min={
+                              minister.pres_from
+                                ? minister.pres_from
+                                : "1937-01-01"
+                            }
+                            max={new Date().toISOString().slice(0, 10)}
+                            onChange={handleChange}
+                          />
+                        </div>
+                      </div>
+                      <div className="form-group row">
+                        <label
+                          htmlFor="inputPassword3"
+                          className="col-sm-4 col-form-label"
+                        >
+                          Legislative Position :
+                        </label>
+                        <div className="col-sm-8">
+                          <Select
+                            isMulti
+                            name="legislative_position"
+                            options={lpOpt}
+                            onChange={(e) =>
+                              setMinister((prev) => ({
+                                ...prev,
+                                legislative_position: e,
+                              }))
+                            }
+                            className=""
+                            classNamePrefix="select"
+                            placeholder="Select Legilsative Position"
+                          />
+                        </div>
+                      </div>
+                      <div className="form-group row">
+                        <label
+                          htmlFor="inputPassword3"
+                          className="col-sm-4 col-form-label"
+                        >
+                          legislative Position Year :
+                        </label>
+                        <div className="col-sm-4">
+                          <input
+                            className="form-control"
+                            name="lp_from"
+                            type="date"
+                            min={"1937-01-01"}
+                            max={new Date().toISOString().slice(0, 10)}
+                            onChange={handleChange}
+                          />
+                        </div>
+                        <div className="col-sm-4">
+                          <input
+                            className="form-control"
+                            name="lp_to"
+                            type="date"
+                            min={
+                              minister.lp_from ? minister.lp_from : "1937-01-01"
+                            }
+                            max={new Date().toISOString().slice(0, 10)}
                             onChange={handleChange}
                           />
                         </div>

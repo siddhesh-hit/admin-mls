@@ -142,7 +142,10 @@ const ViewAllMandal = () => {
                                 )}
                                 placement="bottom"
                               >
-                                <i class="fa fa-archive" aria-hidden="true"></i>
+                                <i
+                                  className="fa fa-archive"
+                                  aria-hidden="true"
+                                ></i>
                               </OverlayTrigger>
                             </button>
                           </td>

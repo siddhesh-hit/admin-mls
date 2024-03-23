@@ -198,7 +198,7 @@ const ViewMemberProfile = () => {
                                 <p>Title : {item.title}</p>
                                 <p>Presiding Officer : {item.presiding.name}</p>
                                 <p>
-                                  Legislative Position :{" "}
+                                  Legislative Position :
                                   {item.legislative_position.name}
                                 </p>
                                 <p>Designation : {item.designation.name}</p>

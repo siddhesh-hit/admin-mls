@@ -64,7 +64,7 @@ const EditContent = () => {
     await putApi("minister", id, data)
       .then((res) => {
         if (res.data.success) {
-          toast.success("Ministry updated Successfully");
+          toast.success("Ministry updated request forwaded!");
           setTimeout(() => {
             navigate(`/ViewAllMantriMandal`);
           }, 1100);

@@ -24,7 +24,7 @@ const EditContent = () => {
     const [field, subField] = name.split(".");
     const maxAllowedSize = 2.5 * 1024 * 1024;
 
-    if (subField) {
+    if (subField && name !== "isHouse") {
       setData((prev) => ({
         ...prev,
         [field]: {
@@ -33,22 +33,31 @@ const EditContent = () => {
         },
       }));
     } else {
-      if (
-        files[0].type.startsWith("image/png") ||
-        files[0].type.startsWith("image/jpeg") ||
-        files[0].type.startsWith("image/jpg")
-      ) {
-        if (files[0].size > maxAllowedSize) {
-          alert("Upload the file of size less than 2MB.");
+      if (files && files.length > 0) {
+        if (
+          files[0].type.startsWith("image/png") ||
+          files[0].type.startsWith("image/jpeg") ||
+          files[0].type.startsWith("image/jpg")
+        ) {
+          if (files[0].size > maxAllowedSize) {
+            alert("Upload the file of size less than 2MB.");
+          } else {
+            setData((prev) => ({
+              ...prev,
+              [name]: files[0],
+            }));
+          }
         } else {
-          setData((prev) => ({
-            ...prev,
-            [name]: files[0],
-          }));
+          alert("Only upload JPEG/JPG/PNG format images");
         }
-      } else {
-        alert("Only upload JPEG/JPG/PNG format images");
       }
+    }
+
+    if (name === "isHouse") {
+      setData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
     }
   };
 
@@ -216,6 +225,31 @@ const EditContent = () => {
                           <p className="photo_disclaimer">
                             *Only upload JPEG/JPG/PNG format images.
                           </p>
+                        </div>
+                      </div>
+                      <div className="form-group row mb-3">
+                        <label
+                          htmlFor="inputPassword3"
+                          className="col-sm-3 col-form-label"
+                        >
+                          *Edit Party House :
+                        </label>
+                        <div className="col-sm-9">
+                          <div className="custom-file">
+                            <select
+                              type="text"
+                              name="isHouse"
+                              onChange={(e) => handleChange(e)}
+                              className="form-control mb-3"
+                              value={data.isHouse}
+                            >
+                              <option hidden>Enter House</option>
+                              <option value={"Assembly"}>Assembly</option>
+                              <option value={"Constituency"}>
+                                Constituency
+                              </option>
+                            </select>
+                          </div>
                         </div>
                       </div>
                     </div>

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import EditBasicinformation from "./EditBasicinformation";
 import EditPoliticaljourney from "./EditPoliticaljourney";
@@ -41,8 +43,11 @@ const EditContent = () => {
       hobby: "",
       foreign_migration: "",
       address: "",
+      address1: "",
       mobile_number: "",
       email: "",
+      awards: "",
+      other_info: "",
     },
     political_journey: [
       {
@@ -336,6 +341,9 @@ const EditContent = () => {
                   handleChange={handleChange}
                   error={error}
                   Data={Data}
+                  setData={setData}
+                  CKEditor={CKEditor}
+                  ClassicEditor={ClassicEditor}
                 />
                 <EditPoliticaljourney
                   currentStep={currentStep}

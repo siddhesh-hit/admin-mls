@@ -19,8 +19,8 @@ function Politicaljourney({
     <div className="mb-5">
       <h2 className="stepper-form">• Legislative Journey</h2>
       <form>
-        {data.political_journey &&
-          data.political_journey.map((item, index) => (
+        {data?.political_journey &&
+          data?.political_journey?.map((item, index) => (
             <div className="formss border_names" key={index}>
               <div className="form-group row">
                 <label
@@ -69,7 +69,7 @@ function Politicaljourney({
                   <select
                     className="form-control"
                     name={`political_journey.presiding.${index}`}
-                    value={item.presiding}
+                    value={item.presiding._id}
                     onChange={handleChange}
                   >
                     <option hidden>Select Presiding Officer</option>
@@ -96,7 +96,7 @@ function Politicaljourney({
                   <select
                     className="form-control"
                     name={`political_journey.legislative_position.${index}`}
-                    value={item.legislative_position}
+                    value={item.legislative_position._id}
                     onChange={handleChange}
                   >
                     <option hidden>Select Legislative Position</option>
@@ -123,7 +123,7 @@ function Politicaljourney({
                   <select
                     className="form-control"
                     name={`political_journey.designation.${index}`}
-                    value={item.designation}
+                    value={item.designation._id}
                     onChange={handleChange}
                   >
                     <option hidden>Select Designation</option>
