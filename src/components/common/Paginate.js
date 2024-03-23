@@ -3,29 +3,26 @@ import ShowingEntries from "../../table/ShowingEntries";
 
 const Paginate = ({ totalCount, perPage, handlePageChange, initialPage }) => {
   const [currentPage, setCurrentPage] = useState(initialPage);
-  const numberOfPages = Math.floor(totalCount / perPage);
+  const numberOfPages = Math.ceil(totalCount / perPage);
   const pageToShow = 5;
   const displayPage = [];
 
   const countPagesToShow = () => {
     if (numberOfPages <= pageToShow) {
-      // Show all pages if total pages are less than or equal to the display limit
-      for (let i = 0; i <= numberOfPages; i++) {
+      for (let i = 0; i < numberOfPages; i++) {
         displayPage.push(i);
       }
     } else {
       const lastPage = numberOfPages;
 
       if (currentPage <= pageToShow / 2 + 1) {
-        // Show first few pages and ellipses
         for (let i = 0; i <= pageToShow; i++) {
           displayPage.push(i);
         }
         displayPage.push("...");
         displayPage.push(lastPage);
       } else if (currentPage >= numberOfPages - pageToShow / 2) {
-        // Show last few pages and ellipses
-        displayPage.push(0); // Show the first page
+        displayPage.push(0);
         displayPage.push("...");
         for (
           let i = Math.max(lastPage - pageToShow + 1, 2);
@@ -35,7 +32,7 @@ const Paginate = ({ totalCount, perPage, handlePageChange, initialPage }) => {
           displayPage.push(i);
         }
       } else {
-        displayPage.push(0); // Show the first page
+        displayPage.push(0);
         displayPage.push("...");
         for (
           let i = Math.max(currentPage - Math.floor(pageToShow / 2), 2);
@@ -45,15 +42,11 @@ const Paginate = ({ totalCount, perPage, handlePageChange, initialPage }) => {
           displayPage.push(i);
         }
         displayPage.push("...");
-        displayPage.push(lastPage); // Show the last page
+        displayPage.push(lastPage);
       }
     }
     return displayPage;
   };
-
-  useEffect(() => {
-    handlePageChange(currentPage);
-  }, [currentPage]);
 
   const handleClick = (page) => {
     if (page >= 0 && page < numberOfPages + 1) {
@@ -68,7 +61,7 @@ const Paginate = ({ totalCount, perPage, handlePageChange, initialPage }) => {
   };
 
   const goToNextPage = () => {
-    if (currentPage < numberOfPages) {
+    if (currentPage < numberOfPages - 1) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -85,7 +78,9 @@ const Paginate = ({ totalCount, perPage, handlePageChange, initialPage }) => {
     ));
   };
 
-  console.log(currentPage, numberOfPages);
+  useEffect(() => {
+    handlePageChange(currentPage);
+  }, [currentPage]);
 
   return (
     <div className="paginationcss">

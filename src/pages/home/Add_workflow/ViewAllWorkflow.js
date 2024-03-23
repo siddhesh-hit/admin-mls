@@ -23,7 +23,7 @@ const ViewAllFaqs = () => {
     await getApi(
       `pending?perPage=${pageOptions.current}&perLimit=${
         pageOptions.page
-      }&isPending=${true}&action=${pageOptions.action}&modelName=${
+      }isPending=${true}&action=${pageOptions.action}&modelName=${
         pageOptions.modelName
       }`
     )

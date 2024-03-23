@@ -25,19 +25,19 @@ const ViewContent = () => {
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete it?") === true) {
       // console.log("cehck");
-      await deleteApi("navigation", id)
+      await deleteApi("sessionField", id)
         .then((res) => {
           if (res.status === 204) {
-            toast.success("Deleted the navigation.");
+            toast.success("Deleted the session field.");
             setTimeout(() => {
-              navigate("/ViewNavigation");
+              navigate("/ViewSessionField");
               fetchData();
             }, 1100);
           }
         })
         .catch((err) => {
           console.log(err);
-          toast.error("Failed to delete the navigation.");
+          toast.error("Failed to delete the session field.");
         });
     }
   };
@@ -77,7 +77,7 @@ const ViewContent = () => {
                             <h4>{item.name}</h4>
                           </td>
                           <td>
-                            <Link to={`/EditContent?id=${item._id}`}>
+                            <Link to={`/EditSessionField?id=${item._id}`}>
                               <OverlayTrigger
                                 delay={{ hide: 450, show: 300 }}
                                 overlay={(props) => (

@@ -3,19 +3,35 @@ import { Link, useNavigate } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { toast } from "react-toastify";
 
+import Paginate from "../../../components/common/Paginate";
+import TotalEntries from "../../../table/TotalEntries";
 import add from "../../../images/add.svg";
 
 import { deleteApi, getApi } from "../../../services/axiosInterceptors";
 
 const ViewContent = () => {
   const [data, setData] = useState([]);
+  const [pageOptions, setPageOptions] = useState({
+    current: 0,
+    page: 10,
+    count: 0,
+    assembly_name: "",
+  });
 
   const navigate = useNavigate();
 
   const fetchData = async () => {
-    await getApi("constituency")
+    await getApi(
+      `constituency?perPage=${pageOptions.current}&perLimit=${pageOptions.page}`
+    )
       .then((res) => {
-        setData(res.data.data);
+        if (res.data.success) {
+          setData(res.data.data);
+          setPageOptions((prev) => ({
+            ...prev,
+            count: res.data.count,
+          }));
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -44,7 +60,7 @@ const ViewContent = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [pageOptions.page, pageOptions.current, pageOptions.assembly_name]);
 
   console.log(data);
 
@@ -57,22 +73,34 @@ const ViewContent = () => {
         </Link>
 
         <h4 className="page-title">• View Constituency</h4>
+        <TotalEntries
+          returnCount={(data) =>
+            setPageOptions((prev) => ({
+              ...prev,
+              page: data,
+            }))
+          }
+          returnSearch={(data) =>
+            setPageOptions((prev) => ({
+              ...prev,
+              assembly_name: data,
+            }))
+          }
+        />
         <div className="card card-info">
           <div className="row">
             <div className="col-lg-12">
               <table className="table table-striped table-bordered mb-0 view_vidhan_mandal">
                 <thead>
                   <tr>
-                    <th>Year</th>
-                    <th>Constituency name</th>
-                    <th>मतदारसंघाचे नाव</th>
-                    <th>Assembly Number</th>
-                    <th>विधानसभा क्रमांक</th>
-                    <th>Year</th>
-                    <th>Constituency Type</th>
-                    <th>मतदारसंघाचा प्रकार</th>
                     <th>Constituency Name</th>
-                    <th>मतदारसंघाचे नाव</th>
+                    <th>Constituency Type</th>
+                    <th>Constituency SubType</th>
+                    <th>Year</th>
+                    <th>Constituency Name</th>
+                    <th>Assembly Number</th>
+                    <th>Constituency Type</th>
+                    <th>Year</th>
                     <th>Edit</th>
                     <th>Delete</th>
                   </tr>
@@ -82,57 +110,36 @@ const ViewContent = () => {
                     <>
                       {data.map((item, index) => (
                         <tr key={index}>
+                          {/* council */}
                           <td>
-                            <h4>
-                              {new Date(
-                                item.english.assembly.year
-                              ).getFullYear() || "-"}
-                            </h4>
+                            <h4>{item.council.constituency_name || "-"}</h4>
                           </td>
-
+                          <td>
+                            <h4>{item.council.constituency_type || "-"}</h4>
+                          </td>
+                          <td>
+                            <h4>{item.council.constituency_subtype || "-"}</h4>
+                          </td>
+                          <td>
+                            <h4>{item.council.year || "-"}</h4>
+                          </td>
+                          {/* assembly */}
+                          <td>
+                            <h4>{item.assembly.constituency_name || "-"}</h4>
+                          </td>
                           <td>
                             <h4>
-                              {item.english.assembly.constituency_assembly ||
+                              {item.assembly.assembly_number?.assembly_name ||
                                 "-"}
                             </h4>
                           </td>
                           <td>
+                            <h4>{item.assembly.constituency_type || "-"}</h4>
+                          </td>
+                          <td>
                             <h4>
-                              {item.marathi.assembly.constituency_assembly ||
+                              {new Date(item.assembly.year).getFullYear() ||
                                 "-"}
-                            </h4>
-                          </td>
-                          <td>
-                            <h4>
-                              {item.english.assembly.assembly_number || "-"}
-                            </h4>
-                          </td>
-                          <td>
-                            <h4>
-                              {item.marathi.assembly.assembly_number || "-"}
-                            </h4>
-                          </td>
-                          <td>
-                            <h4>{item.english.council.year || "-"}</h4>
-                          </td>
-                          <td>
-                            <h4>
-                              {item.english.council.constituency_type || "-"}
-                            </h4>
-                          </td>
-                          <td>
-                            <h4>
-                              {item.marathi.council.constituency_type || "-"}
-                            </h4>
-                          </td>
-                          <td>
-                            <h4>
-                              {item.english.council.constituency_name || "-"}
-                            </h4>
-                          </td>
-                          <td>
-                            <h4>
-                              {item.marathi.council.constituency_name || "-"}
                             </h4>
                           </td>
                           <td>
@@ -169,6 +176,19 @@ const ViewContent = () => {
                   )}
                 </tbody>
               </table>
+              {pageOptions.count > 0 && (
+                <Paginate
+                  totalCount={pageOptions.count}
+                  perPage={pageOptions.page}
+                  handlePageChange={(currentPage) => {
+                    setPageOptions((prev) => ({
+                      ...prev,
+                      current: currentPage,
+                    }));
+                  }}
+                  initialPage={pageOptions.current}
+                />
+              )}
             </div>
           </div>
         </div>

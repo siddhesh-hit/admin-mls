@@ -3,19 +3,33 @@ import { Link, useNavigate } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { toast } from "react-toastify";
 
+import Paginate from "../../../components/common/Paginate";
+import TotalEntries from "../../../table/TotalEntries";
 import add from "../../../images/add.svg";
 
 import { deleteApi, getApi } from "../../../services/axiosInterceptors";
 
 const ViewContent = () => {
   const [data, setData] = useState([]);
-
-  const navigate = useNavigate();
+  const [pageOptions, setPageOptions] = useState({
+    current: 0,
+    page: 10,
+    count: 0,
+    ministry_name: "",
+  });
 
   const fetchData = async () => {
-    await getApi("minister")
+    await getApi(
+      `ministry?perPage=${pageOptions.current}&perLimit=${pageOptions.page}&ministry_name=${pageOptions.ministry_name}`
+    )
       .then((res) => {
-        setData(res.data.data);
+        if (res.data.success) {
+          setData(res.data.data);
+          setPageOptions((prev) => ({
+            ...prev,
+            count: res.data.count,
+          }));
+        }
       })
       .catch((err) => {
         console.log(err);
@@ -24,15 +38,11 @@ const ViewContent = () => {
 
   const handleDelete = async (id) => {
     if (window.confirm("Are you sure you want to delete it?") === true) {
-      // console.log("cehck");
-      await deleteApi("minister", id)
+      await deleteApi("ministry", id)
         .then((res) => {
           if (res.status === 204) {
             toast.success("Deleted the ministry.");
-            setTimeout(() => {
-              navigate("/ViewMinistry");
-              fetchData();
-            }, 1100);
+            fetchData();
           }
         })
         .catch((err) => {
@@ -44,9 +54,7 @@ const ViewContent = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
-
-  console.log(data);
+  }, [pageOptions.page, pageOptions.current, pageOptions.ministry_name]);
 
   return (
     <div className="content-wrapper pt-4">
@@ -57,6 +65,21 @@ const ViewContent = () => {
         </Link>
 
         <h4 className="page-title">• View Ministry</h4>
+        <TotalEntries
+          returnCount={(data) =>
+            setPageOptions((prev) => ({
+              ...prev,
+              page: data,
+            }))
+          }
+          returnSearch={(data) =>
+            setPageOptions((prev) => ({
+              ...prev,
+              ministry_name: data,
+            }))
+          }
+        />
+
         <div className="card card-info">
           <div className="row">
             <div className="col-lg-12">
@@ -64,10 +87,9 @@ const ViewContent = () => {
                 <thead>
                   <tr>
                     <th>Ministry Name</th>
-                    <th>Designation</th>
                     <th>Minister</th>
-                    <th>Assembly Number</th>
-                    <th>Minister of State</th>
+                    <th>Year</th>
+                    <th>Sub Ministry</th>
                     <th>Edit</th>
                     <th>Delete</th>
                   </tr>
@@ -78,19 +100,23 @@ const ViewContent = () => {
                       {data.map((item, index) => (
                         <tr key={index}>
                           <td>
-                            <h4>{item.ministry}</h4>
+                            <h4>{item.ministry_name}</h4>
                           </td>
                           <td>
-                            <h4>{item.designation}</h4>
+                            <h4>{item.minister}</h4>
                           </td>
                           <td>
-                            <h4>{item.ministry_type}</h4>
+                            <h4>{item.year}</h4>
                           </td>
                           <td>
-                            <h4>{item.assembly_number}</h4>
-                          </td>
-                          <td>
-                            <h4>{item.member_name}</h4>
+                            <h4>
+                              {item?.sub_ministry.map((it, i, arr) => (
+                                <span>
+                                  {it.name}
+                                  {i !== arr?.length - 1 ? ", " : ""}
+                                </span>
+                              ))}
+                            </h4>
                           </td>
                           <td>
                             <Link to={`/EditMinistry?id=${item._id}`}>
@@ -126,103 +152,22 @@ const ViewContent = () => {
                   )}
                 </tbody>
               </table>
+              {pageOptions.count > 0 && (
+                <Paginate
+                  totalCount={pageOptions.count}
+                  perPage={pageOptions.page}
+                  handlePageChange={(currentPage) => {
+                    setPageOptions((prev) => ({
+                      ...prev,
+                      current: currentPage,
+                    }));
+                  }}
+                  initialPage={pageOptions.current}
+                />
+              )}
             </div>
           </div>
         </div>
-        {/* <div className="card card-info mt-5">
-          <div className="row">
-            <div className="col-lg-12">
-              <table className="table mb-0 gallery_photo">
-                <thead>
-                  <tr>
-                    <th>Sr No</th>
-                    <th>Photos and Videos Gallery</th>
-                    <th></th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <h4>1</h4>
-                    </td>
-                    <td>
-                      <h4>Maharashtra Legislative Secretariat</h4>
-                    </td>
-                    <td>
-                      <button>View</button>
-                    </td>
-                    <td>
-                      <Link to="/Edit_vidhan_mandal">
-                        <i
-                          className="fa fa-edit"
-                          style={{ fontSize: "20px" }}
-                        ></i>
-                      </Link>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <h4>1</h4>
-                    </td>
-                    <td>
-                      <h4>Maharashtra Legislative Secretariat</h4>
-                    </td>
-                    <td>
-                      <button>View</button>
-                    </td>
-                    <td>
-                      <Link to="/Edit_vidhan_mandal">
-                        <i
-                          className="fa fa-edit"
-                          style={{ fontSize: "20px" }}
-                        ></i>
-                      </Link>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <h4>1</h4>
-                    </td>
-                    <td>
-                      <h4>Maharashtra Legislative Secretariat</h4>
-                    </td>
-                    <td>
-                      <button>View</button>
-                    </td>
-                    <td>
-                      <Link to="/Edit_vidhan_mandal">
-                        <i
-                          className="fa fa-edit"
-                          style={{ fontSize: "20px" }}
-                        ></i>
-                      </Link>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <h4>1</h4>
-                    </td>
-                    <td>
-                      <h4>Maharashtra Legislative Secretariat</h4>
-                    </td>
-                    <td>
-                      <button>View</button>
-                    </td>
-                    <td>
-                      <Link to="/Edit_vidhan_mandal">
-                        <i
-                          className="fa fa-edit"
-                          style={{ fontSize: "20px" }}
-                        ></i>
-                      </Link>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div> */}
       </div>
     </div>
   );

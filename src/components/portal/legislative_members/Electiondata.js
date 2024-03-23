@@ -35,11 +35,10 @@ function Electiondata({
                 <option hidden>Select Constituency</option>
                 {Data.constituency.length > 0 ? (
                   Data.constituency.map((item) => (
-                    <option
-                      key={item._id}
-                      value={item.english.constituency_assembly}
-                    >
-                      {item.english.constituency_assembly}
+                    <option key={item._id} value={item._id}>
+                      {item.council.constituency_name !== ""
+                        ? item.council.constituency_name
+                        : item.assembly.constituency_name}
                     </option>
                   ))
                 ) : (
@@ -147,10 +146,7 @@ function Electiondata({
                         <option hidden>Select Party</option>
                         {Data.party.length > 0 ? (
                           Data.party.map((item) => (
-                            <option
-                              key={item._id}
-                              value={item.english.party_name}
-                            >
+                            <option key={item._id} value={item._id}>
                               {item.english.party_name}
                             </option>
                           ))

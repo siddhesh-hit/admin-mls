@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -6,18 +6,16 @@ import addwhite from "../../../images/addwhite.svg";
 import remove from "../../../images/remove.svg";
 import back from "../../../images/back.svg";
 
-import { postApi } from "../../../services/axiosInterceptors";
+import { getApi, postApi } from "../../../services/axiosInterceptors";
 
 const Content = () => {
   const [divCount, setDivCount] = useState(1);
-  const [year, setYear] = useState([]);
+  const [option, setOption] = useState({
+    year: [],
+    session: [],
+  });
   const [data, setData] = useState({
-    marathi: {
-      session: "",
-    },
-    english: {
-      session: "",
-    },
+    session: "",
     topic_name: "",
     houses: "",
     year: "",
@@ -68,15 +66,7 @@ const Content = () => {
 
     const maxAllowedSize = 2.5 * 1024 * 1024;
 
-    if (lang === "marathi" || lang === "english") {
-      setData((data) => ({
-        ...data,
-        [lang]: {
-          ...data.lang,
-          [field]: value,
-        },
-      }));
-    } else if (index) {
+    if (index) {
       if (files) {
         if (files[0].type.startsWith("application/pdf")) {
           if (files[0].size > maxAllowedSize) {
@@ -135,6 +125,20 @@ const Content = () => {
       .catch((err) => toast.error("Failed to add session."));
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      await getApi("sessionField")
+        .then((res) => {
+          if (res.data.success) {
+            setOption((prev) => ({ ...prev, session: res.data.data }));
+          }
+        })
+        .catch((err) => console.log(err));
+    };
+
+    fetchData();
+  }, []);
+
   useMemo(() => {
     let current = new Date().getFullYear();
 
@@ -143,10 +147,8 @@ const Content = () => {
       years.push(i);
     }
 
-    setYear(years);
+    setOption((prev) => ({ ...prev, year: years }));
   }, []);
-
-  console.log(data);
 
   return (
     <div className="content-wrapper pt-4">
@@ -166,40 +168,20 @@ const Content = () => {
                       htmlFor="inputPassword3"
                       className="col-sm-3 col-form-label"
                     >
-                      Select Marathi Session :
+                      Select Session :
                     </label>
                     <div className="col-sm-9">
                       <select
                         className="form-control select2"
-                        name="session.marathi"
-                        value={data.marathi.session}
+                        name="session"
                         onChange={handleChange}
                       >
-                        <option hidden>Select Marathi Houses</option>
-                        <option value={"Marathi 2"}>Marathi 2</option>
-                        <option value={"Marathi 3"}>Marathi 3</option>
-                        <option value={"Marathi 4"}>Marathi 4</option>
-                      </select>
-                    </div>
-                  </div>
-                  <div className="form-group row">
-                    <label
-                      htmlFor="inputPassword3"
-                      className="col-sm-3 col-form-label"
-                    >
-                      Select English Session :
-                    </label>
-                    <div className="col-sm-9">
-                      <select
-                        className="form-control select2"
-                        name="session.english"
-                        value={data.english.session}
-                        onChange={handleChange}
-                      >
-                        <option hidden>Select English Houses</option>
-                        <option value={"English 2"}>English 2</option>
-                        <option value={"English 3"}>English 3</option>
-                        <option value={"English 4"}>English 4</option>
+                        <option hidden>Select Session</option>
+                        {option.session?.map((item, index) => (
+                          <option key={index} value={item._id}>
+                            {item.name}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -256,9 +238,9 @@ const Content = () => {
                         onChange={handleChange}
                       >
                         <option hidden>Select Year</option>
-                        {year.length > 0 ? (
+                        {option.year.length > 0 ? (
                           <>
-                            {year.map((item, index) => (
+                            {option.year.map((item, index) => (
                               <option key={index}>{item}</option>
                             ))}
                           </>

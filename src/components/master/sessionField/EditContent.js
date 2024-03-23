@@ -1,10 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import add from "../../../images/back.svg";
-import { useLocation } from "react-router-dom";
-import { getApiById } from "../../../services/axiosInterceptors";
+
+import { getApiById, putApi } from "../../../services/axiosInterceptors";
+
 const EditContent = () => {
   const [data, setData] = useState({});
 
+  const navigate = useNavigate();
   const location = useLocation();
   const id = location.search.split("=")[1];
 
@@ -17,6 +22,18 @@ const EditContent = () => {
 
     fetchData();
   }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await putApi("sessionField", id, data)
+      .then((res) => {
+        if (res.data.success) {
+          navigate("/ViewSessionField");
+          toast.success("Session Field created!");
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div>
@@ -31,7 +48,7 @@ const EditContent = () => {
             <div className="row">
               <div className="col-lg-10">
                 <div className="">
-                  <form className="form-horizontal">
+                  <form onSubmit={handleSubmit} className="form-horizontal">
                     <div className="card-body border_names">
                       <div
                         className="form-group row"
@@ -49,14 +66,23 @@ const EditContent = () => {
                             className="form-control"
                             placeholder="Enter Session Field"
                             defaultValue={data?.name}
+                            name="name"
+                            onChange={(e) => {
+                              setData((prev) => ({
+                                ...prev,
+                                [e.target.name]: e.target.value,
+                              }));
+                            }}
                           />
                         </div>
                       </div>
                     </div>
+                    <button type="submit" className="submit123 mt-5">
+                      Submit
+                    </button>
                   </form>
                 </div>
               </div>
-              <button className="submit123 mt-5">Submit</button>
             </div>
           </div>
         </div>

@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
 import DatePicker from "react-datepicker";
 
 import back from "../../../images/back.svg";
 
-import { postApi } from "../../../services/axiosInterceptors";
+import { getApi, postApi } from "../../../services/axiosInterceptors";
 
 const Content = () => {
   const [isToggled, setIsToggled] = useState(true);
@@ -16,32 +16,21 @@ const Content = () => {
   });
 
   const [data, setData] = useState({
-    marathi: {
-      assembly: {
-        constituency_assembly: "",
-        assembly_number: "",
-        year: "",
-      },
-      council: {
-        constituency_type: "",
-        constituency_name: "",
-        year: "",
-      },
+    assembly: {
+      constituency_name: "",
+      assembly_number: "",
+      constituency_type: "",
+      year: "",
     },
-    english: {
-      assembly: {
-        constituency_assembly: "",
-        assembly_number: "",
-        year: "",
-      },
-      council: {
-        constituency_type: "",
-        constituency_name: "",
-        year: "",
-      },
+    council: {
+      constituency_name: "",
+      constituency_type: "",
+      constituency_subtype: "",
+      year: "",
     },
     isHouse: "Assembly",
   });
+  const [assembly, setAssembly] = useState([]);
 
   const navigate = useNavigate();
 
@@ -54,29 +43,17 @@ const Content = () => {
     }));
     setData((prev) => ({
       ...prev,
-      marathi: {
-        assembly: {
-          constituency_assembly: "",
-          assembly_number: "",
-          year: "",
-        },
-        council: {
-          constituency_type: "",
-          constituency_name: "",
-          year: "",
-        },
+      assembly: {
+        constituency_name: "",
+        assembly_number: "",
+        constituency_type: "",
+        year: "",
       },
-      english: {
-        assembly: {
-          constituency_assembly: "",
-          assembly_number: "",
-          year: "",
-        },
-        council: {
-          constituency_type: "",
-          constituency_name: "",
-          year: "",
-        },
+      council: {
+        constituency_name: "",
+        constituency_number: "",
+        constituency_type: "",
+        year: "",
       },
       isHouse: !state.assembly ? "Assembly" : "Constituency",
     }));
@@ -84,18 +61,13 @@ const Content = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    const [lang, field, subField] = name.split(".");
-
-    console.log(lang, field, subField);
+    const [field, subField] = name.split(".");
 
     setData((prev) => ({
       ...prev,
-      [lang]: {
-        ...prev[lang],
-        [field]: {
-          ...prev[lang][field],
-          [subField]: value,
-        },
+      [field]: {
+        ...prev[field],
+        [subField]: value,
       },
     }));
   };
@@ -104,37 +76,17 @@ const Content = () => {
     if (name === "assembly") {
       setData((prev) => ({
         ...prev,
-        english: {
-          ...prev.english,
-          assembly: {
-            ...prev.english.assembly,
-            year: e,
-          },
-        },
-        marathi: {
-          ...prev.marathi,
-          assembly: {
-            ...prev.marathi.assembly,
-            year: e,
-          },
+        assembly: {
+          ...prev.assembly,
+          year: e,
         },
       }));
     } else {
       setData((prev) => ({
         ...prev,
-        english: {
-          ...prev.english,
-          council: {
-            ...prev.english.council,
-            year: e,
-          },
-        },
-        marathi: {
-          ...prev.marathi,
-          council: {
-            ...prev.marathi.council,
-            year: e,
-          },
+        council: {
+          ...prev.council,
+          year: e,
         },
       }));
     }
@@ -154,6 +106,22 @@ const Content = () => {
         console.log(err);
       });
   };
+
+  useEffect(() => {
+    // if (state.assembly === "Constituency") {
+    //   data.assembly.assembly_number = null;
+    // }
+    const fetchData = async () => {
+      await getApi("assembly")
+        .then((res) => {
+          if (res.data.success) {
+            setAssembly(res.data.data);
+          }
+        })
+        .catch((err) => console.log(err));
+    };
+    fetchData();
+  }, []);
 
   console.log(data);
 
@@ -183,7 +151,7 @@ const Content = () => {
                     >
                       <div className={`slider ${isToggled ? "active" : ""}`} />
                       <div className="button-text">
-                        {isToggled ? "Assembly" : "Constituency"}
+                        {isToggled ? "Assembly" : "Council"}
                       </div>
                     </div>
                   </div>
@@ -204,17 +172,10 @@ const Content = () => {
                           <div className="col-sm-9">
                             <input
                               type="text"
-                              name={`english.assembly.constituency_assembly`}
+                              name={`assembly.constituency_name`}
                               onChange={handleChange}
                               className="form-control mb-3"
                               placeholder="Enter Constitution Name"
-                            />
-                            <input
-                              type="text"
-                              name={`marathi.assembly.constituency_assembly`}
-                              onChange={handleChange}
-                              className="form-control mb-3"
-                              placeholder="मतदारसंघाचे नाव प्रविष्ट करा"
                             />
                           </div>
                         </div>
@@ -226,19 +187,34 @@ const Content = () => {
                             *Add Assembly Number :
                           </label>
                           <div className="col-sm-9">
-                            <input
-                              type="number"
-                              name={`english.assembly.assembly_number`}
+                            <select
+                              name={`assembly.assembly_number`}
                               onChange={handleChange}
                               className="form-control mb-3"
-                              placeholder="Enter Assembly Number"
-                            />
+                            >
+                              <option hidden>Select Assembly</option>
+                              {assembly?.map((item, index) => (
+                                <option key={index} value={item._id}>
+                                  {item.assembly_number}
+                                </option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                        <div className="form-group row mb-5">
+                          <label
+                            htmlFor="inputPassword3"
+                            className="col-sm-3 col-form-label"
+                          >
+                            *Add Constituency Type :
+                          </label>
+                          <div className="col-sm-9">
                             <input
-                              type="number"
-                              name={`marathi.assembly.assembly_number`}
+                              type="text"
+                              name={`assembly.constituency_type`}
                               onChange={handleChange}
                               className="form-control mb-3"
-                              placeholder="विधानसभा क्रमांक प्रविष्ट करा"
+                              placeholder="Enter Constituency Type"
                             />
                           </div>
                         </div>
@@ -252,7 +228,7 @@ const Content = () => {
                           <div className="col-sm-9">
                             <DatePicker
                               placeholderText="Select year"
-                              selected={data.english.assembly.year}
+                              selected={data.assembly.year}
                               showYearPicker
                               dateFormat={"yyyy"}
                               onChange={(e) => handleDateChange(e, "assembly")}
@@ -273,22 +249,15 @@ const Content = () => {
                             htmlFor="inputPassword3"
                             className="col-sm-3 col-form-label"
                           >
-                            *Add Constituency type :
+                            *Add Constituency Name :
                           </label>
                           <div className="col-sm-9">
                             <input
                               type="text"
-                              name={`english.council.constituency_type`}
+                              name={`council.constituency_name`}
                               onChange={handleChange}
                               className="form-control mb-3"
-                              placeholder="Enter Constitution type"
-                            />
-                            <input
-                              type="text"
-                              name={`marathi.council.constituency_type`}
-                              onChange={handleChange}
-                              className="form-control mb-3"
-                              placeholder="मतदारसंघाचा प्रकार प्रविष्ट करा"
+                              placeholder="Enter Constituency name"
                             />
                           </div>
                         </div>
@@ -297,22 +266,32 @@ const Content = () => {
                             htmlFor="inputPassword3"
                             className="col-sm-3 col-form-label"
                           >
-                            *Add Constituency name :
+                            *Add Constituency Sub type :
                           </label>
                           <div className="col-sm-9">
                             <input
-                              type="number"
-                              name={`english.council.constituency_name`}
+                              type="text"
+                              name={`council.constituency_subtype`}
                               onChange={handleChange}
                               className="form-control mb-3"
-                              placeholder="Enter Constituency name"
+                              placeholder="Enter Constituency Sub type"
                             />
+                          </div>
+                        </div>
+                        <div className="form-group row mb-5">
+                          <label
+                            htmlFor="inputPassword3"
+                            className="col-sm-3 col-form-label"
+                          >
+                            *Add Constituency Type :
+                          </label>
+                          <div className="col-sm-9">
                             <input
-                              type="number"
-                              name={`marathi.council.constituency_name`}
+                              type="text"
+                              name={`council.constituency_type`}
                               onChange={handleChange}
                               className="form-control mb-3"
-                              placeholder="मतदारसंघाचे नाव टाका"
+                              placeholder="Enter Constitution type"
                             />
                           </div>
                         </div>
@@ -326,7 +305,7 @@ const Content = () => {
                           <div className="col-sm-9">
                             <DatePicker
                               placeholderText="Select year"
-                              selected={data.english.assembly.year}
+                              selected={data.council.year}
                               showYearPicker
                               dateFormat={"yyyy"}
                               onChange={(e) => handleDateChange(e, "council")}

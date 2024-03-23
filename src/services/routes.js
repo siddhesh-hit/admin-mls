@@ -183,6 +183,11 @@ import ViewSeo from "../pages/home/Add_Seo/ViewSeos";
 import AddSEO from "../pages/home/Add_Seo/AddSeos";
 import EditSEO from "../pages/home/Add_Seo/EditSeos";
 
+import ViewAllUserDocument from "../pages/home/Add_UserDocuments/ViewAllUserDocument";
+import ViewUserDocument from "../pages/home/Add_UserDocuments/ViewUserDocument";
+import AddUserDocument from "../pages/home/Add_UserDocuments/AddUserDocument";
+import EditUserDocument from "../pages/home/Add_UserDocuments/EditUserDocument";
+
 export const routes = [
   {
     name: "Dashboard",
@@ -358,6 +363,34 @@ export const routes = [
     exact: true,
     access: ["SuperAdmin", "Admin", "ContentCreator"],
     element: <EditPortalUsers />,
+  },
+  {
+    name: "Portal User",
+    path: "/ViewAllUserDocument",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator", "Reviewer"],
+    element: <ViewAllUserDocument />,
+  },
+  {
+    name: "Portal User",
+    path: "/ViewUserDocument",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator", "Reviewer"],
+    element: <ViewUserDocument />,
+  },
+  {
+    name: "Portal User",
+    path: "/EditUserDocument",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <EditUserDocument />,
+  },
+  {
+    name: "Portal User",
+    path: "/AddUserDocument",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <AddUserDocument />,
   },
   {
     name: "Library",

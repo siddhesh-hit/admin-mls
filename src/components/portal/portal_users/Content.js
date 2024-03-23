@@ -129,7 +129,7 @@ const Content = () => {
         <div className="card card-info">
           <div className="row">
             <div className="col-lg-9">
-              <form className="form-horizontal">
+              <form onSubmit={handleSubmit} className="form-horizontal">
                 <div className="card-body">
                   <div className="form-group row">
                     <label
@@ -343,10 +343,10 @@ const Content = () => {
                     </div>
                   </div>
                 </div>
+                <button className="submit123" type="submit">
+                  Submit
+                </button>
               </form>
-              <button className="submit123" onClick={() => handleSubmit()}>
-                Submit
-              </button>
             </div>
           </div>
         </div>

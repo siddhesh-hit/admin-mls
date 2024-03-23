@@ -56,6 +56,8 @@ const ViewWorkflowGalleryImage = () => {
     fetchData();
   }, []);
 
+  console.log(data);
+
   return (
     <>
       <div>
@@ -73,9 +75,9 @@ const ViewWorkflowGalleryImage = () => {
                 }}
                 src={
                   API.baseUrl +
-                  data?.data_object?.gallery_image[0]?.destination +
+                  data?.data_object?.destination +
                   "/" +
-                  data?.data_object?.gallery_image[0]?.filename
+                  data?.data_object?.filename
                 }
                 alt="gallery"
               />

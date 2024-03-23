@@ -1,4 +1,13 @@
-function Basicinformation({ currentStep, data, handleChange, error, Data }) {
+function Basicinformation({
+  currentStep,
+  data,
+  handleChange,
+  error,
+  Data,
+  setData,
+  CKEditor,
+  ClassicEditor,
+}) {
   if (currentStep !== 1) {
     return null;
   }
@@ -10,7 +19,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
         <div>
           <div className="form-group row">
             <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
-              Add House :
+              *Add House :
             </label>
             <div className="col-sm-8">
               <input
@@ -67,11 +76,8 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
                   <option hidden>Select Assembly Number</option>
                   {Data.assembly.length > 0 ? (
                     Data.assembly.map((item) => (
-                      <option
-                        key={item._id}
-                        value={item.english.assembly_number}
-                      >
-                        {item.english.assembly_number}
+                      <option key={item._id} value={item._id}>
+                        {item.assembly_number}
                       </option>
                     ))
                   ) : (
@@ -89,11 +95,53 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
               </div>
             </div>
           )}
+
+          {data.basic_info.house === "Council" && (
+            <>
+              <div className="form-group row">
+                <label
+                  htmlFor="inputPassword3"
+                  className="col-sm-4 col-form-label"
+                >
+                  Constituency From :
+                </label>
+                <div className="col-sm-8">
+                  <input
+                    type="date"
+                    name="basic_info.constituency_from"
+                    defaultValue={data.basic_info.constituency_from}
+                    onChange={handleChange}
+                    className={`form-control`}
+                    placeholder="Enter Name"
+                  />
+                </div>
+              </div>
+              <div className="form-group row">
+                <label
+                  htmlFor="inputPassword3"
+                  className="col-sm-4 col-form-label"
+                >
+                  Constituency To :
+                </label>
+                <div className="col-sm-8">
+                  <input
+                    type="date"
+                    name="basic_info.constituency_to"
+                    min={data.basic_info.constituency_from || ""}
+                    defaultValue={data.basic_info.constituency_to}
+                    onChange={handleChange}
+                    className={`form-control`}
+                    placeholder="Enter Name"
+                  />
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
         <div className="form-group row">
           <label htmlFor="inputEmail3" className="col-sm-4 col-form-label">
-            Add Profile :
+            *Add Profile :
           </label>
           <div className="col-sm-8">
             <div className="custom-file">
@@ -130,7 +178,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
         </div>
         <div className="form-group row">
           <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
-            Add Name :
+            *Add Name :
           </label>
           <div className="col-sm-8">
             <input
@@ -152,7 +200,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
         </div>
         <div className="form-group row">
           <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
-            Add Surname :
+            *Add Surname :
           </label>
           <div className="col-sm-8">
             <input
@@ -174,7 +222,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
         </div>
         <div className="form-group row">
           <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
-            Add Constituency :
+            *Add Constituency :
           </label>
           <div className="col-sm-8">
             <select
@@ -188,11 +236,10 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
               <option hidden>Select Constituency</option>
               {Data.constituency.length > 0 ? (
                 Data.constituency.map((item) => (
-                  <option
-                    key={item._id}
-                    value={item.english.constituency_assembly}
-                  >
-                    {item.english.constituency_assembly}
+                  <option key={item._id} value={item._id}>
+                    {item.council.constituency_name !== ""
+                      ? item.council.constituency_name
+                      : item.assembly.constituency_name}
                   </option>
                 ))
               ) : (
@@ -210,7 +257,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
         </div>
         <div className="form-group row">
           <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
-            Add Party :
+            *Add Party :
           </label>
           <div className="col-sm-8">
             <select
@@ -224,7 +271,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
               <option hidden>Select Party</option>
               {Data.party.length > 0 ? (
                 Data.party.map((item) => (
-                  <option key={item._id} value={item.english.party_name}>
+                  <option key={item._id} value={item._id}>
                     {item.english.party_name}
                   </option>
                 ))
@@ -241,7 +288,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
         </div>
         <div className="form-group row">
           <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
-            Add Gender :
+            *Add Gender :
           </label>
           <div className="col-sm-8">
             <select
@@ -255,8 +302,8 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
               <option hidden>Select Gender</option>
               {Data.gender.length > 0 ? (
                 Data.gender.map((item) => (
-                  <option key={item._id} value={item.english.gender}>
-                    {item.english.gender}
+                  <option key={item._id} value={item._id}>
+                    {item.marathi.gender}
                   </option>
                 ))
               ) : (
@@ -272,7 +319,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
         </div>
         <div className="form-group row">
           <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
-            Add District :
+            *Add District :
           </label>
           <div className="col-sm-8">
             <select
@@ -286,7 +333,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
               <option hidden>Select District</option>
               {Data.district.length > 0 ? (
                 Data.district.map((item) => (
-                  <option key={item._id} value={item.english.district}>
+                  <option key={item._id} value={item._id}>
                     {item.english.district}
                   </option>
                 ))
@@ -303,7 +350,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
         </div>
         <div className="form-group row">
           <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
-            Add First Time Elected ? :
+            *Add First Time Elected ? :
           </label>
           <div className="col-sm-8">
             <select
@@ -329,7 +376,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
         </div>
         <div className="form-group row">
           <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
-            Add Date of Birth :
+            *Add Date of Birth :
           </label>
           <div className="col-sm-8">
             <input
@@ -353,7 +400,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
         </div>
         <div className="form-group row">
           <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
-            Add Place of Birth :
+            *Add Place of Birth :
           </label>
           <div className="col-sm-8">
             <input
@@ -377,7 +424,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
         </div>
         <div className="form-group row">
           <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
-            Add Education :
+            *Add Education :
           </label>
           <div className="col-sm-8">
             <input
@@ -400,7 +447,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
 
         <div className="form-group row">
           <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
-            Add Language :
+            *Add Language :
           </label>
           <div className="col-sm-8">
             <input
@@ -422,7 +469,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
         </div>
         <div className="form-group row">
           <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
-            Add Marital Status :
+            *Add Marital Status :
           </label>
           <div className="col-sm-8">
             <input
@@ -446,7 +493,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
         </div>
         <div className="form-group row">
           <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
-            Add Children :
+            *Add Children :
           </label>
           <div className="col-sm-8">
             <input
@@ -468,7 +515,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
         </div>
         <div className="form-group row">
           <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
-            Add Business :
+            *Add Business :
           </label>
           <div className="col-sm-8">
             <input
@@ -490,7 +537,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
         </div>
         <div className="form-group row">
           <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
-            Add Hobby :
+            *Add Hobby :
           </label>
           <div className="col-sm-8">
             <input
@@ -512,7 +559,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
         </div>
         <div className="form-group row">
           <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
-            Add Foreign Migration :
+            *Add Foreign Journey :
           </label>
           <div className="col-sm-8">
             <input
@@ -523,7 +570,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
               className={`form-control ${
                 error?.basic_info?.foreign_migration ? "activeError" : ""
               }`}
-              placeholder="Enter Foreign Migration"
+              placeholder="Enter Foreign Journey"
             />
             {error?.basic_info?.foreign_migration ? (
               <p className="red-error mt-3">
@@ -536,7 +583,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
         </div>
         <div className="form-group row">
           <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
-            Add Address :
+            *Add Address :
           </label>
           <div className="col-sm-8">
             <input
@@ -558,7 +605,29 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
         </div>
         <div className="form-group row">
           <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
-            Add Mobile Number :
+            *Add Address 1 :
+          </label>
+          <div className="col-sm-8">
+            <input
+              type="text"
+              name="basic_info.address1"
+              defaultValue={data.basic_info.address1}
+              onChange={handleChange}
+              className={`form-control ${
+                error?.basic_info?.address1 ? "activeError" : ""
+              }`}
+              placeholder="Enter Address 1"
+            />
+            {error?.basic_info?.address1 ? (
+              <p className="red-error mt-3">{error?.basic_info?.address1}</p>
+            ) : (
+              <></>
+            )}
+          </div>
+        </div>
+        <div className="form-group row">
+          <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
+            *Add Mobile Number :
           </label>
           <div className="col-sm-8">
             <input
@@ -582,7 +651,7 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
         </div>
         <div className="form-group row">
           <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
-            Add Email Address :
+            *Add Email Address :
           </label>
           <div className="col-sm-8">
             <input
@@ -597,6 +666,65 @@ function Basicinformation({ currentStep, data, handleChange, error, Data }) {
             />
             {error?.basic_info?.email ? (
               <p className="red-error mt-3">{error?.basic_info?.email}</p>
+            ) : (
+              <></>
+            )}
+          </div>
+        </div>
+        <div className="form-group row">
+          <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
+            *Add Awards :
+          </label>
+          <div className="col-sm-8">
+            <CKEditor
+              editor={ClassicEditor}
+              // data={editorData}
+              className={`form-control ${
+                error?.basic_info?.awards ? "activeError" : ""
+              }`}
+              name="english.about_us-description"
+              onChange={(event, value) =>
+                setData((prev) => ({
+                  ...prev,
+                  basic_info: {
+                    ...prev.basic_info,
+                    awards: value.getData(),
+                  },
+                }))
+              }
+              config={{ placeholder: "Enter Award" }}
+            />
+            {error?.basic_info?.awards ? (
+              <p className="red-error mt-3">{error?.basic_info?.awards}</p>
+            ) : (
+              <></>
+            )}
+          </div>
+        </div>
+        <div className="form-group row">
+          <label htmlFor="inputPassword3" className="col-sm-4 col-form-label">
+            *Add Other Information :
+          </label>
+          <div className="col-sm-8">
+            <CKEditor
+              editor={ClassicEditor}
+              className={`form-control ${
+                error?.basic_info?.other_info ? "activeError" : ""
+              }`}
+              name="english.about_us-description"
+              onChange={(event, value) =>
+                setData((prev) => ({
+                  ...prev,
+                  basic_info: {
+                    ...prev.basic_info,
+                    other_info: value.getData(),
+                  },
+                }))
+              }
+              config={{ placeholder: "Enter Other Information" }}
+            />
+            {error?.basic_info?.other_info ? (
+              <p className="red-error mt-3">{error?.basic_info?.other_info}</p>
             ) : (
               <></>
             )}

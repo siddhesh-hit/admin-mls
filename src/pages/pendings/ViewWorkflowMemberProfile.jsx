@@ -173,11 +173,19 @@ const ViewWorkflowMemberProfile = () => {
                             </p>
                             <p>
                               <b>Party :</b>{" "}
-                              {data?.data_object.basic_info.party}
+                              {
+                                data?.data_object.basic_info.party?.marathi
+                                  ?.party_name
+                              }
                             </p>
                             <p>
                               <b>Constituency :</b>
-                              {data?.data_object.basic_info.constituency}
+                              {data.data_object.basic_info.constituency.council
+                                .constituency_name !== ""
+                                ? data.data_object.basic_info.constituency
+                                    .council.constituency_name
+                                : data.data_object.basic_info.constituency
+                                    .assembly.constituency_name}
                             </p>
                             <p>
                               <b>Hobby :</b>{" "}
@@ -189,11 +197,18 @@ const ViewWorkflowMemberProfile = () => {
                             </p>
                             <p>
                               <b>Gender :</b>{" "}
-                              {data?.data_object.basic_info.gender}
+                              {
+                                data?.data_object.basic_info.gender?.marathi
+                                  ?.gender
+                              }
                             </p>
                             <p>
                               <b>Address :</b>{" "}
                               {data?.data_object.basic_info.address}
+                            </p>
+                            <p>
+                              <b>Address 1:</b>{" "}
+                              {data?.data_object.basic_info.address1}
                             </p>
                             <p>
                               <b>Mobile Number :</b>
@@ -202,6 +217,23 @@ const ViewWorkflowMemberProfile = () => {
                             <p>
                               <b>Email Address :</b>
                               {data?.data_object.basic_info.email}
+                            </p>
+                            <p>
+                              <b>Other Information :</b>
+                              <span
+                                dangerouslySetInnerHTML={{
+                                  __html:
+                                    data?.data_object.basic_info?.other_info,
+                                }}
+                              ></span>
+                            </p>
+                            <p>
+                              <b>Awards :</b>
+                              <span
+                                dangerouslySetInnerHTML={{
+                                  __html: data?.data_object.basic_info?.awards,
+                                }}
+                              ></span>
                             </p>
                           </div>
                         )}
@@ -250,7 +282,15 @@ const ViewWorkflowMemberProfile = () => {
                                     <h3 className="timeline-title">
                                       {item.date}
                                     </h3>
-                                    <p>{item.title}</p>
+                                    <p>Title : {item.title}</p>
+                                    <p>
+                                      Presiding Officer : {item.presiding.name}
+                                    </p>
+                                    <p>
+                                      Legislative Position :
+                                      {item.legislative_position.name}
+                                    </p>
+                                    <p>Designation : {item.designation.name}</p>
                                   </div>
                                 </li>
                               )
@@ -271,7 +311,12 @@ const ViewWorkflowMemberProfile = () => {
                       <div className="col-lg-12">
                         <h4 className="eclecresult">Election Result</h4>
                         <h3 className="gondiaa">
-                          {data?.data_object.election_data.constituency}
+                          {data.data_object.election_data.constituency.council
+                            .constituency_name !== ""
+                            ? data.data_object.election_data.constituency
+                                .council.constituency_name
+                            : data.data_object.election_data.constituency
+                                .assembly.constituency_name}
                         </h3>
                         <div className="row votes_abcdss">
                           <div className="col-lg-5">
@@ -314,7 +359,7 @@ const ViewWorkflowMemberProfile = () => {
                                   <h4>{item.votes}</h4>
                                 </td>
                                 <td>
-                                  <h4>{item.party}</h4>
+                                  <h4>{item.party?.marathi.party_name}</h4>
                                 </td>
                               </tr>
                             )
