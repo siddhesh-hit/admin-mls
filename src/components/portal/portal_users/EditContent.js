@@ -2,16 +2,19 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useLocation, useNavigate } from "react-router-dom";
 
-import { getApiById, getApi, putApi } from "../../../services/axiosInterceptors";
+import {
+  getApiById,
+  getApi,
+  putApi,
+} from "../../../services/axiosInterceptors";
 
 const EditContent = () => {
-  const [navigation, setNavigation] = useState([])
+  const [navigation, setNavigation] = useState([]);
   const [server, setServer] = useState({});
 
   const location = useLocation();
   const id = location.search.split("=")[1];
   const navigate = useNavigate();
-
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -57,14 +60,15 @@ const EditContent = () => {
       });
   };
 
-
   useEffect(() => {
     const fetchData = async () => {
-      await getApi('navigation').then((res) => {
-        if (res.data.success) {
-          setNavigation(res.data.data)
-        }
-      }).catch((err) => console.log(err))
+      await getApi("navigation")
+        .then((res) => {
+          if (res.data.success) {
+            setNavigation(res.data.data);
+          }
+        })
+        .catch((err) => console.log(err));
 
       await getApiById("user", id)
         .then((res) => {
@@ -75,9 +79,9 @@ const EditContent = () => {
           }));
         })
         .catch((err) => console.log(err));
-    }
-    fetchData()
-  }, [])
+    };
+    fetchData();
+  }, []);
 
   console.log(server);
 
@@ -266,7 +270,9 @@ const EditContent = () => {
                       >
                         <option hidden>Enter Interest Area</option>
                         {navigation?.map((item, index) => (
-                          <option key={index} value={item._id}>{item?.english?.navigation}</option>
+                          <option key={index} value={item._id}>
+                            {item?.english?.navigation}
+                          </option>
                         ))}
                       </select>
                     </div>

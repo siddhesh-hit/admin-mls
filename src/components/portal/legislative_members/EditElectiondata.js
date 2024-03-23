@@ -29,10 +29,9 @@ function Electiondata({
               <select
                 className="form-control"
                 name="election_data.constituency"
-                value={data.election_data.constituency}
+                value={data?.election_data?.constituency?._id}
                 onChange={handleChange}
               >
-                <option hidden>Select Constituency</option>
                 <option hidden>Select Constituency</option>
                 {Data.constituency.length > 0 ? (
                   Data.constituency.map((item) => (
@@ -79,8 +78,8 @@ function Electiondata({
             </div>
           </div>
         </div>
-        {data.election_data &&
-          data.election_data.member_election_result.map((item, index) => (
+        {data?.election_data &&
+          data?.election_data?.member_election_result?.map((item, index) => (
             <div className="border_names" key={index}>
               <div className="" style={{ padding: "0px 20px" }}>
                 <h2 className="stepper-form mb-2 mt-5">
@@ -135,7 +134,7 @@ function Electiondata({
                         <select
                           className="form-control"
                           name={`election_data.member_election_result.party.${index}`}
-                          value={item.party}
+                          value={item.party._id}
                           onChange={handleChange}
                         >
                           <option hidden>Select Party</option>

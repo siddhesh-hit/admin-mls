@@ -3,13 +3,13 @@ import ShowingEntries from "../../table/ShowingEntries";
 
 const Paginate = ({ totalCount, perPage, handlePageChange, initialPage }) => {
   const [currentPage, setCurrentPage] = useState(initialPage);
-  const numberOfPages = Math.floor(totalCount / perPage);
+  const numberOfPages = Math.ceil(totalCount / perPage);
   const pageToShow = 5;
   const displayPage = [];
 
   const countPagesToShow = () => {
     if (numberOfPages <= pageToShow) {
-      for (let i = 0; i <= numberOfPages; i++) {
+      for (let i = 0; i < numberOfPages; i++) {
         displayPage.push(i);
       }
     } else {

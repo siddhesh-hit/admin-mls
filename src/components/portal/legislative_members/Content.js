@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 import Basicinformation from "./Basicinformation";
 import Politicaljourney from "./Politicaljourney";
@@ -39,8 +41,11 @@ const Content = () => {
       hobby: "",
       foreign_migration: "",
       address: "",
+      address1: "",
       mobile_number: "",
       email: "",
+      awards: "",
+      other_info: "",
     },
     political_journey: [
       {
@@ -394,7 +399,6 @@ const Content = () => {
   }, []);
 
   console.log(data);
-
   return (
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
@@ -413,6 +417,9 @@ const Content = () => {
                   handleChange={handleChange}
                   error={error}
                   Data={Data}
+                  setData={setData}
+                  CKEditor={CKEditor}
+                  ClassicEditor={ClassicEditor}
                 />
                 <Politicaljourney
                   currentStep={currentStep}
