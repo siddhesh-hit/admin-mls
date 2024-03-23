@@ -5,7 +5,6 @@ import { getApi, postApi } from "../../../services/axiosInterceptors";
 import { useNavigate } from "react-router-dom";
 
 const Content = () => {
-  const [navigation, setNavigation] = useState([]);
   const [data, setData] = useState({
     full_name: "",
     houses: "",
@@ -17,6 +16,13 @@ const Content = () => {
     gender: "",
     interest_area: "",
     user_image: "",
+  });
+
+  const [options, setOptions] = useState({
+    designation: [],
+    department: [],
+    navigation: [],
+    gender: [],
   });
 
   const handleChange = (e) => {
@@ -48,8 +54,7 @@ const Content = () => {
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
-    console.log(data);
+    e.preventDefault();
 
     const formData = new FormData();
     formData.append("data", JSON.stringify(data));
@@ -73,7 +78,43 @@ const Content = () => {
       await getApi("navigation")
         .then((res) => {
           if (res.data.success) {
-            setNavigation(res.data.data);
+            setOptions((prev) => ({
+              ...prev,
+              navigation: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => console.log(err));
+
+      await getApi(`designation`)
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prev) => ({
+              ...prev,
+              designation: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => console.log(err));
+
+      await getApi(`department`)
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prev) => ({
+              ...prev,
+              department: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => console.log(err));
+
+      await getApi(`gender`)
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prev) => ({
+              ...prev,
+              gender: res.data.data,
+            }));
           }
         })
         .catch((err) => console.log(err));
@@ -123,10 +164,8 @@ const Content = () => {
                         onChange={handleChange}
                       >
                         <option hidden>Select Houses</option>
-                        <option>Houses 2</option>
-                        <option>Houses 3</option>
-                        <option>Houses 4</option>
-                        <option>Houses 5</option>
+                        <option>Assembly</option>
+                        <option>Council</option>
                       </select>
                     </div>
                   </div>
@@ -145,10 +184,11 @@ const Content = () => {
                         onChange={handleChange}
                       >
                         <option hidden>Select Department</option>
-                        <option>Department 2</option>
-                        <option>Department 3</option>
-                        <option>Department 4</option>
-                        <option>Department 5</option>
+                        {options?.department?.map((item, index) => (
+                          <option key={index} value={item._id}>
+                            {item.name}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -167,10 +207,11 @@ const Content = () => {
                         onChange={handleChange}
                       >
                         <option hidden>Select Designation</option>
-                        <option>Designation 2</option>
-                        <option>Designation 3</option>
-                        <option>Designation 4</option>
-                        <option>Designation 5</option>
+                        {options?.designation?.map((item, index) => (
+                          <option key={index} value={item._id}>
+                            {item.name}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -243,10 +284,11 @@ const Content = () => {
                         onChange={handleChange}
                       >
                         <option hidden>Enter Gender</option>
-                        <option>Gender 2</option>
-                        <option>Gender 3</option>
-                        <option>Gender 4</option>
-                        <option>Gender 5</option>
+                        {options?.gender?.map((item, index) => (
+                          <option key={index} value={item._id}>
+                            {item?.english?.gender}
+                          </option>
+                        ))}
                       </select>
                     </div>
                   </div>
@@ -265,7 +307,7 @@ const Content = () => {
                         onChange={handleChange}
                       >
                         <option hidden>Enter Interest Area</option>
-                        {navigation?.map((item, index) => (
+                        {options?.navigation?.map((item, index) => (
                           <option key={index} value={item._id}>
                             {item?.english?.navigation}
                           </option>

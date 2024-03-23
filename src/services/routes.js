@@ -108,6 +108,10 @@ import AddNavigation from "../pages/masters/Add_navigation/AddNavigation";
 import EditNavigation from "../pages/masters/Add_navigation/EditNavigation";
 import ViewNavigation from "../pages/masters/Add_navigation/ViewNavigation";
 
+import AddDepartment from "../pages/masters/Add_department/AddDepartment";
+import EditDepartment from "../pages/masters/Add_department/EditDepartment";
+import ViewDepartment from "../pages/masters/Add_department/ViewDepartment";
+
 import AddMinistry from "../pages/masters/Add_ministry/AddMinistry";
 import ViewMinistry from "../pages/masters/Add_ministry/ViewMinistry";
 import EditMinistry from "../pages/masters/Add_ministry/EditMinistry";
@@ -641,6 +645,27 @@ export const routes = [
     exact: true,
     access: ["SuperAdmin", "Admin", "ContentCreator"],
     element: <EditHouses />,
+  },
+  {
+    name: "Department",
+    path: "/AddDepartment",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator", "Reviewer"],
+    element: <AddDepartment />,
+  },
+  {
+    name: "Department",
+    path: "/ViewDepartment",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator", "Reviewer"],
+    element: <ViewDepartment />,
+  },
+  {
+    name: "Department",
+    path: "/EditDepartment",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <EditDepartment />,
   },
   {
     name: "AddCouncil",

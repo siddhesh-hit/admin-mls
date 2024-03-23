@@ -149,16 +149,20 @@ export const masterPaths = [
     child: ["/ViewNavigation", "/AddNavigation", "/EditNavigation"],
   },
   {
-    name: "SessionField",
-    path: "/ViewSessionField",
-    child: ["/ViewSessionField", "/AddSessionField", "/EditSessionField"],
-  },
-  {
     name: "Designation",
     path: "/ViewDesignation",
     child: ["/ViewDesignation", "/AddDesignation", "/EditDesignation"],
   },
-
+  {
+    name: "Department",
+    path: "/ViewDepartment",
+    child: ["/ViewDepartment", "/AddDepartment", "/EditDepartment"],
+  },
+  {
+    name: "SessionField",
+    path: "/ViewSessionField",
+    child: ["/ViewSessionField", "/AddSessionField", "/EditSessionField"],
+  },
   {
     name: "Legislative Positions",
     path: "/ViewLegislativePositions",
@@ -168,7 +172,6 @@ export const masterPaths = [
       "/EditLegislativePositions",
     ],
   },
-
   {
     name: "Presiding Officer",
     path: "/ViewPresidingOfficers",
@@ -200,6 +203,7 @@ export const routes = [
   "Navigation",
   "Ministry",
   "Designation",
+  "Department",
   "Legislative Positions",
   "Presiding Officer",
   "SessionField",

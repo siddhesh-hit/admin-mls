@@ -30,7 +30,6 @@ const Layout = ({ children }) => {
   const showHeaderFooter = !noHeaderFooterPaths.includes(
     location.pathname.toLowerCase()
   );
-  console.log(showHeaderFooter);
   return (
     <>
       {showHeaderFooter && <Header />}

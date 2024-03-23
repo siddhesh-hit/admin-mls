@@ -21,7 +21,9 @@ const ViewAllFaqs = () => {
 
   const fetchData = async () => {
     await getApi(
-      `pending?isPending=${true}&action=${pageOptions.action}&modelName=${
+      `pending?perPage=${pageOptions.current}&perLimit=${
+        pageOptions.page
+      }&isPending=${true}&action=${pageOptions.action}&modelName=${
         pageOptions.modelName
       }`
     )

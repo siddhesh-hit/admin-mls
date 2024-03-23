@@ -68,9 +68,7 @@ const Paginate = ({ totalCount, perPage, handlePageChange, initialPage }) => {
   };
 
   const goToNextPage = () => {
-    if (currentPage < numberOfPages - 1) {
-      // Adjust condition
-
+    if (currentPage < numberOfPages) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -87,6 +85,8 @@ const Paginate = ({ totalCount, perPage, handlePageChange, initialPage }) => {
     ));
   };
 
+  console.log(currentPage, numberOfPages);
+
   return (
     <div className="paginationcss">
       <ShowingEntries
@@ -94,20 +94,17 @@ const Paginate = ({ totalCount, perPage, handlePageChange, initialPage }) => {
         end={
           (initialPage + 1) * perPage > totalCount
             ? totalCount
-            : (initialPage + 1) * perPage > totalCount
+            : (initialPage + 1) * perPage
         }
         total={totalCount}
       />
 
       <div className="paginationnew">
-        <button onClick={goToPrevPage} disabled={currentPage === 1}>
+        <button onClick={goToPrevPage} disabled={currentPage === 0}>
           «
         </button>
         {renderPageLinks()}
-        <button
-          onClick={goToNextPage}
-          disabled={currentPage === numberOfPages - 1}
-        >
+        <button onClick={goToNextPage} disabled={currentPage === numberOfPages}>
           »
         </button>
       </div>

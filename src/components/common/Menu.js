@@ -107,8 +107,9 @@ const Menu = () => {
 
               <li
                 onClick={() => handleChange("master")}
-                className={`nav-item has-treeview borders ${navbar.master ? "menu-open" : ""
-                  }`}
+                className={`nav-item has-treeview borders ${
+                  navbar.master ? "menu-open" : ""
+                }`}
                 style={{ cursor: "pointer" }}
               >
                 <a className="nav-link main ">
@@ -144,8 +145,9 @@ const Menu = () => {
                   </p>
                 </a>
                 <ul
-                  className={`nav nav-treeview dots ${masterOpen ? "d-block" : ""
-                    } `}
+                  className={`nav nav-treeview dots ${
+                    masterOpen ? "d-block" : ""
+                  } `}
                 >
                   {masterPaths.map((item, index) => {
                     let active = null;
@@ -174,8 +176,9 @@ const Menu = () => {
 
               <li
                 onClick={() => handleChange("portal")}
-                className={`nav-item has-treeview borders ${navbar.portal ? "menu-open" : ""
-                  }`}
+                className={`nav-item has-treeview borders ${
+                  navbar.portal ? "menu-open" : ""
+                }`}
                 style={{ cursor: "pointer" }}
               >
                 <a className="nav-link main">
@@ -186,8 +189,9 @@ const Menu = () => {
                   </p>
                 </a>
                 <ul
-                  className={`nav nav-treeview dots ${portalOpen ? "d-block" : ""
-                    }`}
+                  className={`nav nav-treeview dots ${
+                    portalOpen ? "d-block" : ""
+                  }`}
                 >
                   {portalPaths.map((item, index) => {
                     let active = null;
@@ -545,8 +549,8 @@ const Menu = () => {
                 </ul>
               </li>
 
-              <li className="nav-item borders">
-                <Link to="/ViewAudit" className="nav-link main">
+              <NavLink to="/ViewAudit" className="nav-link main">
+                <li className="nav-item borders">
                   <svg
                     width="18"
                     height="18"
@@ -574,11 +578,11 @@ const Menu = () => {
                     />
                   </svg>
                   &nbsp;&nbsp;&nbsp;<p>Audit Trails</p>
-                </Link>
-              </li>
+                </li>
+              </NavLink>
 
-              <li className="nav-item borders">
-                <Link to="/ViewContact" className="nav-link main">
+              <NavLink to="/ViewContact" className="nav-link main">
+                <li className="nav-item borders">
                   <svg
                     width="18"
                     height="18"
@@ -606,8 +610,8 @@ const Menu = () => {
                     />
                   </svg>
                   &nbsp;&nbsp;&nbsp;<p>ContactUS</p>
-                </Link>
-              </li>
+                </li>
+              </NavLink>
 
               <li className="nav-item borders">
                 <Link to="/Dashboard" className="nav-link main">

@@ -8,8 +8,8 @@ import remove from "../../../images/remove.svg";
 import back from "../../../images/back.svg";
 
 import { postApi } from "../../../services/axiosInterceptors";
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 const Content = () => {
   const [isToggled, setIsToggled] = useState(false);
@@ -246,7 +246,7 @@ const Content = () => {
         [field]: value?.getData(),
       },
     }));
-  }
+  };
   console.log(data);
 
   return (
@@ -423,13 +423,25 @@ const Content = () => {
                           editor={ClassicEditor}
                           // data={editorData}
                           name="english_politicalCareer"
-                          onChange={(event, editor) => handleEditorChange(event, editor, "english_politicalCareer")}
+                          onChange={(event, editor) =>
+                            handleEditorChange(
+                              event,
+                              editor,
+                              "english_politicalCareer"
+                            )
+                          }
                         />
                         <CKEditor
                           editor={ClassicEditor}
                           // data={editorData}
                           name="marathi_politicalCareer"
-                          onChange={(event, editor) => handleEditorChange(event, editor, "marathi_politicalCareer")}
+                          onChange={(event, editor) =>
+                            handleEditorChange(
+                              event,
+                              editor,
+                              "marathi_politicalCareer"
+                            )
+                          }
                         />
                         {/* <textarea
                           type="text"
@@ -563,8 +575,8 @@ const Content = () => {
                                             languageIndex
                                           ]
                                             ? speeches[speechIndex].values[
-                                              languageIndex
-                                            ].content.name
+                                                languageIndex
+                                              ].content.name
                                             : ""}
                                         </label>
                                       </div>
