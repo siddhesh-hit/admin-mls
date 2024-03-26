@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 
-import add from "../../../images/add.svg";
+import back from "../../../images/back.svg";
 
 import { useDataFetchingForBothApis } from "../../../hooks/useDataFetchingForBothApis";
 import LoadingComponent from "../../../components/common/Loading";
@@ -15,9 +15,9 @@ const Viewcontent = () => {
   return (
     <div className="content-wrapper pt-4">
       <div className="contentofpages">
-        <Link to="/AddMantriMandal" className="addpagess">
-          <img src={add} alt="add" />
-          Add Mantri Mandal
+        <Link to="/ViewAllMantriMandal" className="addpagess">
+          <img src={back} alt="back" />
+          Go back
         </Link>
 
         <h4 className="page-title">• View Mantri Mandal</h4>

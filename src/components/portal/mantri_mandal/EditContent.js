@@ -15,11 +15,22 @@ const EditContent = () => {
   const [data, setData] = useState([]);
   const [isToggled, setIsToggled] = useState(false);
 
+  const [defaultOpt, setdefaultOpt] = useState({
+    ministry: [],
+    assembly: [],
+    member: [],
+    designation: [],
+    presiding: [],
+    legislative_position: [],
+  });
+
   const [options, setOptions] = useState({
     ministry: [],
     assembly: [],
     member: [],
     designation: [],
+    presiding: [],
+    legislative_position: [],
   });
 
   const desOpt = options?.designation?.map((item) => {
@@ -29,8 +40,27 @@ const EditContent = () => {
     };
     return data;
   });
-
-  const [defaultDesOpt, setDefaultDesOpt] = useState([]);
+  const presOpt = options?.presiding?.map((item) => {
+    let data = {
+      value: item._id,
+      label: item.name,
+    };
+    return data;
+  });
+  const lpOpt = options?.legislative_position?.map((item) => {
+    let data = {
+      value: item._id,
+      label: item.name,
+    };
+    return data;
+  });
+  const minisOpt = options?.ministry?.map((item) => {
+    let data = {
+      value: item._id,
+      label: item.ministry_name,
+    };
+    return data;
+  });
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -54,12 +84,14 @@ const EditContent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    data.designation = defaultDesOpt.map((item) => item.value);
-    data.assembly_number = data.assembly_number._id;
-    data.member_name = data.member_name._id;
-    data.ministry_type = data.ministry_type._id;
-
-    console.log(data);
+    data.designation = data.designation.map((item) => item.value || item._id);
+    data.presiding = data.presiding.map((item) => item.value || item._id);
+    data.legislative_position = data.legislative_position.map(
+      (item) => item.value || item._id
+    );
+    data.ministry_type = data.ministry_type.map(
+      (item) => item.value || item._id
+    );
 
     await putApi("minister", id, data)
       .then((res) => {
@@ -80,22 +112,46 @@ const EditContent = () => {
       await getApiById("minister", id)
         .then((res) => {
           setData(res.data.data);
-          setDefaultDesOpt(
-            res?.data?.data?.designation?.map((item) => {
+          setdefaultOpt((prev) => ({
+            ...prev,
+            ministry: res?.data?.data.ministry_type?.map((item) => {
+              let data = {
+                value: item._id,
+                label: item.ministry_name,
+              };
+              return data;
+            }),
+            designation: res?.data?.data?.designation?.map((item) => {
               let data = {
                 value: item._id,
                 label: item.name,
               };
               return data;
-            })
-          );
+            }),
+            presiding: res?.data?.data?.presiding?.map((item) => {
+              let data = {
+                value: item._id,
+                label: item.name,
+              };
+              return data;
+            }),
+            legislative_position: res?.data?.data?.legislative_position?.map(
+              (item) => {
+                let data = {
+                  value: item._id,
+                  label: item.name,
+                };
+                return data;
+              }
+            ),
+          }));
           setIsToggled(res.data.data.isActive);
         })
         .catch((err) => {
           console.log(err);
         });
 
-      await getApi("ministry")
+      await getApi("ministry/option")
         .then((res) => {
           if (res.data.success) {
             setOptions((prevData) => ({
@@ -108,7 +164,7 @@ const EditContent = () => {
           console.log(err);
         });
 
-      await getApi("assembly")
+      await getApi("assembly/option")
         .then((res) => {
           if (res.data.success) {
             setOptions((prevData) => ({
@@ -121,20 +177,7 @@ const EditContent = () => {
           console.log(err);
         });
 
-      await getApi("member?status=Approved")
-        .then((res) => {
-          if (res.data.success) {
-            setOptions((prevData) => ({
-              ...prevData,
-              member: res.data.data,
-            }));
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
-      await getApi("designation")
+      await getApi("designation/option")
         .then((res) => {
           if (res.data.success) {
             setOptions((prevData) => ({
@@ -146,9 +189,60 @@ const EditContent = () => {
         .catch((err) => {
           console.log(err);
         });
+
+      await getApi("officer/option")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prevData) => ({
+              ...prevData,
+              presiding: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+
+      await getApi("position/option")
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prevData) => ({
+              ...prevData,
+              legislative_position: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     };
+
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      await getApi(
+        `member/all?status=Approved&basic_info.house=Assembly&basic_info.assembly_number=${
+          data?.assembly_number?._id || ""
+        }`
+      )
+        .then((res) => {
+          if (res.data.success) {
+            setOptions((prevData) => ({
+              ...prevData,
+              member: res.data.data,
+            }));
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    };
+    fetchData();
+  }, [data?.assembly_number]);
+
+  console.log(data);
 
   return (
     <div className="content-wrapper pt-4">
@@ -161,41 +255,15 @@ const EditContent = () => {
         <div className="card card-info">
           <div className="row">
             <div className="col-lg-9">
-              <form
-                onSubmit={handleSubmit}
-                className="form-horizontal border_names"
-              >
-                {data && (
-                  <div className="card-body">
-                    <div className="form-group row">
-                      <label
-                        htmlFor="inputEmail3"
-                        className="col-sm-3 col-form-label"
-                      >
-                        Edit Ministry Type :
-                      </label>
-                      <div className="col-sm-8">
-                        <select
-                          className="form-control"
-                          name="ministry_type"
-                          value={data?.ministry_type?._id}
-                          onChange={handleChange}
-                        >
-                          <option hidden>Select Ministry Type</option>
-                          {options.ministry.map((item, index) => (
-                            <option key={index} value={item._id}>
-                              {item.ministry_name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
+              {data && (
+                <form onSubmit={handleSubmit} className="form-horizontal">
+                  <div className="card-body border_names">
                     <div className="form-group row">
                       <label
                         htmlFor="inputPassword3"
-                        className="col-sm-3 col-form-label"
+                        className="col-sm-4 col-form-label"
                       >
-                        Edit Assembly Number :
+                        Assembly Number :
                       </label>
                       <div className="col-sm-8">
                         <select
@@ -215,10 +283,10 @@ const EditContent = () => {
                     </div>
                     <div className="form-group row">
                       <label
-                        htmlFor="inputEmail3"
-                        className="col-sm-3 col-form-label"
+                        htmlFor="inputPassword3"
+                        className="col-sm-4 col-form-label"
                       >
-                        Edit Member Name :
+                        Member Name :
                       </label>
                       <div className="col-sm-8">
                         <select
@@ -227,7 +295,7 @@ const EditContent = () => {
                           value={data?.member_name?._id}
                           onChange={handleChange}
                         >
-                          <option hidden>Select Member name</option>
+                          <option hidden>Select Member Name</option>
                           {options.member.map((item, index) => (
                             <option key={index} value={item._id}>
                               {item.basic_info.surname +
@@ -241,18 +309,56 @@ const EditContent = () => {
                     <div className="form-group row">
                       <label
                         htmlFor="inputPassword3"
-                        className="col-sm-3 col-form-label"
+                        className="col-sm-4 col-form-label"
                       >
-                        Edit Designation :
+                        Ministry Type :
+                      </label>
+                      <div className="col-sm-8">
+                        <Select
+                          isMulti
+                          name="ministry_type"
+                          value={defaultOpt.ministry}
+                          options={minisOpt}
+                          onChange={(e) => {
+                            setData((prev) => ({
+                              ...prev,
+                              ministry_type: e,
+                            }));
+                            setdefaultOpt((prev) => ({
+                              ...prev,
+                              ministry: e,
+                            }));
+                          }}
+                          className=""
+                          classNamePrefix="select"
+                          placeholder="Select Ministry Type"
+                        />
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <label
+                        htmlFor="inputPassword3"
+                        className="col-sm-4 col-form-label"
+                      >
+                        Designation :
                       </label>
                       <div className="col-sm-8">
                         <Select
                           isMulti
                           name="designation"
+                          value={defaultOpt.designation}
                           options={desOpt}
-                          onChange={(e) => setDefaultDesOpt(e)}
-                          value={defaultDesOpt}
-                          closeMenuOnSelect={false}
+                          onChange={(e) => {
+                            setData((prev) => ({
+                              ...prev,
+                              designation: e,
+                            }));
+                            setdefaultOpt((prev) => ({
+                              ...prev,
+                              designation: e,
+                            }));
+                          }}
+                          className=""
                           classNamePrefix="select"
                           placeholder="Select Designation"
                         />
@@ -261,16 +367,29 @@ const EditContent = () => {
                     <div className="form-group row">
                       <label
                         htmlFor="inputPassword3"
-                        className="col-sm-3 col-form-label"
+                        className="col-sm-4 col-form-label"
                       >
-                        Edit Year :
+                        Designation Year :
                       </label>
-                      <div className="col-sm-8">
+                      <div className="col-sm-4">
                         <input
-                          type="date"
-                          defaultValue={data?.year}
                           className="form-control"
-                          name="year"
+                          name="des_from"
+                          type="date"
+                          value={data?.des_from?.split("T")[0]}
+                          min={"1937-01-01"}
+                          max={new Date().toISOString().slice(0, 10)}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="col-sm-4">
+                        <input
+                          className="form-control"
+                          name="des_to"
+                          type="date"
+                          value={data?.des_to?.split("T")[0]}
+                          min={data?.des_from ? data?.des_from : "1937-01-01"}
+                          max={new Date().toISOString().slice(0, 10)}
                           onChange={handleChange}
                         />
                       </div>
@@ -278,30 +397,127 @@ const EditContent = () => {
                     <div className="form-group row">
                       <label
                         htmlFor="inputPassword3"
-                        className="col-sm-3 col-form-label"
+                        className="col-sm-4 col-form-label"
                       >
-                        Edit Status :
+                        Presiding Officer :
                       </label>
                       <div className="col-sm-8">
-                        <div
-                          className={`toggle-button ${
-                            isToggled ? "active" : ""
-                          }`}
-                          onClick={handleToggle}
-                        >
-                          <div
-                            className={`slider ${isToggled ? "active" : ""}`}
-                          />
-                          <div className="button-text">
-                            {isToggled ? "Active" : "Inactive"}
-                          </div>
-                        </div>
+                        <Select
+                          isMulti
+                          name="presiding"
+                          value={defaultOpt.presiding}
+                          options={presOpt}
+                          onChange={(e) => {
+                            setData((prev) => ({
+                              ...prev,
+                              presiding: e,
+                            }));
+                            setdefaultOpt((prev) => ({
+                              ...prev,
+                              presiding: e,
+                            }));
+                          }}
+                          className=""
+                          classNamePrefix="select"
+                          placeholder="Select Presiding Officer"
+                        />
                       </div>
                     </div>
-                    <button className="submit123 mt-5">Submit</button>
+                    <div className="form-group row">
+                      <label
+                        htmlFor="inputPassword3"
+                        className="col-sm-4 col-form-label"
+                      >
+                        Presiding Officer Year :
+                      </label>
+                      <div className="col-sm-4">
+                        <input
+                          className="form-control"
+                          name="pres_from"
+                          type="date"
+                          value={data?.pres_from?.split("T")[0]}
+                          min={"1937-01-01"}
+                          max={new Date().toISOString().slice(0, 10)}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="col-sm-4">
+                        <input
+                          className="form-control"
+                          name="pres_to"
+                          type="date"
+                          value={data?.pres_to?.split("T")[0]}
+                          min={data?.pres_from ? data?.pres_from : "1937-01-01"}
+                          max={new Date().toISOString().slice(0, 10)}
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <label
+                        htmlFor="inputPassword3"
+                        className="col-sm-4 col-form-label"
+                      >
+                        Legislative Position :
+                      </label>
+                      <div className="col-sm-8">
+                        <Select
+                          isMulti
+                          name="legislative_position"
+                          options={lpOpt}
+                          value={defaultOpt.legislative_position}
+                          onChange={(e) => {
+                            setData((prev) => ({
+                              ...prev,
+                              legislative_position: e,
+                            }));
+                            setdefaultOpt((prev) => ({
+                              ...prev,
+                              legislative_position: e,
+                            }));
+                          }}
+                          className=""
+                          classNamePrefix="select"
+                          placeholder="Select Legilsative Position"
+                        />
+                      </div>
+                    </div>
+                    <div className="form-group row">
+                      <label
+                        htmlFor="inputPassword3"
+                        className="col-sm-4 col-form-label"
+                      >
+                        legislative Position Year :
+                      </label>
+                      <div className="col-sm-4">
+                        <input
+                          className="form-control"
+                          name="lp_from"
+                          type="date"
+                          value={data?.lp_from?.split("T")[0]}
+                          min={"1937-01-01"}
+                          max={new Date().toISOString().slice(0, 10)}
+                          onChange={handleChange}
+                        />
+                      </div>
+                      <div className="col-sm-4">
+                        <input
+                          className="form-control"
+                          name="lp_to"
+                          type="date"
+                          value={data?.lp_to?.split("T")[0]}
+                          min={data?.lp_from ? data?.lp_from : "1937-01-01"}
+                          max={new Date().toISOString().slice(0, 10)}
+                          onChange={handleChange}
+                        />
+                      </div>
+                    </div>
                   </div>
-                )}
-              </form>
+                  <button type="submit" className="submit123 mt-5">
+                    Submit
+                  </button>
+                </form>
+              )}
             </div>
           </div>
         </div>
