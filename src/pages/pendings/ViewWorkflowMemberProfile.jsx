@@ -173,14 +173,14 @@ const ViewWorkflowMemberProfile = () => {
                             </p>
                             <p>
                               <b>Party :</b>{" "}
-                              {
-                                data?.data_object.basic_info.party?.marathi
-                                  ?.party_name
-                              }
+                              {data?.data_object.basic_info.party?.marathi
+                                ?.party_name ||
+                                data?.data_object.basic_info.party}
                             </p>
                             <p>
                               <b>Constituency :</b>
-                              {data.data_object.basic_info.constituency.council
+                              {data?.data_object.basic_info.constituency ||
+                              data.data_object.basic_info.constituency.council
                                 .constituency_name !== ""
                                 ? data.data_object.basic_info.constituency
                                     .council.constituency_name
@@ -197,10 +197,8 @@ const ViewWorkflowMemberProfile = () => {
                             </p>
                             <p>
                               <b>Gender :</b>{" "}
-                              {
-                                data?.data_object.basic_info.gender?.marathi
-                                  ?.gender
-                              }
+                              {data?.data_object.basic_info.gender?.marathi
+                                ?.gender || data?.data_object.basic_info.gender}
                             </p>
                             <p>
                               <b>Address :</b>{" "}
@@ -284,13 +282,19 @@ const ViewWorkflowMemberProfile = () => {
                                     </h3>
                                     <p>Title : {item.title}</p>
                                     <p>
-                                      Presiding Officer : {item.presiding.name}
+                                      Presiding Officer :{" "}
+                                      {item.presiding.name || item.presiding}
                                     </p>
                                     <p>
                                       Legislative Position :
-                                      {item.legislative_position.name}
+                                      {item.legislative_position.name ||
+                                        item.legislative_position}
                                     </p>
-                                    <p>Designation : {item.designation.name}</p>
+                                    <p>
+                                      Designation :{" "}
+                                      {item.designation.name ||
+                                        item.designation}
+                                    </p>
                                   </div>
                                 </li>
                               )
@@ -311,7 +315,8 @@ const ViewWorkflowMemberProfile = () => {
                       <div className="col-lg-12">
                         <h4 className="eclecresult">Election Result</h4>
                         <h3 className="gondiaa">
-                          {data.data_object.election_data.constituency.council
+                          {data?.data_object.election_data.constituency ||
+                          data.data_object.election_data.constituency.council
                             .constituency_name !== ""
                             ? data.data_object.election_data.constituency
                                 .council.constituency_name
@@ -359,7 +364,10 @@ const ViewWorkflowMemberProfile = () => {
                                   <h4>{item.votes}</h4>
                                 </td>
                                 <td>
-                                  <h4>{item.party?.marathi.party_name}</h4>
+                                  <h4>
+                                    {item.party?.marathi.party_name ||
+                                      item.party}
+                                  </h4>
                                 </td>
                               </tr>
                             )

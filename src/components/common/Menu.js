@@ -239,7 +239,10 @@ const Menu = () => {
                   ? (active = true)
                   : (active = false);
                 return (
-                  <li className="nav-item borders" key={index}>
+                  <li
+                    className={`nav-item borders ${active ? "active" : ""}`}
+                    key={index}
+                  >
                     <Link
                       to={item.path}
                       className={`nav-link main ${active ? "active" : ""}`}

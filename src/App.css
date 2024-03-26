@@ -1849,3 +1849,12 @@ input.searchtext {
   font-family: "Poppins", sans-serif;
   font-weight: 600;
 }
+
+li.nav-item.borders.active {
+  background: #000088;
+}
+
+.sidebar-dark-primary .nav-sidebar.nav-legacy > .nav-item > .nav-link.active,
+.sidebar-light-primary .nav-sidebar.nav-legacy > .nav-item > .nav-link.active {
+  border: none;
+}

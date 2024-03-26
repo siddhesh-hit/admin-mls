@@ -85,17 +85,17 @@ export const portalPaths = [
     path: "/ViewGallery",
     child: ["/ViewGallery", "/AddGallery", "/EditGallery", "/ViewGallery"],
   },
-  {
-    name: "InterestRequest",
-    path: "/ViewInterestRequest",
-    child: [
-      "/EditInterest",
-      "/EditRequest",
-      "/ViewInterest",
-      "/ViewRequest",
-      "/ViewInterestRequest",
-    ],
-  },
+  // {
+  //   name: "InterestRequest",
+  //   path: "/ViewInterestRequest",
+  //   child: [
+  //     "/EditInterest",
+  //     "/EditRequest",
+  //     "/ViewInterest",
+  //     "/ViewRequest",
+  //     "/ViewInterestRequest",
+  //   ],
+  // },
   {
     name: "MantriMandal",
     path: "/ViewAllMantriMandal",
