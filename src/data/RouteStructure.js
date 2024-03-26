@@ -183,6 +183,99 @@ export const masterPaths = [
   },
 ];
 
+export const homePaths = [
+  {
+    name: "InterestRequest",
+    path: "/ViewInterestRequest",
+    child: [
+      "/ViewInterestRequest",
+      "/ViewRequest",
+      "/ViewInterest",
+      "/EditRequest",
+      "/EditInterest",
+    ],
+  },
+  {
+    name: "Feedback",
+    path: "/ViewAllFeedbacks",
+    child: ["/ViewAllFeedbacks", "/ViewFeedbacks", "/EditFeedbacks"],
+  },
+  {
+    name: "Helpdesk",
+    path: "/ViewAllHelpdesk",
+    child: ["/ViewAllHelpdesk", "/ViewHelpdesk", "/EditHelpdesk"],
+  },
+  {
+    name: "User Management",
+    path: "/UserRole",
+    child: ["/UserRole", "/EditRole"],
+  },
+  {
+    name: "Task Management",
+    path: "/ViewTask",
+    child: ["/ViewTask", "/AddTask", "/EditTask"],
+  },
+  {
+    name: "Portal User",
+    path: "/ViewPortalUsers",
+    child: [
+      "/ViewPortalUsers",
+      "/AddPortalUsers",
+      "/EditPortalUsers",
+      "/BlockUsers",
+      "/UserReset",
+    ],
+  },
+  {
+    name: "ContactUs",
+    path: "/ViewContact",
+    child: ["/ViewContact", "/AddContact", "/EditContact"],
+  },
+  {
+    name: "AuditTrail",
+    path: "/ViewAudit",
+    child: ["/ViewAudit"],
+  },
+  {
+    name: "Workflow",
+    path: "/ViewAllWorkflow",
+    child: [
+      "/ViewAllWorkflow",
+      "/ViewWorkflow",
+      "/EditWorkflow",
+      "/AddWorkflow",
+      "/ViewWorkflowHistory",
+      "/ViewWorkflowVidhanMandal",
+      "/ViewWorkflowMantriMandal",
+      "/ViewWorkflowCalendar",
+      "/ViewWorkflowFaqs",
+      "/ViewWorkflowGallery",
+      "/ViewWorkflowInterestRequest",
+      "/ViewWorkflowLegislativeAssembly",
+      "/ViewWorkflowLegislativeCouncil",
+      "/ViewWorkflowLibrary",
+      "/ViewWorkflowRajyapal",
+      "/ViewWorkflowMemberProfile",
+      "/ViewWorkflowGalleryImage",
+    ],
+  },
+  {
+    name: "Archive",
+    path: "/ViewArchive",
+    child: ["/ViewArchive"],
+  },
+  {
+    name: "SEO",
+    path: "/Viewseo",
+    child: ["/Viewseo", "/AddSEO", "/EditSEO"],
+  },
+  {
+    name: "File Manager",
+    path: "/ViewFileManager",
+    child: ["/ViewFileManager", "/AddFileManager", "/EditFileManager"],
+  },
+];
+
 export const auth = [
   "Admin",
   "SuperAdmin",
@@ -231,6 +324,7 @@ export const routes = [
   "Workflow",
   "Archive",
   "SEO",
+  "File Manager",
 ];
 
 export const authDesc = [

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, NavLink, useLocation } from "react-router-dom";
 
-import { portalPaths, masterPaths } from "../../data/RouteStructure";
+import { portalPaths, masterPaths, homePaths } from "../../data/RouteStructure";
 import logo from "../../images/logo.svg";
 
 const Menu = () => {
@@ -9,10 +9,12 @@ const Menu = () => {
 
   const [masterOpen, setMasterOpen] = useState(false);
   const [portalOpen, setPortalOpen] = useState(false);
+  const [homeOpen, setHomeOpen] = useState(false);
 
   const [navbar, setNavbar] = useState({
     master: false,
     portal: false,
+    home: false,
   });
 
   const handleChange = (arg) => {
@@ -21,10 +23,15 @@ const Menu = () => {
         ...prev,
         master: !navbar.master,
       }));
-    } else {
+    } else if (arg === "portal") {
       setNavbar((prev) => ({
         ...prev,
         portal: !navbar.portal,
+      }));
+    } else if (arg === "home") {
+      setNavbar((prev) => ({
+        ...prev,
+        home: !navbar.home,
       }));
     }
   };
@@ -46,6 +53,15 @@ const Menu = () => {
       setMasterOpen(true);
     } else {
       setMasterOpen(false);
+    }
+
+    if (
+      (location && homePaths.some((obj) => obj.path === location.pathname)) ||
+      homePaths.some((path) => path.child.includes(location.pathname))
+    ) {
+      setHomeOpen(true);
+    } else {
+      setHomeOpen(false);
     }
   }, [location]);
 
@@ -107,8 +123,9 @@ const Menu = () => {
 
               <li
                 onClick={() => handleChange("master")}
-                className={`nav-item has-treeview borders ${navbar.master ? "menu-open" : ""
-                  }`}
+                className={`nav-item has-treeview borders ${
+                  navbar.master ? "menu-open" : ""
+                }`}
                 style={{ cursor: "pointer" }}
               >
                 <a className="nav-link main ">
@@ -144,8 +161,9 @@ const Menu = () => {
                   </p>
                 </a>
                 <ul
-                  className={`nav nav-treeview dots ${masterOpen ? "d-block" : ""
-                    } `}
+                  className={`nav nav-treeview dots ${
+                    masterOpen ? "d-block" : ""
+                  } `}
                 >
                   {masterPaths.map((item, index) => {
                     let active = null;
@@ -174,8 +192,9 @@ const Menu = () => {
 
               <li
                 onClick={() => handleChange("portal")}
-                className={`nav-item has-treeview borders ${navbar.portal ? "menu-open" : ""
-                  }`}
+                className={`nav-item has-treeview borders ${
+                  navbar.portal ? "menu-open" : ""
+                }`}
                 style={{ cursor: "pointer" }}
               >
                 <a className="nav-link main">
@@ -186,8 +205,9 @@ const Menu = () => {
                   </p>
                 </a>
                 <ul
-                  className={`nav nav-treeview dots ${portalOpen ? "d-block" : ""
-                    }`}
+                  className={`nav nav-treeview dots ${
+                    portalOpen ? "d-block" : ""
+                  }`}
                 >
                   {portalPaths.map((item, index) => {
                     let active = null;
@@ -212,286 +232,50 @@ const Menu = () => {
                 </ul>
               </li>
 
-              <NavLink
-                to="/ViewSEO"
-                className="nav-link main borders"
-                style={{ padding: "18px 20px" }}
-              >
-                <li className="nav-item">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9 9C9 8.4477 9.4477 8 10 8H16C16.5523 8 17 8.4477 17 9V16C17 16.5523 16.5523 17 16 17H10C9.4477 17 9 16.5523 9 16V9Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M1 2C1 1.44772 1.44772 1 2 1H5C5.55228 1 6 1.44772 6 2V16C6 16.5523 5.55228 17 5 17H2C1.44772 17 1 16.5523 1 16V2Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M9 2C9 1.44772 9.4477 1 10 1H16C16.5523 1 17 1.44772 17 2V4C17 4.55228 16.5523 5 16 5H10C9.4477 5 9 4.55228 9 4V2Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  &nbsp;&nbsp;&nbsp;<p>SEO</p>
-                </li>
-              </NavLink>
-              <NavLink
-                to="/ViewPortalUsers"
-                className="nav-link main borders"
-                style={{ padding: "18px 20px" }}
-              >
-                <li className="nav-item">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9 9C9 8.4477 9.4477 8 10 8H16C16.5523 8 17 8.4477 17 9V16C17 16.5523 16.5523 17 16 17H10C9.4477 17 9 16.5523 9 16V9Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M1 2C1 1.44772 1.44772 1 2 1H5C5.55228 1 6 1.44772 6 2V16C6 16.5523 5.55228 17 5 17H2C1.44772 17 1 16.5523 1 16V2Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M9 2C9 1.44772 9.4477 1 10 1H16C16.5523 1 17 1.44772 17 2V4C17 4.55228 16.5523 5 16 5H10C9.4477 5 9 4.55228 9 4V2Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  &nbsp;&nbsp;&nbsp;<p>Portal User</p>
-                </li>
-              </NavLink>
+              {homePaths?.map((item, index) => {
+                let active = null;
 
-              <NavLink
-                to="/ViewAllFeedbacks"
-                className="nav-link main borders"
-                style={{ padding: "18px 20px" }}
-              >
-                <li className="nav-item">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9 9C9 8.4477 9.4477 8 10 8H16C16.5523 8 17 8.4477 17 9V16C17 16.5523 16.5523 17 16 17H10C9.4477 17 9 16.5523 9 16V9Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M1 2C1 1.44772 1.44772 1 2 1H5C5.55228 1 6 1.44772 6 2V16C6 16.5523 5.55228 17 5 17H2C1.44772 17 1 16.5523 1 16V2Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M9 2C9 1.44772 9.4477 1 10 1H16C16.5523 1 17 1.44772 17 2V4C17 4.55228 16.5523 5 16 5H10C9.4477 5 9 4.55228 9 4V2Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  &nbsp;&nbsp;&nbsp;<p>Feedback</p>
-                </li>
-              </NavLink>
-
-              <NavLink
-                to="/ViewAllHelpdesk"
-                className="nav-link main borders"
-                style={{ padding: "18px 20px" }}
-              >
-                <li className="nav-item">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9 9C9 8.4477 9.4477 8 10 8H16C16.5523 8 17 8.4477 17 9V16C17 16.5523 16.5523 17 16 17H10C9.4477 17 9 16.5523 9 16V9Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M1 2C1 1.44772 1.44772 1 2 1H5C5.55228 1 6 1.44772 6 2V16C6 16.5523 5.55228 17 5 17H2C1.44772 17 1 16.5523 1 16V2Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M9 2C9 1.44772 9.4477 1 10 1H16C16.5523 1 17 1.44772 17 2V4C17 4.55228 16.5523 5 16 5H10C9.4477 5 9 4.55228 9 4V2Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  &nbsp;&nbsp;&nbsp;<p>HelpDesk</p>
-                </li>
-              </NavLink>
-
-              <NavLink
-                to="/ViewTask"
-                className="nav-link main borders"
-                style={{ padding: "18px 20px" }}
-              >
-                <li className="nav-item">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9 9C9 8.4477 9.4477 8 10 8H16C16.5523 8 17 8.4477 17 9V16C17 16.5523 16.5523 17 16 17H10C9.4477 17 9 16.5523 9 16V9Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M1 2C1 1.44772 1.44772 1 2 1H5C5.55228 1 6 1.44772 6 2V16C6 16.5523 5.55228 17 5 17H2C1.44772 17 1 16.5523 1 16V2Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M9 2C9 1.44772 9.4477 1 10 1H16C16.5523 1 17 1.44772 17 2V4C17 4.55228 16.5523 5 16 5H10C9.4477 5 9 4.55228 9 4V2Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  &nbsp;&nbsp;&nbsp;<p>Task Management</p>
-                </li>
-              </NavLink>
-
-              <NavLink
-                to="/UserRole"
-                className="nav-link main borders"
-                style={{ padding: "18px 20px" }}
-              >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 18 18"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M9 9C9 8.4477 9.4477 8 10 8H16C16.5523 8 17 8.4477 17 9V16C17 16.5523 16.5523 17 16 17H10C9.4477 17 9 16.5523 9 16V9Z"
-                    stroke="#000088"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M1 2C1 1.44772 1.44772 1 2 1H5C5.55228 1 6 1.44772 6 2V16C6 16.5523 5.55228 17 5 17H2C1.44772 17 1 16.5523 1 16V2Z"
-                    stroke="#000088"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                  <path
-                    d="M9 2C9 1.44772 9.4477 1 10 1H16C16.5523 1 17 1.44772 17 2V4C17 4.55228 16.5523 5 16 5H10C9.4477 5 9 4.55228 9 4V2Z"
-                    stroke="#000088"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                  />
-                </svg>
-                &nbsp;&nbsp;&nbsp;
-                <p style={{ lineHeight: "1.4" }}>
-                  User Role Management <br />
-                  System
-                </p>
-              </NavLink>
-
-              <NavLink to="/ViewAllWorkflow" className="nav-link main">
-                <li className="nav-item borders">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9 9C9 8.4477 9.4477 8 10 8H16C16.5523 8 17 8.4477 17 9V16C17 16.5523 16.5523 17 16 17H10C9.4477 17 9 16.5523 9 16V9Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M1 2C1 1.44772 1.44772 1 2 1H5C5.55228 1 6 1.44772 6 2V16C6 16.5523 5.55228 17 5 17H2C1.44772 17 1 16.5523 1 16V2Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M9 2C9 1.44772 9.4477 1 10 1H16C16.5523 1 17 1.44772 17 2V4C17 4.55228 16.5523 5 16 5H10C9.4477 5 9 4.55228 9 4V2Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  &nbsp;&nbsp;&nbsp;<p>Workflow</p>
-                </li>
-              </NavLink>
-
-              <NavLink to="/ViewArchive" className="nav-link main">
-                <li className="nav-item borders">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9 9C9 8.4477 9.4477 8 10 8H16C16.5523 8 17 8.4477 17 9V16C17 16.5523 16.5523 17 16 17H10C9.4477 17 9 16.5523 9 16V9Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M1 2C1 1.44772 1.44772 1 2 1H5C5.55228 1 6 1.44772 6 2V16C6 16.5523 5.55228 17 5 17H2C1.44772 17 1 16.5523 1 16V2Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M9 2C9 1.44772 9.4477 1 10 1H16C16.5523 1 17 1.44772 17 2V4C17 4.55228 16.5523 5 16 5H10C9.4477 5 9 4.55228 9 4V2Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  &nbsp;&nbsp;&nbsp;<p>Archive</p>
-                </li>
-              </NavLink>
+                location && item.child.includes(location.pathname)
+                  ? (active = true)
+                  : (active = false);
+                return (
+                  <li className="nav-item borders" key={index}>
+                    <Link
+                      to={item.path}
+                      className={`nav-link main ${active ? "active" : ""}`}
+                    >
+                      <svg
+                        width="18"
+                        height="18"
+                        viewBox="0 0 18 18"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M9 9C9 8.4477 9.4477 8 10 8H16C16.5523 8 17 8.4477 17 9V16C17 16.5523 16.5523 17 16 17H10C9.4477 17 9 16.5523 9 16V9Z"
+                          stroke="#000088"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                        />
+                        <path
+                          d="M1 2C1 1.44772 1.44772 1 2 1H5C5.55228 1 6 1.44772 6 2V16C6 16.5523 5.55228 17 5 17H2C1.44772 17 1 16.5523 1 16V2Z"
+                          stroke="#000088"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                        />
+                        <path
+                          d="M9 2C9 1.44772 9.4477 1 10 1H16C16.5523 1 17 1.44772 17 2V4C17 4.55228 16.5523 5 16 5H10C9.4477 5 9 4.55228 9 4V2Z"
+                          stroke="#000088"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                        />
+                      </svg>
+                      &nbsp;&nbsp;&nbsp;
+                      <p style={{ lineHeight: "1.4" }}>{item.name}</p>
+                    </Link>
+                  </li>
+                );
+              })}
 
               <li className="nav-item has-treeview borders">
                 <Link to="/Dashboard" className="nav-link main">
@@ -543,70 +327,6 @@ const Menu = () => {
                     </li>
                   </NavLink>
                 </ul>
-              </li>
-
-              <li className="nav-item borders">
-                <Link to="/ViewAudit" className="nav-link main">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9 9C9 8.4477 9.4477 8 10 8H16C16.5523 8 17 8.4477 17 9V16C17 16.5523 16.5523 17 16 17H10C9.4477 17 9 16.5523 9 16V9Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M1 2C1 1.44772 1.44772 1 2 1H5C5.55228 1 6 1.44772 6 2V16C6 16.5523 5.55228 17 5 17H2C1.44772 17 1 16.5523 1 16V2Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M9 2C9 1.44772 9.4477 1 10 1H16C16.5523 1 17 1.44772 17 2V4C17 4.55228 16.5523 5 16 5H10C9.4477 5 9 4.55228 9 4V2Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  &nbsp;&nbsp;&nbsp;<p>Audit Trails</p>
-                </Link>
-              </li>
-
-              <li className="nav-item borders">
-                <Link to="/ViewContact" className="nav-link main">
-                  <svg
-                    width="18"
-                    height="18"
-                    viewBox="0 0 18 18"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M9 9C9 8.4477 9.4477 8 10 8H16C16.5523 8 17 8.4477 17 9V16C17 16.5523 16.5523 17 16 17H10C9.4477 17 9 16.5523 9 16V9Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M1 2C1 1.44772 1.44772 1 2 1H5C5.55228 1 6 1.44772 6 2V16C6 16.5523 5.55228 17 5 17H2C1.44772 17 1 16.5523 1 16V2Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                    <path
-                      d="M9 2C9 1.44772 9.4477 1 10 1H16C16.5523 1 17 1.44772 17 2V4C17 4.55228 16.5523 5 16 5H10C9.4477 5 9 4.55228 9 4V2Z"
-                      stroke="#000088"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                    />
-                  </svg>
-                  &nbsp;&nbsp;&nbsp;<p>ContactUS</p>
-                </Link>
               </li>
 
               <li className="nav-item borders">

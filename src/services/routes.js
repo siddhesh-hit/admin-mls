@@ -63,12 +63,6 @@ import AddLibraryDoc from "../pages/portals/Add_library_doc/AddLibraryDoc";
 import EditLibraryDoc from "../pages/portals/Add_library_doc/EditLibraryDoc";
 import ViewAllLibraryDocs from "../pages/portals/Add_library_doc/ViewAllLibraryDocs";
 
-import EditInterest from "../pages/portals/Add_Interest_Request/EditInterest";
-import EditRequest from "../pages/portals/Add_Interest_Request/EditRequest";
-import ViewInterest from "../pages/portals/Add_Interest_Request/ViewInterest";
-import ViewRequest from "../pages/portals/Add_Interest_Request/ViewRequest";
-import ViewInterestRequest from "../pages/portals/Add_Interest_Request/ViewInterestRequest";
-
 import AddMantriMandal from "../pages/portals/Add_mantri_mandal/AddMantriMandal";
 import ViewAllMantriMandal from "../pages/portals/Add_mantri_mandal/ViewAllMantriMandal";
 import ViewMantriMandal from "../pages/portals/Add_mantri_mandal/ViewMantriMandal";
@@ -134,6 +128,12 @@ import ViewPresidingOfficers from "../pages/masters/Add_presiding_officers/ViewP
 
 // HOME ROUTES
 
+import EditInterest from "../pages/portals/Add_Interest_Request/EditInterest";
+import EditRequest from "../pages/portals/Add_Interest_Request/EditRequest";
+import ViewInterest from "../pages/portals/Add_Interest_Request/ViewInterest";
+import ViewRequest from "../pages/portals/Add_Interest_Request/ViewRequest";
+import ViewInterestRequest from "../pages/portals/Add_Interest_Request/ViewInterestRequest";
+
 import EditFeedbacks from "../pages/home/Add_feedbacks/EditFeedbacks";
 import ViewFeedbacks from "../pages/home/Add_feedbacks/ViewFeedbacks";
 import ViewAllFeedbacks from "../pages/home/Add_feedbacks/ViewAllFeedbacks";
@@ -187,6 +187,10 @@ import ViewAllUserDocument from "../pages/home/Add_UserDocuments/ViewAllUserDocu
 import ViewUserDocument from "../pages/home/Add_UserDocuments/ViewUserDocument";
 import AddUserDocument from "../pages/home/Add_UserDocuments/AddUserDocument";
 import EditUserDocument from "../pages/home/Add_UserDocuments/EditUserDocument";
+
+import AddFileManager from "../pages/home/Add_File_Management/AddFileManager";
+import EditFileManager from "../pages/home/Add_File_Management/EditFileManager";
+import ViewFileManager from "../pages/home/Add_File_Management/ViewFileManager";
 
 export const routes = [
   {
@@ -391,6 +395,27 @@ export const routes = [
     exact: true,
     access: ["SuperAdmin", "Admin", "ContentCreator"],
     element: <AddUserDocument />,
+  },
+  {
+    name: "File Manager",
+    path: "/AddFileManager",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <AddFileManager />,
+  },
+  {
+    name: "File Manager",
+    path: "/EditFileManager",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <EditFileManager />,
+  },
+  {
+    name: "File Manager",
+    path: "/ViewFileManager",
+    exact: true,
+    access: ["SuperAdmin", "Admin", "ContentCreator"],
+    element: <ViewFileManager />,
   },
   {
     name: "Library",
